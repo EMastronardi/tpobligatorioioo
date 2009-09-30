@@ -10,16 +10,14 @@ Date : 30/09/2009
 
 */
 
-
-
-
-
 public class Consumible {
 	private String descripcion;
 	private String codigo;
+	private double precio;
 	private Vector<ItemProducto> itemsProducto;
-	public void getPrecio() {
 	
+	public double getPrecio() {
+		return this.precio;
 	}
 	
 	public Vector<ItemProducto> getItemsProducto() {
