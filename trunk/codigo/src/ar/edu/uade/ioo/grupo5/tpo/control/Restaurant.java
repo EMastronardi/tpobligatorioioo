@@ -47,7 +47,15 @@ public class Restaurant {
 	}
 	
 	public void inicializar(int cantidadMozos, int cantidadMesas, double porcentajeComision) {
-		//Esto podria ser el constructor tambien, no?
+		for (int i=0;i<cantidadMozos;i++){
+			Mozo unMozo = new Mozo();
+			mozos.add(unMozo);
+		}
+		for (int i=0;i<cantidadMesas;i++){
+			Mesa unaMesa = new Mesa();
+			mesas.add(unaMesa);
+		}
+		this.comision = porcentajeComision;
 	}
 	
 	private Vector<Comanda> buscarComandas(int nroMozo) {
@@ -60,8 +68,10 @@ public class Restaurant {
 	}
 	
 	private Vector<Producto> buscarProductos(int idProveedor) {
+		//Tenemos un buscarproductos que busca y devuelve varios?!
+		
 		//TODO Ojo que esto es solo para que devuelva algo
-		//Tenemos un productos que busca varios?!
+		
 		return null;
 	}
 	
