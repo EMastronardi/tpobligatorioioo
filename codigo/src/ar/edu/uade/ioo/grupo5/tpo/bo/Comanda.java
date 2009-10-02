@@ -17,11 +17,17 @@ public class Comanda {
 	private Mozo mozo;
 	
 	
-	public void Comanda(Mesa mesa, Mozo mozo) {
+	public Comanda(Mesa mesa, Mozo mozo) {
 		this.mesa = mesa;
 		this.mozo = mozo;
 	}
 	
+	
+	public Mozo getMozo() {
+		return mozo;
+	}
+
+
 	public double calcularTotal() {
 		double total=0;
 		for(int i=0;i<items.size();i++){
