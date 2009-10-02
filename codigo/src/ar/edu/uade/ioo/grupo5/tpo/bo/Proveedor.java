@@ -15,6 +15,7 @@ import java.util.Vector;
 
 
 public class Proveedor {
+	//TODO Checho: con el nombre no alcanza para identificarlo?
 	private int id;
 	private Vector<Producto> productos;
 	private String nombre;

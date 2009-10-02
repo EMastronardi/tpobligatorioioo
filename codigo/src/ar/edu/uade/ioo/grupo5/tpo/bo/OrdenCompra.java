@@ -16,8 +16,9 @@ import java.util.Vector;
 public class OrdenCompra {
 	private Vector<Producto> productos;
 	private Proveedor proveedor;
-	public void addProducto(Producto producto) {
 	
+	public void addProducto(Producto producto) {
+	//TODO Checho: este sería el add que "esta de mas"?
 	}
 	
 	public Vector<Producto> getProductos() {
