@@ -1,6 +1,7 @@
 package ar.edu.uade.ioo.grupo5.tpo.control;
 
 import java.util.Vector;
+import java.text.*;
 
 import ar.edu.uade.ioo.grupo5.tpo.bo.*;
 /**
@@ -26,6 +27,16 @@ public class Restaurant {
 	
 	
 	public String emitirLiquidaciones() {
+		for (int i= 0 ; i< mozos.size();i++){
+			double subtotal = 0;
+			Mozo unMozo = mozos.elementAt(i);
+			for(int j=0; j< comandasCerradas.size();j++){
+				if(unMozo.getNroMozo()==comandasCerradas.elementAt(j).getMozo().getNroMozo())
+				subtotal +=comandasCerradas.elementAt(j).calcularTotal();
+				
+			}
+			System.out.println("El mozo Nro: "+ unMozo.getNroMozo()+ "tiene una comision de: "+ (subtotal*comision)+"\n");
+		}
 		return null;
 	}
 	
@@ -34,15 +45,29 @@ public class Restaurant {
 	}
 	
 	public String cerrarComanda(int NroMesa) {
-		//No me acuerdo que devolviamos aca...
-		return null;
+		double total;
+		NumberFormat nm = NumberFormat.getNumberInstance();
+		
+		Mesa unaMesa = buscarMesa(NroMesa);
+		Comanda unaComanda = unaMesa.getComanda();
+		comandasCerradas.add(unaComanda);
+		//setear estado a mesa, preguntar EmaT
+		total = unaComanda.calcularTotal();
+		
+		return nm.format(total) + unaMesa.getId() + unaMesa.getMozo().getNroMozo();
 	}
 	
 	public void agregarPedido(String codConsumible, int cantidad) {
+				
 	
 	}
 	
 	public void nuevaComanda(int nroMesa) {
+		Mesa unaMesa = buscarMesa(nroMesa);
+		//setear el estado a la mesa, preguntar a emaT por lo de enumeration	
+		Mozo unMozo = unaMesa.getMozo();
+		Comanda unaComanda = new Comanda(unaMesa, unMozo);
+		unaMesa.setComanda(unaComanda);
 		
 	}
 	
