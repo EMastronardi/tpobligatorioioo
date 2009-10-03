@@ -41,6 +41,16 @@ public class Restaurant {
 	}
 	
 	public void emitirOrdenesDeCompra() {
+		for(int i=0; i<proveedores.size();i++){
+			Proveedor unProveedor =proveedores.elementAt(i);
+			if(unProveedor.getProductos().size()>0){
+				OrdenCompra unaOC =new OrdenCompra(unProveedor.getProductos(),unProveedor);
+				/*ya que estamos, meti todo adentro del constructor, si guardamos
+				 *  un vector por proveedor, con los items a comprar, asi no
+				 *  recorremos productos ahora. Esto seria mas bien generar OC's
+				 *  */
+			}
+		}
 	
 	}
 	
@@ -57,9 +67,12 @@ public class Restaurant {
 		return nm.format(total) + unaMesa.getId() + unaMesa.getMozo().getNroMozo();
 	}
 	
-	public void agregarPedido(String codConsumible, int cantidad) {
+	public void agregarPedido(String codConsumible, int cantidad, int nroMesa) {
+				Consumible unConsumible= buscarConsumible(codConsumible);
+				ItemComanda unItemComanda = new ItemComanda(unConsumible, cantidad);
+				Mesa unaMesa = buscarMesa(nroMesa);
+				unaMesa.getComanda().addItem(unItemComanda);
 				
-	
 	}
 	
 	public void nuevaComanda(int nroMesa) {
@@ -85,6 +98,10 @@ public class Restaurant {
 	
 	private Vector<Comanda> buscarComandas(int nroMozo) {
 		//Aca le pasamos el numero de Mozo o el mozo en si mismo?
+		/*Mepa que este metodo lo puso emaT para obtener todas las comandas de un mozo
+		 * pero yo hice el liquidar comisiones a lo cabeza.. podemos cambiarlo, va a
+		 * quedar mejor.. Por ahi el liquidar esta "sobrecargado"...
+		 * */
 		return null;
 	}
 	
@@ -101,17 +118,31 @@ public class Restaurant {
 	}
 	
 	private OrdenCompra buscarOrdenCompra(int idProveedor) {
-		//TODO Ojo que esto es solo para que devuelva algo
+		// no se en que parte lo usamos pero bueh..
+		for(int i=0 ; i<ordenesCompra.size();i++){
+			if(ordenesCompra.elementAt(i).getProveedor().getId()== idProveedor){
+				return ordenesCompra.elementAt(i);
+			}
+		}
+		
 		return null;
 	}
 	
 	private Mesa buscarMesa(int nroMesa) {
-		//TODO Ojo que esto es solo para que devuelva algo
+		for(int i=0;i<mesas.size();i++){
+			if(mesas.elementAt(i).getId()==nroMesa){
+				return mesas.elementAt(i);
+			}
+		}
 		return null;
 	}
 	
 	private Consumible buscarConsumible(String codConsumible) {
-		//TODO Ojo que esto es solo para que devuelva algo
+		for(int i=0;i<carta.size();i++){
+			if(carta.elementAt(i).getCodigo()==codConsumible){
+				return carta.elementAt(i);
+			}
+		}
 		return null;
 	}
 }
