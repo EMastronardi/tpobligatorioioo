@@ -11,4 +11,7 @@ package ar.edu.uade.ioo.grupo5.tpo.bo;
 
 public class Bebida extends Consumible {
 
+	public Bebida(String descripcion, String codigo, double precio) {
+		super(descripcion, codigo, precio);
+	}
 }

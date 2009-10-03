@@ -16,6 +16,20 @@ public class Consumible {
 	private double precio;
 	private Vector<ItemProducto> itemsProducto;
 	
+	
+	
+	public Consumible(String descripcion, String codigo, double precio) {
+		
+		this.descripcion = descripcion;
+		this.codigo = codigo;
+		this.precio = precio;
+		this.itemsProducto = new Vector<ItemProducto>();
+	}
+	
+	public void addItemProducto(Producto producto, double cantidad){
+		itemsProducto.add(new ItemProducto(producto, cantidad));
+	}
+
 	public double getPrecio() {
 		return this.precio;
 	}

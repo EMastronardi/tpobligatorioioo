@@ -15,20 +15,19 @@ import java.util.Vector;
 
 
 public class Proveedor {
-	//TODO Checho: con el nombre no alcanza para identificarlo?
-	private int id;
-	private Vector<Producto> productos;
+	private Vector<Producto> productosAReponer;
 	private String nombre;
-	
-	public int getId() {
-		return this.id;
-	}
-	
+		
 	public String getNombre() {
 		return this.nombre;
 	}
 	
 	public Vector<Producto> getProductos() {
-		return this.productos;
+		return this.productosAReponer;
 	}
+	
+	public void addProductoAReponer(Producto producto){
+		productosAReponer.add(producto);
+	}
+	
 }

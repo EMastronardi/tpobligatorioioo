@@ -12,8 +12,16 @@ package ar.edu.uade.ioo.grupo5.tpo.bo;
 
 
 public class ItemProducto {
-	private float cantidad;
+	private double cantidad;
 	private Producto producto;
+	
+	
+	public ItemProducto(Producto producto,double cantidad) {
+		
+		this.cantidad = cantidad;
+		this.producto = producto;
+	}
+
 	public double getCantidad() {
 		return this.cantidad;
 	}

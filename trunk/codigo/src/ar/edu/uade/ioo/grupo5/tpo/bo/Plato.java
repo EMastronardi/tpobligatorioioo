@@ -13,4 +13,7 @@ package ar.edu.uade.ioo.grupo5.tpo.bo;
 
 
 public class Plato extends Consumible {
+	public Plato(String descripcion, String codigo, double precio) {
+		super(descripcion, codigo, precio);
+	}
 }

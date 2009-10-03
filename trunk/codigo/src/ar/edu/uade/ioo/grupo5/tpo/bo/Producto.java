@@ -16,19 +16,50 @@ public class Producto {
 	private double stock;
 	private double puntoPedido;
 	private double puntoReabastecimiento;
-	public void descontarStock(double cantidad) {
+	private Proveedor proveedor;
+	
+	
+	public Producto(String nombre, double stock, double puntoPedido,
+			double puntoReabastecimiento, Proveedor proveedor) {
 		
+		this.nombre = nombre;
+		this.stock = stock;
+		this.puntoPedido = puntoPedido;
+		this.puntoReabastecimiento = puntoReabastecimiento;
+		this.proveedor = proveedor;
+	}
+
+	public void descontarStock(double cantidad) {
+		stock-= cantidad;
+		
+		if(estaBajoPuntoPedido()){
+			proveedor.addProductoAReponer(this);
+		}
 	}
 	
 	public String getNombre() {
 		return this.nombre;
 	}
 	
-	public boolean estaBajoPuntoPedido() {
+	private boolean estaBajoPuntoPedido() {
 		return this.puntoPedido > this.stock;
 	}
 	
 	public double getPuntoReabastecimiento() {
 		return this.puntoReabastecimiento;
 	}
+
+	public double getStock() {
+		return stock;
+	}
+
+	public double getPuntoPedido() {
+		return puntoPedido;
+	}
+
+	public Proveedor getProveedor() {
+		return proveedor;
+	}
+	
+	
 }

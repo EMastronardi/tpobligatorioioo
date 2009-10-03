@@ -9,10 +9,19 @@ package ar.edu.uade.ioo.grupo5.tpo.bo;
 */
 
 public class Mesa {
+	private static int cantMesas = 0;
 	private int nro;
 	private Comanda comanda;
-	//public ESTADO_MESA estado;
+	public ESTADO_MESA estado;
 	private Mozo mozo;
+	
+	private static int getNewId() {
+		return ++Mesa.cantMesas;
+	}
+	
+	public int GetNro() {
+		return this.nro;
+	}
 	
 	
 	public Comanda getComanda() {
@@ -23,27 +32,23 @@ public class Mesa {
 		return this.mozo;
 	}
 	
-//	public void setEstado(ESTADO_MESA estado) {
-//		return this.estado;
-//	}
+	public void setEstado(ESTADO_MESA estado) {
+		this.estado = estado;
+	}
 	
 	public void setComanda(Comanda comanda) {
-	
+		this.comanda = comanda;
 	}
 	
 	public void asignarMozo(Mozo mozo) {
-		
+		this.mozo = mozo;
 	}
 	
-	public int getId() {
-		return this.nro;
+	public ESTADO_MESA getEstado() {
+		return estado;
 	}
 	
-//	public _MESA getEstado() {
-//	
-//	}
-	
-	public void Mesa() {
-		
+	public Mesa() {
+		this.nro = getNewId();
 	}
 }
