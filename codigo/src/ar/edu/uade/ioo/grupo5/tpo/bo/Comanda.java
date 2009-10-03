@@ -1,6 +1,6 @@
 package ar.edu.uade.ioo.grupo5.tpo.bo;
 
-import java.util.Iterator;
+
 import java.util.Vector;
 
 /**
@@ -12,26 +12,17 @@ Date : 30/09/2009
 
 public class Comanda {
 	private Vector<ItemComanda> items;
-	//TODO estos atributos van o no van?!?!
-	private Mesa mesa;
-	private Mozo mozo;
-	
-	
-	public Comanda(Mesa mesa, Mozo mozo) {
-		this.mesa = mesa;
-		this.mozo = mozo;
-	}
-	
-	
-	public Mozo getMozo() {
-		return mozo;
-	}
 
+	public Comanda() {
+		items = new Vector<ItemComanda>();
+	}
+	
 
 	public double calcularTotal() {
 		double total=0;
-		for(int i=0;i<items.size();i++){
-			total += items.elementAt(i).calcularSubtotal();
+
+		for (ItemComanda itemComanda : items) {
+			total+= itemComanda.calcularSubtotal();
 		}
 		return total;
 	}

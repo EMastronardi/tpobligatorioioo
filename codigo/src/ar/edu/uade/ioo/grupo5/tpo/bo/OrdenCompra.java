@@ -14,18 +14,24 @@ import java.util.Vector;
 
 
 public class OrdenCompra {
-	private Vector<Producto> productos;
-	private Proveedor proveedor;
+	private Vector<OrdenCompraItem> items;
+	private String proveedor;
 	
-	public void addProducto(Producto producto) {
-	//TODO Checho: este sería el add que "esta de mas"?
+	public OrdenCompra() {
+		items = new Vector<OrdenCompraItem>();
 	}
 	
-	public Vector<Producto> getProductos() {
-		return this.productos;
+	public void addItem(String producto, double cantidad) {
+		items.add(new OrdenCompraItem(producto, cantidad));
 	}
 	
-	public Proveedor getProveedor() {
+	public Vector<String> getItemsCompra() {
+		return this.getItemsCompra();
+	}
+	
+	public String getProveedor() {
 		return this.proveedor;
 	}
+	
+	
 }
