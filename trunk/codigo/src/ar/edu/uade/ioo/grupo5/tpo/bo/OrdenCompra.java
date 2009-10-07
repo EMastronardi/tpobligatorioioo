@@ -25,8 +25,8 @@ public class OrdenCompra {
 		items.add(new OrdenCompraItem(producto, cantidad));
 	}
 	
-	public Vector<String> getItemsCompra() {
-		return this.getItemsCompra();
+	public Vector<OrdenCompraItem> getItemsCompra() {
+		return items;
 	}
 	
 	public String getProveedor() {

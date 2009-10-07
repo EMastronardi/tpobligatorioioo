@@ -17,7 +17,11 @@ import java.util.Vector;
 public class Proveedor {
 	private Vector<Producto> productosAReponer;
 	private String nombre;
-		
+	
+	public Proveedor() {
+		productosAReponer = new Vector<Producto>();
+	}
+			
 	public String getNombre() {
 		return this.nombre;
 	}

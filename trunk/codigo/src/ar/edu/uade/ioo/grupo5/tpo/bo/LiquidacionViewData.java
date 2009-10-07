@@ -10,9 +10,11 @@ public class LiquidacionViewData {
 		this.comision = comision;
 		this.nroMozo = nroMozo;
 	}
+	
 	public double getComision() {
 		return comision;
 	}
+	
 	public int getNroMozo() {
 		return nroMozo;
 	}

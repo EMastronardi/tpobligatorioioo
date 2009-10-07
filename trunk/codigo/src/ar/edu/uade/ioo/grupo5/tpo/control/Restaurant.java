@@ -15,11 +15,18 @@ public class Restaurant {
 	private Vector<Producto> productos;
 	private Vector<Mozo> mozos;
 	private Vector<Mesa> mesas;
-	
 	private Vector<Proveedor> proveedores;
 	
+	public Restaurant() {
+		carta = new Vector<Consumible>();
+		productos = new Vector<Producto>();
+		mozos = new Vector<Mozo>();
+		mesas = new Vector<Mesa>();
+		proveedores = new Vector<Proveedor>();
+	}
 	public void inicializar(int cantidadMozos, int cantidadMesas,
 			double porcentajeComision) {
+		
 		for (int i = 0; i < cantidadMozos; i++) {
 			Mozo unMozo = new Mozo();
 			mozos.add(unMozo);
@@ -40,11 +47,7 @@ public class Restaurant {
 		}
 
 		this.comision = porcentajeComision;
-		
-		this.productos = new Vector<Producto>();
-		this.mesas = new Vector<Mesa>();
-		this.mozos = new Vector<Mozo>();
-		
+
 	}
 	
 	public Vector<LiquidacionViewData> emitirLiquidaciones() {
@@ -122,13 +125,10 @@ public class Restaurant {
 
 			Comanda unaComanda = new Comanda();
 			unaMesa.setComanda(unaComanda);
-			
-			
+
 		}
 
 	}
-
-	
 
 	private Mesa buscarMesa(int nroMesa) {
 		for (Mesa mesa : mesas) {
