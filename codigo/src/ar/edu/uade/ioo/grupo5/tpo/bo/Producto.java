@@ -49,9 +49,7 @@ public class Producto {
 		return this.puntoReabastecimiento;
 	}
 
-	public double getStock() {
-		return stock;
-	}
+	
 
 	public double getPuntoPedido() {
 		return puntoPedido;
