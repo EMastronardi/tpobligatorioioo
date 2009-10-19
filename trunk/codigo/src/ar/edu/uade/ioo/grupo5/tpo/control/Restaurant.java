@@ -1,5 +1,6 @@
 package ar.edu.uade.ioo.grupo5.tpo.control;
 
+import java.util.Iterator;
 import java.util.Vector;
 import java.text.*;
 
@@ -27,28 +28,35 @@ public class Restaurant {
 	public void inicializar(int cantidadMozos, int cantidadMesas,
 			double porcentajeComision) {
 		
-		for (int i = 0; i < cantidadMozos; i++) {
-			Mozo unMozo = new Mozo();
-			mozos.add(unMozo);
-		}
+		setComision(porcentajeComision);
+		
+		if(cantidadMesas < cantidadMozos)
+			return;
+		
+		agregarMozos(cantidadMozos);
 
-		while (cantidadMesas != 0) {
-			for (Mozo mozo : mozos) {
-				Mesa unaMesa = new Mesa();
-				unaMesa.asignarMozo(mozo);
-
-				mesas.add(unaMesa);
-
-				cantidadMesas--;
-
-				if (cantidadMesas == 0)
-					break;
-			}
-		}
-
-		this.comision = porcentajeComision;
-
+		agregarMesas(cantidadMesas);	
+		
+		reasignarMesas();
 	}
+	
+	
+	private void reasignarMesas(){
+		int i=0;
+		
+		for (Mesa mesa : mesas) {
+			
+			if(i > mozos.size()){
+				i = 0;
+			}
+			
+			mesa.asignarMozo(mozos.elementAt(i));
+			i++;
+		}
+	}
+	
+	
+	
 	
 	public Vector<LiquidacionViewData> emitirLiquidaciones() {
 		double total;
@@ -107,6 +115,7 @@ public class Restaurant {
 		if (unConsumible != null) {
 			ItemComanda unItemComanda = new ItemComanda(unConsumible, cantidad);
 			
+			
 			Mesa unaMesa = buscarMesa(nroMesa);
 
 			if (unaMesa != null) {
@@ -116,6 +125,8 @@ public class Restaurant {
 			}
 		}
 	}
+	
+	
 
 	public void nuevaComanda(int nroMesa) {
 		Mesa unaMesa = buscarMesa(nroMesa);
@@ -145,5 +156,99 @@ public class Restaurant {
 				return consumible;
 		}
 		return null;
+	}
+	
+	private Vector<Mesa> getMesasLibres(){
+		Vector<Mesa> mesasLibres =new Vector<Mesa>();
+		
+		for (Mesa mesa : mesas) {
+			if(mesa.getEstado().equals(ESTADO_MESA.LIBRE)){
+				mesasLibres.add(mesa);
+			}
+		}
+		
+		return mesasLibres;
+	
+	}
+	
+	
+	private void agregarMesas(int cantidad) {
+		for (int i = 0; i < cantidad; i++) {
+			mesas.add(new Mesa());
+		}
+	}
+	
+	private void quitarMesas(int cantidad) {
+		Vector<Mesa> mesasLibres = getMesasLibres();
+		
+		for (Mesa mesaLibre : mesasLibres) {
+			if(cantidad == 0)
+				break;
+			
+			mesas.remove(mesaLibre);
+			cantidad--;
+		}
+		
+	}
+	
+	private void quitarMozos(int cantidad) {
+		
+		if(cantidad < mozos.size())
+			return;
+		
+		for (int i = 0; i < cantidad; i++) {
+			mozos.remove(mozos.elementAt(i));
+		}
+		
+	}
+	
+	private void agregarMozos(int cantidad) {
+		for (int i = 0; i < cantidad; i++) {
+			mozos.add(new Mozo());
+		}
+		
+	}
+	
+	public void modificarCantidadMesas(int cantidadMesas){
+		
+		if(mozos.size() > cantidadMesas)
+			return;
+	
+		int diferenciaMesas = cantidadMesas - mesas.size();
+		
+		if(diferenciaMesas < 0){
+			quitarMesas(diferenciaMesas * (-1));
+		}
+		else if(diferenciaMesas >0){
+			agregarMesas(diferenciaMesas);
+		}
+		
+		reasignarMesas();
+		
+	}
+	
+	public void modificarCantidadMozos(int cantidadMozos){
+		
+		if(cantidadMozos > mesas.size())
+			return;
+	
+		
+		int diferenciaMozos = cantidadMozos - mozos.size();
+		
+		
+		if(diferenciaMozos < 0){
+			quitarMozos(diferenciaMozos * (-1));
+		}
+		else if(diferenciaMozos >0){
+			agregarMozos(diferenciaMozos);
+		}
+		
+		reasignarMesas();
+		
+	}
+	
+	
+	public void setComision(double comision){
+		this.comision = comision;
 	}
 }

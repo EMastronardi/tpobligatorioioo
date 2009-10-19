@@ -40,6 +40,7 @@ public class Mesa {
 		this.comanda = comanda;
 	}
 	
+	
 	public void asignarMozo(Mozo mozo) {
 		this.mozo = mozo;
 	}
