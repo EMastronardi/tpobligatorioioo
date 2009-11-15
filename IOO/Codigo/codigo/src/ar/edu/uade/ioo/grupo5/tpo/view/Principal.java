@@ -1,10 +1,14 @@
 package ar.edu.uade.ioo.grupo5.tpo.view;
 
 import java.awt.MenuBar;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import ar.edu.uade.ioo.grupo5.tpo.control.Restaurant;
 
 public class Principal extends LayoutBase {
 	private JMenuBar barraMenu;
@@ -22,8 +26,9 @@ public class Principal extends LayoutBase {
 	private Principal() {
 		super("Sistema RESTAURANT");
 		initGUI();
+		inicializarEventos();
 	}
-	
+
 	public static Principal getInstance(){
 		if(instancia == null){
 			instancia = new Principal();
@@ -60,6 +65,20 @@ public class Principal extends LayoutBase {
 		
 		setSize(400, 300);
 		
+	}
+	
+	private void inicializarEventos() {
+		menuInicializarComanda.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					try {
+						AbrirMesa.getInstance().setVisible(true);
+					}
+					catch (Exception ex){
+						handleException(ex);
+;					}
+			    }
+			}
+        );	
 	}
 	
 }

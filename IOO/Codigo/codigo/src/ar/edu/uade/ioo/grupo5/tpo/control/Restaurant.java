@@ -5,6 +5,7 @@ import java.util.Vector;
 import java.text.*;
 
 import ar.edu.uade.ioo.grupo5.tpo.bo.*;
+import ar.edu.uade.ioo.grupo5.tpo.common.ErrorException;
 import ar.edu.uade.ioo.grupo5.tpo.common.ValidationException;
 
 /**
@@ -136,7 +137,7 @@ public class Restaurant {
 	
 	
 
-	public void nuevaComanda(int nroMesa) {
+	public void nuevaComanda(int nroMesa) throws ErrorException{
 		Mesa unaMesa = buscarMesa(nroMesa);
 
 		if (unaMesa != null) {
@@ -146,6 +147,10 @@ public class Restaurant {
 			unaMesa.setComanda(unaComanda);
 
 		}
+		else {
+			throw new ErrorException("La mesa ingresada no existe");
+		}
+		
 
 	}
 
