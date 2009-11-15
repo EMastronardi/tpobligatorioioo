@@ -18,6 +18,7 @@ public class Mozo {
 	
 	public Mozo() {
 		this.nro = getNewId();
+		comandasCerradas = new Vector<Comanda>();
 	}
 	
 	private static int getNewId() {
