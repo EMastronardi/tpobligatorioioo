@@ -8,6 +8,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import ar.edu.uade.ioo.grupo5.tpo.common.ErrorException;
+import ar.edu.uade.ioo.grupo5.tpo.common.ValidationException;
+import ar.edu.uade.ioo.grupo5.tpo.control.Restaurant;
+
 public class DatosSistema extends LayoutBase {
 	private JTextField txtCantidadMozos;
 	private JTextField txtCantidadMesas;
@@ -33,17 +37,24 @@ public class DatosSistema extends LayoutBase {
 		inicializarEventos();
 		
 		inicializar();
-		setSize(300, this.getHeight() +10);
+		setSize(400, this.getHeight() +10);
 	}
 
 	private void inicializarEventos() {
 		btnCargarDatos.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showMessage("Prueba mensaje de formulario");
-				PopupControl.showMessage("PRUEBA MENSAJE POPUP");
-				PopupControl.showError("PRUEBA MENSAJE POPUP ERROR");
-				
+				try {
+					hideMessage();
+					int cantidadMozos = Integer.parseInt(txtCantidadMozos.getText());
+					int cantidadMesas = Integer.parseInt(txtCantidadMesas.getText());;
+					double porcentajeComision = Double.parseDouble(txtPorcentajeComision.getText());;
+					
+					Restaurant.getInstance().inicializar(cantidadMozos, cantidadMesas, porcentajeComision);
+				} 
+				catch (Exception ex) {
+					handleException(ex);
+				}
 			}
 		});
 		

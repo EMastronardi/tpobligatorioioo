@@ -5,6 +5,7 @@ import java.util.Vector;
 import java.text.*;
 
 import ar.edu.uade.ioo.grupo5.tpo.bo.*;
+import ar.edu.uade.ioo.grupo5.tpo.common.ValidationException;
 
 /**
  * Project : TP_IPOO_1 File Name : Restaurant.java Date : 30/09/2009 Author :
@@ -17,16 +18,26 @@ public class Restaurant {
 	private Vector<Mozo> mozos;
 	private Vector<Mesa> mesas;
 	private Vector<Proveedor> proveedores;
+	private static Restaurant instancia = null;
 	
-	public Restaurant() {
+	private Restaurant() {
 		carta = new Vector<Consumible>();
 		productos = new Vector<Producto>();
 		mozos = new Vector<Mozo>();
 		mesas = new Vector<Mesa>();
 		proveedores = new Vector<Proveedor>();
 	}
+	
+	public static Restaurant getInstance(){
+		if(instancia == null){
+			instancia= new Restaurant();
+		}
+		return instancia;
+	}
+	
 	public void inicializar(int cantidadMozos, int cantidadMesas,
-			double porcentajeComision) {
+			double porcentajeComision) throws ValidationException {
+		
 		
 		setComision(porcentajeComision);
 		
@@ -244,7 +255,13 @@ public class Restaurant {
 	}
 	
 	
-	public void setComision(double comision){
-		this.comision = comision;
+	public void setComision(double comision)throws ValidationException{
+		if(comision <= 100 && comision >= 0){
+			this.comision = comision;
+		}
+		else{
+			throw new ValidationException("El porcentaje está fuera de rango (Debe ser de 0-100");
+		}
+		
 	}
 }

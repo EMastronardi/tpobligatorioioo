@@ -18,6 +18,7 @@ public class Formulario {
 	    private JLabel lblMessage;
 	    public Formulario(Container container) {
 	    	lblMessage = new JLabel();
+	    	lblMessage.setSize(500, 50);
 	    	lblMessage.setForeground(new Color(203,12,12));
 	    	
 	        this.container = container;

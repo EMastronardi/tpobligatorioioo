@@ -17,6 +17,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import ar.edu.uade.ioo.grupo5.tpo.common.ErrorException;
+import ar.edu.uade.ioo.grupo5.tpo.common.ValidationException;
+
 
 public class LayoutBase extends JFrame {
 	private JPanel content; // Panel contenedor principal
@@ -56,6 +59,7 @@ public class LayoutBase extends JFrame {
         // el "contentPane" tiene BorderLayout por defecto
         this.getContentPane().add(panel);
         panel.add(content);
+        
         //this.getContentPane().add(content, BorderLayout.WEST);
         
         this.getContentPane().add(footer, BorderLayout.SOUTH);
@@ -95,4 +99,19 @@ public class LayoutBase extends JFrame {
 		   footer.add(boton);
 	       
 		}
+	
+	protected void handleException(Exception ex){
+		
+		if(ex instanceof ValidationException){
+			showMessage(ex.getMessage());
+		}else
+		if(ex instanceof ErrorException){
+			PopupControl.showError(ex.getMessage());
+		}
+		else{
+			PopupControl.showError("Se produjo un error descocido");
+		}
+		
+		
+	}
 }
