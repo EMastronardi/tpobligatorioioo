@@ -27,8 +27,8 @@ public class Comanda {
 		return total;
 	}
 	
-	public void addItem(ItemComanda item) {
-		items.add(item);
+	public void addItem(Consumible consumible, int cantidad) {
+		items.add(new ItemComanda(consumible, cantidad));
 	}
 	
 	
