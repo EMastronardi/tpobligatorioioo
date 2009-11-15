@@ -77,10 +77,24 @@ public class Principal extends LayoutBase {
 					}
 					catch (Exception ex){
 						handleException(ex);
-;					}
+					}
 			    }
 			}
         );	
+		
+		menuAgregarPedido.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try 
+				{
+					AgregarPedido.getInstance().setVisible(true);
+					
+				} catch (Exception ex) {
+					handleException(ex);
+				}
+				
+			}
+		});
 		menuCerrarComanda.addActionListener(new ActionListener(){
 			
 			public void actionPerformed(ActionEvent e) {

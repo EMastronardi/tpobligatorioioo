@@ -26,7 +26,7 @@ public class Consumible {
 		this.itemsProducto = new Vector<ItemProducto>();
 	}
 	
-	public void addItemProducto(Producto producto, double cantidad){
+	void addItemProducto(Producto producto, double cantidad){
 		itemsProducto.add(new ItemProducto(producto, cantidad));
 	}
 
