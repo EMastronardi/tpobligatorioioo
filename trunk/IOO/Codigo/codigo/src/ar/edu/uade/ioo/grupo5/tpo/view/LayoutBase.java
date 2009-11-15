@@ -109,8 +109,11 @@ public class LayoutBase extends JFrame {
 			PopupControl.showError(ex.getMessage());
 		}
 		else{
+			
 			PopupControl.showError("Se produjo un error descocido");
 		}
+		
+		ex.printStackTrace();
 		
 		
 	}
