@@ -21,6 +21,7 @@ public class DatosSistema extends LayoutBase {
 	public DatosSistema() {
 			super("Datos del sistema");
 			initGUI();
+			inicializarEventos();
 	}
 
 	private void initGUI() {
@@ -33,8 +34,6 @@ public class DatosSistema extends LayoutBase {
 		addField("Cantidad de mesas", txtCantidadMesas);
 		addField("Porcentaje de comisión", txtPorcentajeComision);
 		addButton(btnCargarDatos);
-		
-		inicializarEventos();
 		
 		inicializar();
 		setSize(400, this.getHeight() +10);
