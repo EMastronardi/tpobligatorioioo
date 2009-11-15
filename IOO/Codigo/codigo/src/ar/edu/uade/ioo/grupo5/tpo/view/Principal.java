@@ -65,21 +65,7 @@ public class Principal extends LayoutBase {
 		
 		setSize(400, 300);
 		
-		menuCerrarComanda.addActionListener(new ActionListener(){
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			try {
-				hideMessage();
-				CerrarVenta.getInstance().setVisible(true);
-				dispose();
-				
-			} catch (Exception ex) {
-				handleException(ex);
-			}
-				
-			}
-		});
+		
 		
 	}
 	
@@ -95,6 +81,34 @@ public class Principal extends LayoutBase {
 			    }
 			}
         );	
+		menuCerrarComanda.addActionListener(new ActionListener(){
+			
+			public void actionPerformed(ActionEvent e) {
+			try {
+				hideMessage();
+				CerrarVenta.getInstance().setVisible(true);
+				
+				
+			} catch (Exception ex) {
+				handleException(ex);
+			}
+				
+			}
+		});
+		menuEmitirLiquidaciones.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				try {
+					hideMessage();
+					EmitirLiquidaciones.getInstance().mostar();
+					
+					
+				} catch (Exception ex) {
+					handleException(ex);
+				}
+					
+			}
+		});
 	}
 	
 }
