@@ -3,6 +3,7 @@ package ar.edu.uade.ioo.grupo5.tpo.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -32,6 +33,7 @@ public class LayoutBase extends JFrame {
     
 	public LayoutBase(String titulo) {
 		this.titulo = titulo;
+		setTitle(titulo);
 		content = new JPanel();
         footer = new JPanel();
         header = new JPanel();
@@ -50,7 +52,9 @@ public class LayoutBase extends JFrame {
 
         // un JPanel por defecto tiene un FlowLayout
         // así que la etiqueta estará centrada
-        header.add(new JLabel(titulo));
+        JLabel lblTitulo = new JLabel(titulo);
+        
+        header.add(lblTitulo);
     
   
         header.setBackground(Color.GRAY);
@@ -79,18 +83,20 @@ public class LayoutBase extends JFrame {
 	}
 	protected void inicializar(){
 		 
-        
-      
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setMinimumSize(this.getPreferredSize());
         this.setMaximumSize(this.getPreferredSize());
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-       ;
+       
 	}
 	
 	protected void addField(String titulo, JComponent component){
+		form.addField(titulo,component);
+	}
+	
+	protected void addField(JLabel titulo, JComponent component){
 		form.addField(titulo,component);
 	}
 	
@@ -114,7 +120,7 @@ public class LayoutBase extends JFrame {
 		}
 		
 		ex.printStackTrace();
-		
+
 		
 	}
 }

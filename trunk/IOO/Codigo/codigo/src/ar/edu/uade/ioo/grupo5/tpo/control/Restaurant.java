@@ -122,7 +122,7 @@ public class Restaurant {
 				+ unaMesa.getMozo().getNro();
 	}
 
-	public void agregarPedido(String codConsumible, int cantidad, int nroMesa) {
+	public void agregarPedido(String codConsumible, int cantidad, int nroMesa) throws ErrorException{
 		
 		Mesa unaMesa = buscarMesa(nroMesa);
 		Consumible unConsumible = buscarConsumible(codConsumible);
@@ -163,16 +163,17 @@ public class Restaurant {
 		return null;
 	}
 
-	private Consumible buscarConsumible(String codConsumible) {
+	public Consumible buscarConsumible(String codConsumible) throws ErrorException {
 		for (Consumible consumible : carta) {
 			if (consumible.getCodigo().equalsIgnoreCase(codConsumible))
 				return consumible;
 		}
-		return null;
+		
+		throw new ErrorException("El consumible solicitado no existe");
 	}
 	
 	private Vector<Mesa> getMesasLibres(){
-		Vector<Mesa> mesasLibres =new Vector<Mesa>();
+		Vector<Mesa> mesasLibres = new Vector<Mesa>();
 		
 		for (Mesa mesa : mesas) {
 			if(mesa.getEstado().equals(ESTADO_MESA.LIBRE)){
@@ -270,4 +271,5 @@ public class Restaurant {
 		}
 		
 	}
+
 }
