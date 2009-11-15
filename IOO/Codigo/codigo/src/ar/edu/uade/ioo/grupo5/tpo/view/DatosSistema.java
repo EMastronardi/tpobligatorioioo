@@ -15,26 +15,25 @@ public class DatosSistema extends LayoutBase {
 	private JButton btnCargarDatos;
     
 	public DatosSistema() {
-		
 			super("Datos del sistema");
-			
-			txtCantidadMesas = new JTextField(4);
-			txtCantidadMozos = new JTextField(4);
-			txtPorcentajeComision = new JTextField(4);
-			btnCargarDatos = new JButton("Cargar datos");
-			
-			addField("Cantidad de mozos", txtCantidadMozos);
-			addField("Cantidad de mesas", txtCantidadMesas);
-			addField("Porcentaje de comisión", txtPorcentajeComision);
-			addButton(btnCargarDatos);
-			
-			inicializarEventos();
-			inicializar();
-			setSize(300, this.getHeight() +10);
+			initGUI();
+	}
 
-			
-			
-			
+	private void initGUI() {
+		txtCantidadMesas = new JTextField(4);
+		txtCantidadMozos = new JTextField(4);
+		txtPorcentajeComision = new JTextField(4);
+		btnCargarDatos = new JButton("Cargar datos");
+		
+		addField("Cantidad de mozos", txtCantidadMozos);
+		addField("Cantidad de mesas", txtCantidadMesas);
+		addField("Porcentaje de comisión", txtPorcentajeComision);
+		addButton(btnCargarDatos);
+		
+		inicializarEventos();
+		
+		inicializar();
+		setSize(300, this.getHeight() +10);
 	}
 
 	private void inicializarEventos() {
