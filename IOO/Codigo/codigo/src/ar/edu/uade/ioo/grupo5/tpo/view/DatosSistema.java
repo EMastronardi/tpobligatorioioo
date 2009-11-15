@@ -47,10 +47,14 @@ public class DatosSistema extends LayoutBase {
 				try {
 					hideMessage();
 					int cantidadMozos = Integer.parseInt(txtCantidadMozos.getText());
-					int cantidadMesas = Integer.parseInt(txtCantidadMesas.getText());;
-					double porcentajeComision = Double.parseDouble(txtPorcentajeComision.getText());;
+					int cantidadMesas = Integer.parseInt(txtCantidadMesas.getText());
+					double porcentajeComision = Double.parseDouble(txtPorcentajeComision.getText());
 					
 					Restaurant.getInstance().inicializar(cantidadMozos, cantidadMesas, porcentajeComision);
+					
+					Principal.getInstance().setVisible(true);
+					dispose();
+					
 				} 
 				catch (Exception ex) {
 					handleException(ex);

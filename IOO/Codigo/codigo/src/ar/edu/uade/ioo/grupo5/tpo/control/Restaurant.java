@@ -41,9 +41,10 @@ public class Restaurant {
 		
 		setComision(porcentajeComision);
 		
-		if(cantidadMesas < cantidadMozos)
-			return;
-		
+		if(cantidadMesas < cantidadMozos){
+			throw new ValidationException("La cantidad de mesas no puede ser menor a la cantidad de mozos");
+		}
+			
 		agregarMozos(cantidadMozos);
 
 		agregarMesas(cantidadMesas);	
@@ -57,7 +58,7 @@ public class Restaurant {
 		
 		for (Mesa mesa : mesas) {
 			
-			if(i > mozos.size()){
+			if(i >= mozos.size()){
 				i = 0;
 			}
 			
