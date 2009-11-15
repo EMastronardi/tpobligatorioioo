@@ -110,18 +110,14 @@ public class Restaurant {
 	}
 
 	public void agregarPedido(String codConsumible, int cantidad, int nroMesa) {
+		
+		Mesa unaMesa = buscarMesa(nroMesa);
 		Consumible unConsumible = buscarConsumible(codConsumible);
-
-		if (unConsumible != null) {
-			ItemComanda unItemComanda = new ItemComanda(unConsumible, cantidad);
-			
-			
-			Mesa unaMesa = buscarMesa(nroMesa);
-
-			if (unaMesa != null) {
-				Comanda comanda = unaMesa.getComanda();
-				comanda.addItem(unItemComanda);
-
+		
+		if (unConsumible != null && unaMesa != null) {
+			Comanda comanda = unaMesa.getComanda();
+			if(comanda != null){
+				comanda.addItem(unConsumible, cantidad);
 			}
 		}
 	}

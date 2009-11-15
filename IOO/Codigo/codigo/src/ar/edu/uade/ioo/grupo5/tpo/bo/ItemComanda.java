@@ -24,17 +24,10 @@ public class ItemComanda {
 		
 		Vector<ItemProducto> itemsProductos = this.consumible.getItemsProducto();
 		
-		
 		for (ItemProducto itemProducto: itemsProductos) {
-			double cantidadProducto = itemProducto.getCantidad();
-			
-			Producto producto = itemProducto.getProducto();
-			
-			producto.descontarStock(cantidadProducto * cantidad);
-			
-			
+			itemProducto.descontarStock(cantidad);
 		}
-		 
+ 
 	}
 	
 	public Consumible getConsumible() {
