@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 
 public class FormType {
 	private FORMS type;
+	private JFrame form;
+	
 	public FORMS getType() {
 		return type;
 	}
@@ -18,7 +20,7 @@ public class FormType {
 	public void setForm(JFrame form) {
 		this.form = form;
 	}
-	private JFrame form;
+	
 	public FormType(FORMS type, JFrame form) {
 		super();
 		this.type = type;
