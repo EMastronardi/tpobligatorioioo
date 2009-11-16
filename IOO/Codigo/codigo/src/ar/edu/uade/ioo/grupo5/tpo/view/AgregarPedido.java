@@ -75,11 +75,33 @@ public class AgregarPedido extends LayoutBase {
     	mostrarResultado(false);
     	
     }
+    
+    private boolean esValidoBuscarConsumible(){
+    	
+		if (txtCodigoConsumible.getText().equals(""))return false;
+		if (txtCantidad.getText().equals("")) return false;
+		if (txtNroMesa.getText().equals("")) return false;
+		
+		return true ;
+	}
+    
+    private boolean esValidoAgregarPedido(){
+    	
+		if (txtCodigoConsumible.getText().equals(""))return false;
+		if (txtCantidad.getText().equals("")) return false;
+		if (txtNroMesa.getText().equals("")) return false;
+		
+		return true ;
+	}
+    
     private void inicializarEventos() {
 	
 		btnBuscarConsumible.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (!esValidoBuscarConsumible()){
+					showMessage("Debe ingresar un codigo de consumible");
+				}
 				try {
 					String codigo = txtCodigoConsumible.getText().trim();
 					
@@ -106,6 +128,9 @@ public class AgregarPedido extends LayoutBase {
 		btnAgregarPedido.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (!esValidoAgregarPedido()){
+					showMessage("Debe ingresar un codigo de consumible");
+				}
 				try {
 					int nroMesa = Integer.parseInt(txtNroMesa.getText());
 					int cantidad = Integer.parseInt(txtCantidad.getText());

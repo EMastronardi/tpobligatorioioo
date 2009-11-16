@@ -60,11 +60,24 @@ public class ModificarDatosSistema extends LayoutBase {
 		inicializar();
 		setSize(400, this.getHeight() +10);
 	}
+	
+	private boolean esValidoModificarDatos(){
+		
+		if (txtCantidadMesas.getText().equals("")) return false;
+		if (txtCantidadMozos.getText().equals("")) return false;
+		if (txtPorcentajeComision.getText().equals("")) return false;
+		
+		return true;
+	}
 
 	private void inicializarEventos(){
 		btnModificarDatos.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (!esValidoModificarDatos()){
+					showMessage("Debe ingresar un numero de mesa");
+					return;
+				}
 				try {
 					hideMessage();
 					int cantidadMozos = Integer.parseInt(txtCantidadMozos.getText());

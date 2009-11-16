@@ -45,22 +45,36 @@ public class AbrirMesa extends LayoutBase {
 		return instancia;
 	}
 	
+	private boolean esValidoAbrirMesa(){
+		
+		if (txtNumeroMesa.getText().equals("")) return false;
+		
+		return true;
+	}
+	
 	private void inicializarEventos() {
 		btnAbrirMesa.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				if (!esValidoAbrirMesa()){
+					showMessage("Debe ingresar un numero de mesa");
+					return;
+				}
 				try {
-					hideMessage();
 					
+					hideMessage();
+
 					int numeroMesa = Integer.parseInt(txtNumeroMesa.getText());
 					Restaurant.getInstance().nuevaComanda(numeroMesa);
-					
 					clearTextFields();
 					dispose();
+
 				} 
 				catch (Exception ex) {
 					handleException(ex);
 				}
+				
 			}
 		});
 		
