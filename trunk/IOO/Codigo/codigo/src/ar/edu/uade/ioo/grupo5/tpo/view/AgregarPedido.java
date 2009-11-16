@@ -100,6 +100,12 @@ public class AgregarPedido extends LayoutBase {
 		return message.equals("");
 	}
     
+    private void clearTextFields(){
+    	txtCantidad.setText("");
+    	txtCodigoConsumible.setText("");
+    	txtNroMesa.setText("");
+    }
+    
     private void inicializarEventos() {
 	
 		btnBuscarConsumible.addActionListener(new ActionListener(){
@@ -127,7 +133,7 @@ public class AgregarPedido extends LayoutBase {
 			public void actionPerformed(ActionEvent e) {
 				setDefault();
 				dispose();
-				
+				clearTextFields();
 			}
 		});
 		
@@ -146,6 +152,7 @@ public class AgregarPedido extends LayoutBase {
 					Restaurant.getInstance().agregarPedido(codConsumible, cantidad, nroMesa);
 					
 					setDefault();
+					txtCantidad.setText("");
 				} catch (Exception ex) {
 					handleException(ex);
 				}
