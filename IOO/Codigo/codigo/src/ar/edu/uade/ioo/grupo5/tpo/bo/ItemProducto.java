@@ -26,6 +26,14 @@ public class ItemProducto {
 		this.cantidad = cantidad;
 		this.producto = producto;
 	}
+	
+	public boolean tieneStockDisponible(int cantidad){
+		return this.producto.tieneStockDisponible(cantidad);
+	}
+	
+	public Producto getProducto(){
+		return producto;
+	}
 
 	public void descontarStock(int cantidad) throws ValidationException {
 		if(cantidad <= 0)

@@ -33,6 +33,12 @@ public class ItemComanda {
 		Vector<ItemProducto> itemsProductos = this.consumible.getItemsProducto();
 		
 		for (ItemProducto itemProducto: itemsProductos) {
+			if(!itemProducto.tieneStockDisponible(cantidad))
+				throw new ValidationException(String.format("El producto %s no tiene stock disponible", itemProducto.getProducto().getNombre()));
+			 
+		}
+		
+		for (ItemProducto itemProducto: itemsProductos) {
 			itemProducto.descontarStock(cantidad);
 		}
  

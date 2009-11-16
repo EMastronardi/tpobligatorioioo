@@ -75,6 +75,11 @@ public class Producto {
 	public Proveedor getProveedor() {
 		return proveedor;
 	}
+
+	public boolean tieneStockDisponible(int cantidad) {
+		return (stock - cantidad) >= 0;
+
+	}
 	
 	
 }

@@ -25,7 +25,13 @@ public class EmitirOrdenesDeCompra extends LayoutBase {
 	
 	public EmitirOrdenesDeCompra(){
 		super("Emitir Ordenes de Compra");
-		initGUI();
+		try {
+			initGUI();
+			inicializarEventos();
+		} catch (Exception ex) {
+			handleException(ex);
+		}
+		
 	}
 
 	public static EmitirOrdenesDeCompra getInstance(){

@@ -73,6 +73,7 @@ public class AgregarPedido extends LayoutBase {
     	txtNroMesa.setText("");
     	lblConsumible.setText("");
     	mostrarResultado(false);
+    	hideMessage();
     	
     }
     
