@@ -21,7 +21,7 @@ public class AbrirMesa extends LayoutBase {
 	private static AbrirMesa instancia;
 	
 	public AbrirMesa(){
-		super("Inicilizar Comanda");
+		super("Inicializar Comanda");
 		initGUI();
 		inicializarEventos();
 	}

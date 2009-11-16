@@ -19,7 +19,8 @@ public class OrdenCompra {
 	private Vector<OrdenCompraItem> items;
 	private String proveedor;
 	
-	public OrdenCompra() {
+	public OrdenCompra(String proveedor) {
+		this.proveedor = proveedor;
 		items = new Vector<OrdenCompraItem>();
 	}
 	
