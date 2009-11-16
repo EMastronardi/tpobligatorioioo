@@ -4,7 +4,6 @@ import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -66,7 +65,7 @@ public class Principal extends LayoutBase {
 		
 		setSize(400, 300);
 		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		
 	}
 	
@@ -81,18 +80,7 @@ public class Principal extends LayoutBase {
 					}
 			    }
 			}
-        );
-		menuModificarDatosSistema.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				try {
-					ModificarDatosSistema.getInstance().mostrarDatos();
-				}
-				catch (Exception ex){
-					handleException(ex);
-;				}
-		    }
-		}
-    );
+        );	
 		
 		menuAgregarPedido.addActionListener(new ActionListener(){
 			@Override
@@ -113,6 +101,8 @@ public class Principal extends LayoutBase {
 			try {
 				hideMessage();
 				CerrarVenta.getInstance().setVisible(true);
+				
+				
 			} catch (Exception ex) {
 				handleException(ex);
 			}

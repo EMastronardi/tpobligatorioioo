@@ -1,7 +1,5 @@
 package ar.edu.uade.ioo.grupo5.tpo.bo;
 
-import ar.edu.uade.ioo.grupo5.tpo.common.ValidationException;
-
 /**
  Project : TP_IPOO_1
  File Name : Mesa.java
@@ -43,10 +41,7 @@ public class Mesa {
 	}
 	
 	
-	public void asignarMozo(Mozo mozo)throws ValidationException {
-		if(mozo == null)
-			throw new ValidationException("El mozo asignado a la mesa es inválido");
-		
+	public void asignarMozo(Mozo mozo) {
 		this.mozo = mozo;
 	}
 	
@@ -56,6 +51,5 @@ public class Mesa {
 	
 	public Mesa() {
 		this.nro = getNewId();
-		this.estado = ESTADO_MESA.LIBRE;
 	}
 }

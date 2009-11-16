@@ -62,24 +62,22 @@ public class ModificarDatosSistema extends LayoutBase {
 	}
 	
 	private boolean esValidoModificarDatos(){
-		String message = "";
 		
-		if (txtCantidadMesas.getText().equals("")) 
-			message="Debe ingresar una cantidad de mesas";
-		else if (txtCantidadMozos.getText().equals("")) 
-			message="Debe ingresar una cantidad de mozos";
-		else if (txtPorcentajeComision.getText().equals(""))
-			message="Debe ingresar un porcentaje de comision";
+		if (txtCantidadMesas.getText().equals("")) return false;
+		if (txtCantidadMozos.getText().equals("")) return false;
+		if (txtPorcentajeComision.getText().equals("")) return false;
 		
-		showMessage(message);
-		return (message.equals(""));
+		return true;
 	}
 
 	private void inicializarEventos(){
 		btnModificarDatos.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!esValidoModificarDatos()) return;
+				if (!esValidoModificarDatos()){
+					showMessage("Debe ingresar un numero de mesa");
+					return;
+				}
 				try {
 					hideMessage();
 					int cantidadMozos = Integer.parseInt(txtCantidadMozos.getText());
@@ -90,7 +88,6 @@ public class ModificarDatosSistema extends LayoutBase {
 					Restaurant.getInstance().modificarCantidadMozos(cantidadMozos);
 					Restaurant.getInstance().setComision(porcentajeComision);
 					
-					dispose();	
 				} 
 				catch (Exception ex) {
 					handleException(ex);

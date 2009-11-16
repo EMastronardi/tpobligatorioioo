@@ -78,27 +78,19 @@ public class AgregarPedido extends LayoutBase {
     }
     
     private boolean esValidoBuscarConsumible(){
-    	String message = "";
-		if (txtCodigoConsumible.getText().equals(""))message = "El código de consumible es un campo obligatorio";
+    	
+		if (txtCodigoConsumible.getText().equals(""))return false;
 		
-		showMessage(message);
-		return message.equals("") ;
+		return true ;
 	}
     
     private boolean esValidoAgregarPedido(){
-    	String message = "";
     	
-    	if (txtCodigoConsumible.getText().equals(""))message = "El código de consumible es un campo obligatorio";
-    	else
-		if (txtCantidad.getText().equals("")) 
-			message = "La cantidad es un campo obligatorio";
-		else
-			if (txtNroMesa.getText().equals("")) message = "El Nro. de mesa es un campo obligatorio";
-			
 		
-		showMessage(message);
+		if (txtCantidad.getText().equals("")) return false;
+		if (txtNroMesa.getText().equals("")) return false;
 		
-		return message.equals("");
+		return true ;
 	}
     
     private void clearTextFields(){
@@ -112,9 +104,6 @@ public class AgregarPedido extends LayoutBase {
 		btnBuscarConsumible.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!esValidoBuscarConsumible())
-					return;
-				
 				try {
 					String codigo = txtCodigoConsumible.getText().trim();
 					
@@ -141,9 +130,6 @@ public class AgregarPedido extends LayoutBase {
 		btnAgregarPedido.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!esValidoAgregarPedido())
-					return;
-		
 				try {
 					
 					int nroMesa = Integer.parseInt(txtNroMesa.getText());
