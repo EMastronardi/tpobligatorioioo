@@ -79,15 +79,13 @@ public class AgregarPedido extends LayoutBase {
     private boolean esValidoBuscarConsumible(){
     	
 		if (txtCodigoConsumible.getText().equals(""))return false;
-		if (txtCantidad.getText().equals("")) return false;
-		if (txtNroMesa.getText().equals("")) return false;
 		
 		return true ;
 	}
     
     private boolean esValidoAgregarPedido(){
     	
-		if (txtCodigoConsumible.getText().equals(""))return false;
+		
 		if (txtCantidad.getText().equals("")) return false;
 		if (txtNroMesa.getText().equals("")) return false;
 		
@@ -132,6 +130,7 @@ public class AgregarPedido extends LayoutBase {
 					showMessage("Debe ingresar un codigo de consumible");
 				}
 				try {
+					
 					int nroMesa = Integer.parseInt(txtNroMesa.getText());
 					int cantidad = Integer.parseInt(txtCantidad.getText());
 					String codConsumible = txtCodigoConsumible.getText().trim();
