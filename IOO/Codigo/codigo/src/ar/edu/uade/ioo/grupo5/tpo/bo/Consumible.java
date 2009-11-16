@@ -32,7 +32,7 @@ public class Consumible {
 		this.itemsProducto = new Vector<ItemProducto>();
 	}
 	
-	void addItemProducto(Producto producto, double cantidad) throws ValidationException{
+	public void addItemProducto(Producto producto, double cantidad) throws ValidationException{
 		if(producto == null)
 			throw new ValidationException("El producto agregado al consumible es inválido");
 		
