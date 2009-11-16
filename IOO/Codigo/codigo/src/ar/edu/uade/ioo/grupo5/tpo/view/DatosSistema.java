@@ -27,35 +27,35 @@ public class DatosSistema extends LayoutBase {
 	private void initGUI() {
 		
 		
-		try {
-			
-			int cantidadMozos = 10;
-			int cantidadMesas = 20;
-			double porcentajeComision = 50.0;
-			
-			Restaurant.getInstance().inicializar(cantidadMozos, cantidadMesas, porcentajeComision);
-			
-			Principal.getInstance().setVisible(true);
-			setVisible(false);
-			dispose();
-			
-		} 
-		catch (Exception ex) {
-			handleException(ex);
-		}
+//		try {
+//			
+//			int cantidadMozos = 10;
+//			int cantidadMesas = 20;
+//			double porcentajeComision = 50.0;
+//			
+//			Restaurant.getInstance().inicializar(cantidadMozos, cantidadMesas, porcentajeComision);
+//			
+//			Principal.getInstance().setVisible(true);
+//			setVisible(false);
+//			dispose();
+//			
+//		} 
+//		catch (Exception ex) {
+//			handleException(ex);
+//		}
 		
-//		txtCantidadMesas = new JTextField(4);
-//		txtCantidadMozos = new JTextField(4);
-//		txtPorcentajeComision = new JTextField(4);
-//		btnCargarDatos = new JButton("Cargar datos");
-//		
-//		addField("Cantidad de mozos", txtCantidadMozos);
-//		addField("Cantidad de mesas", txtCantidadMesas);
-//		addField("Porcentaje de comisión", txtPorcentajeComision);
-//		addButton(btnCargarDatos);
-//		
-//		inicializar();
-//		setSize(400, this.getHeight() +10);
+		txtCantidadMesas = new JTextField(4);
+		txtCantidadMozos = new JTextField(4);
+		txtPorcentajeComision = new JTextField(4);
+		btnCargarDatos = new JButton("Cargar datos");
+		
+		addField("Cantidad de mozos", txtCantidadMozos);
+		addField("Cantidad de mesas", txtCantidadMesas);
+		addField("Porcentaje de comisión", txtPorcentajeComision);
+		addButton(btnCargarDatos);
+		
+		inicializar();
+		setSize(400, this.getHeight() +10);
 	}
 
 	private void inicializarEventos() {
