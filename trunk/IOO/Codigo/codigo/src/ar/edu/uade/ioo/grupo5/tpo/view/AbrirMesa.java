@@ -46,10 +46,13 @@ public class AbrirMesa extends LayoutBase {
 	}
 	
 	private boolean esValidoAbrirMesa(){
+		String message="";
 		
-		if (txtNumeroMesa.getText().equals("")) return false;
+		if (txtNumeroMesa.getText().equals(""))
+			message="Debe ingresar un numero de mesa";
 		
-		return true;
+		showMessage(message);
+		return (message.equals(""));
 	}
 	
 	private void inicializarEventos() {
@@ -57,10 +60,7 @@ public class AbrirMesa extends LayoutBase {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				if (!esValidoAbrirMesa()){
-					showMessage("Debe ingresar un numero de mesa");
-					return;
-				}
+				if (!esValidoAbrirMesa())return;
 				try {
 					
 					hideMessage();

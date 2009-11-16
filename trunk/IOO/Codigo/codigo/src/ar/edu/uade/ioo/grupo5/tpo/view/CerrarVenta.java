@@ -48,20 +48,20 @@ public class CerrarVenta extends LayoutBase  {
 	}
 	
 	private boolean esValidoCerrar(){
+		String message="";
 		
-		if (txtNroMesa.getText().equals("")) return false;
+		if (txtNroMesa.getText().equals("")) 
+			message="Debe ingresar un numero de mesa";
 		
-		return true;
+		showMessage(message);
+		return (message.equals(""));
 	}
 
 	private void inicializarEventos() {
 		btnCerrar.addActionListener(new ActionListener(){
 			
 			public void actionPerformed(ActionEvent e) {
-				if (!esValidoCerrar()) {
-					showMessage("Debe ingresar un numero de mesa");
-					return;
-				}
+				if (!esValidoCerrar()) return;
 				try {
 					hideMessage();
 					int nroMesa = Integer.parseInt(txtNroMesa.getText());

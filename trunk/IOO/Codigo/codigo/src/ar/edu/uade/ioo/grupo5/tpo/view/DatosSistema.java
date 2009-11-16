@@ -44,11 +44,26 @@ public class DatosSistema extends LayoutBase {
 		inicializar();
 		setSize(400, this.getHeight() +10);
 	}
+	
+	private boolean esValidoCargarDatos(){
+		String message = "";
+		
+		if (txtCantidadMozos.getText().equals("")) 
+			message="Debe ingresar una cantidad de mozos";
+		else if (txtCantidadMesas.getText().equals("")) 
+			message="Debe ingresar una cantidad de mesas";
+		else if (txtPorcentajeComision.getText().equals(""))
+			message="Debe ingresar un porcentaje de comision";
+		
+		showMessage(message);
+		return (message.equals(""));
+	}
 
 	private void inicializarEventos() {
 		btnCargarDatos.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (!esValidoCargarDatos()) return;
 				try {
 					hideMessage();
 					int cantidadMozos = Integer.parseInt(txtCantidadMozos.getText());
