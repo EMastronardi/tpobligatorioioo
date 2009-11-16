@@ -38,9 +38,7 @@ public class Mesa {
 		this.estado = estado;
 	}
 	
-	public void setComanda(Comanda comanda) throws ValidationException{
-		if(comanda == null)
-			throw new ValidationException("La comanda asignada a la mesa es inválida");
+	public void setComanda(Comanda comanda) {
 		this.comanda = comanda;
 	}
 	

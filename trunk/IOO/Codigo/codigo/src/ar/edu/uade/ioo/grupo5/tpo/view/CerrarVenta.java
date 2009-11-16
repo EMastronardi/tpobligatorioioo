@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import ar.edu.uade.ioo.grupo5.tpo.bo.ComandaCerradaViewData;
 import ar.edu.uade.ioo.grupo5.tpo.control.Restaurant;
 
 public class CerrarVenta extends LayoutBase  {
@@ -65,11 +66,11 @@ public class CerrarVenta extends LayoutBase  {
 				try {
 					hideMessage();
 					int nroMesa = Integer.parseInt(txtNroMesa.getText());
-					String resultado =  Restaurant.getInstance().cerrarComanda(nroMesa);
+					ComandaCerradaViewData resultado =  Restaurant.getInstance().cerrarComanda(nroMesa);
 									
-					PopupControl.showMessage("Cierre mesa finalizado - " + resultado);
+					PopupControl.showMessage(String.format("Cierre mesa Nro. %d para el mozo Nro. %d por $%f", resultado.getNroMesa(), resultado.getNroMozo(), resultado.getTotal()) );
 					
-					
+					dispose();
 				} 
 				catch (Exception ex) {
 					handleException(ex);

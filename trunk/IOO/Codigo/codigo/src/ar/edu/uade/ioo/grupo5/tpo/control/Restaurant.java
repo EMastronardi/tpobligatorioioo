@@ -141,7 +141,7 @@ public class Restaurant {
 		Vector<OrdenCompra> ordenesDeCompra = new Vector<OrdenCompra>();
 		
 		for (Proveedor proveedor : proveedores) {
-			OrdenCompra orden = new OrdenCompra();
+			OrdenCompra orden = new OrdenCompra(proveedor.getNombre());
 			
 			for (Producto producto : proveedor.getProductos()) {
 				orden.addItem(producto.getNombre(), producto.getPuntoReabastecimiento());
@@ -153,7 +153,7 @@ public class Restaurant {
 		return ordenesDeCompra;
 	}
 
-	public String cerrarComanda(int NroMesa) throws ErrorException, ValidationException {
+	public ComandaCerradaViewData cerrarComanda(int NroMesa) throws ErrorException, ValidationException {
 		double total;
 		NumberFormat nm = NumberFormat.getNumberInstance();
 
@@ -171,9 +171,8 @@ public class Restaurant {
 		Mozo unMozo = unaMesa.getMozo();
 		
 		unMozo.addComandaCerrada(unaComanda);
-		
-		return nm.format(total) + unaMesa.GetNro()
-				+ unaMesa.getMozo().getNro();
+	
+		return new ComandaCerradaViewData(total, unaMesa.GetNro(), unaMesa.getMozo().getNro());
 	}
 
 	public void agregarPedido(String codConsumible, int cantidad, int nroMesa) throws ErrorException,ValidationException{
