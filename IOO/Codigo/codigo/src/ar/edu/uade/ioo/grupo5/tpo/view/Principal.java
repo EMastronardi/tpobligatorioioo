@@ -133,6 +133,20 @@ public class Principal extends LayoutBase {
 					
 			}
 		});
+		menuEmitirOrdenesCompra.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				try {
+					hideMessage();
+					EmitirOrdenesDeCompra.getInstance().mostar();
+					
+					
+				} catch (Exception ex) {
+					handleException(ex);
+				}
+					
+			}
+		});
 	}
 	
 }
