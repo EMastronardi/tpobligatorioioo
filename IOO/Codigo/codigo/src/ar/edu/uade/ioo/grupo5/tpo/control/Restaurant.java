@@ -137,7 +137,7 @@ public class Restaurant {
 		return liquidaciones;
 	}
 
-	public Vector<OrdenCompra> emitirOrdenesDeCompra() throws ValidationException {
+	public Vector<OrdenCompra> emitirOrdenesDeCompra() {
 		Vector<OrdenCompra> ordenesDeCompra = new Vector<OrdenCompra>();
 		
 		for (Proveedor proveedor : proveedores) {
@@ -159,13 +159,12 @@ public class Restaurant {
 
 		Mesa unaMesa = buscarMesa(NroMesa);
 		Comanda unaComanda = unaMesa.getComanda();
-
+				
 		if(unaComanda == null)
-			throw new ValidationException("La mesa no tiene asociada una comanda");
-		
+			throw new ErrorException("La mesa no tiene asociada una comanda");
 		
 		unaMesa.setEstado(ESTADO_MESA.LIBRE);
-		unaMesa.setComanda(null);
+		
 		total = unaComanda.calcularTotal();
 		
 		Mozo unMozo = unaMesa.getMozo();
@@ -175,7 +174,7 @@ public class Restaurant {
 		return new ComandaCerradaViewData(total, unaMesa.GetNro(), unaMesa.getMozo().getNro());
 	}
 
-	public void agregarPedido(String codConsumible, int cantidad, int nroMesa) throws ErrorException,ValidationException{
+	public void agregarPedido(String codConsumible, int cantidad, int nroMesa) throws ErrorException{
 		
 		Mesa unaMesa = buscarMesa(nroMesa);
 		Consumible unConsumible = buscarConsumible(codConsumible);
@@ -193,7 +192,7 @@ public class Restaurant {
 	
 	
 
-	public void nuevaComanda(int nroMesa) throws ErrorException, ValidationException{
+	public void nuevaComanda(int nroMesa) throws ErrorException{
 		Mesa unaMesa = buscarMesa(nroMesa);
 
 		if (unaMesa != null) {
@@ -210,13 +209,13 @@ public class Restaurant {
 
 	}
 
-	private Mesa buscarMesa(int nroMesa) throws ErrorException{
+	private Mesa buscarMesa(int nroMesa) {
 		for (Mesa mesa : mesas) {
 			if (mesa.GetNro() == nroMesa)
 				return mesa;
 		}
 		
-		throw new ErrorException("La mesa solicitada no existe");
+		return null;
 	}
 
 	public Consumible buscarConsumible(String codConsumible) throws ErrorException {
@@ -279,10 +278,10 @@ public class Restaurant {
 		
 	}
 	
-	public void modificarCantidadMesas(int cantidadMesas)throws ValidationException{
+	public void modificarCantidadMesas(int cantidadMesas){
 		
 		if(mozos.size() > cantidadMesas)
-			throw new ValidationException("La cantidad de mesas no puede ser menor a la cantidad de mozos");
+			return;
 	
 		int diferenciaMesas = cantidadMesas - mesas.size();
 		
@@ -297,10 +296,10 @@ public class Restaurant {
 		
 	}
 	
-	public void modificarCantidadMozos(int cantidadMozos)throws ValidationException{
+	public void modificarCantidadMozos(int cantidadMozos){
 		
 		if(cantidadMozos > mesas.size())
-			throw new ValidationException("La cantidad de mesas no puede ser menor a la cantidad de mozos");
+			return;
 	
 		
 		int diferenciaMozos = cantidadMozos - mozos.size();
@@ -318,18 +317,6 @@ public class Restaurant {
 	}
 	
 	
-	public double getComision() {
-		return comision;
-	}
-	
-	public int getCantidadMesas(){
-		return mesas.size();
-	}
-	
-	public int getCantidadMozos(){
-		return mozos.size();
-	}
-
 	public void setComision(double comision)throws ValidationException{
 		if(comision <= 100 && comision >= 0){
 			this.comision = comision;

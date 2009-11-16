@@ -38,7 +38,7 @@ public class CerrarVenta extends LayoutBase  {
 //		txtMozo = new JTextField (4);
 		
 		
-		addField("Nro. Mesa", txtNroMesa);
+		addField("Mesa a Cerrar", txtNroMesa);
 		addButton(btnCerrar);
 		inicializarEventos();
 		
@@ -47,22 +47,11 @@ public class CerrarVenta extends LayoutBase  {
 		
 		
 	}
-	
-	private boolean esValidoCerrar(){
-		String message="";
-		
-		if (txtNroMesa.getText().equals("")) 
-			message="Debe ingresar un numero de mesa";
-		
-		showMessage(message);
-		return (message.equals(""));
-	}
 
 	private void inicializarEventos() {
 		btnCerrar.addActionListener(new ActionListener(){
 			
 			public void actionPerformed(ActionEvent e) {
-				if (!esValidoCerrar()) return;
 				try {
 					hideMessage();
 					int nroMesa = Integer.parseInt(txtNroMesa.getText());

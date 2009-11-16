@@ -2,8 +2,6 @@ package ar.edu.uade.ioo.grupo5.tpo.bo;
 
 import java.util.Vector;
 
-import ar.edu.uade.ioo.grupo5.tpo.common.ErrorException;
-
 /**
 Project : TP_IPOO_1
 File Name : Mozo.java
@@ -36,10 +34,7 @@ public class Mozo {
 	}
 
 
-	public void addComandaCerrada(Comanda unaComanda) throws ErrorException {
-		if(unaComanda == null)
-			throw new ErrorException("La comanda cerrada asignada al mozo es inválida");
-		
+	public void addComandaCerrada(Comanda unaComanda) {
 		comandasCerradas.add(unaComanda);
 		
 	}

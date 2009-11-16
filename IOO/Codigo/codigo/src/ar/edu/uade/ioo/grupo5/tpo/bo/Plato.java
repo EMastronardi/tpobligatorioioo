@@ -1,7 +1,5 @@
 package ar.edu.uade.ioo.grupo5.tpo.bo;
 
-import ar.edu.uade.ioo.grupo5.tpo.common.ValidationException;
-
 
 /**
   Project : TP_IPOO_1
@@ -15,7 +13,7 @@ import ar.edu.uade.ioo.grupo5.tpo.common.ValidationException;
 
 
 public class Plato extends Consumible {
-	public Plato(String descripcion, String codigo, double precio) throws ValidationException {
+	public Plato(String descripcion, String codigo, double precio) {
 		super(descripcion, codigo, precio);
 	}
 }

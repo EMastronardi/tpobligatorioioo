@@ -26,10 +26,8 @@ public class Formulario {
 	        constraints = new GridBagConstraints();
 	        constraints.insets = new Insets(3, 3, 3, 3);
 	        constraints.gridx = 0;
-	        
 	        constraints.gridy = 0;
 	        constraints.anchor = GridBagConstraints.LINE_START;
-	        constraints.fill = GridBagConstraints.BOTH;
 	        this.container.add(lblMessage, constraints);
 	        constraints.gridy++;
 	       
