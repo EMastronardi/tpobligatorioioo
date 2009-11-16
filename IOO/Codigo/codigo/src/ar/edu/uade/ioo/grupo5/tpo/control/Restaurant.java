@@ -51,10 +51,60 @@ public class Restaurant {
 		agregarMesas(cantidadMesas);	
 		
 		reasignarMesas();
+		
+		cargarDatosPrueba();
 	}
 	
 	
+
+	private void cargarDatosPrueba() throws ValidationException {
+		Proveedor verduleria = new Proveedor("Verduleria");
+		Proveedor carniceria = new Proveedor("Carniceria");
+		Proveedor cocacola = new Proveedor("Coca-Cola");
+		
+		proveedores.add(verduleria);
+		proveedores.add(carniceria);
+		proveedores.add(cocacola);
+		
+		Producto papa=new Producto("Papa", 10, 5, 5, verduleria);
+		Producto batata=new Producto("Batata", 10, 5, 5, verduleria);
+		Producto lomo=new Producto("Lomo", 20, 5, 5, verduleria);
+		Producto cuadril=new Producto("Cuadril", 30, 10, 5, verduleria);
+		Producto coca = new Producto("Coca-Cola", 100, 70, 50, cocacola);
+		Producto sprite = new Producto("Sprite", 100, 70, 50, cocacola);
+		
+		productos.add(papa);
+		productos.add(batata);
+		productos.add(lomo);
+		productos.add(cuadril);
+		productos.add(coca);
+		productos.add(sprite);
+		
+		Consumible lopa = new Consumible("Lomo con papas","lopa",100.00);
+		lopa.addItemProducto(papa, 0.5);
+		lopa.addItemProducto(lomo, .2);
+		Consumible loba = new Consumible("Lomo con papas","lopa",100.00);
+		loba.addItemProducto(batata, 0.5);
+		loba.addItemProducto(lomo, .2);
+		Consumible cuaba = new Consumible("Cuadril con batatas","cuaba",80.00);
+		cuaba.addItemProducto(batata, 0.5);
+		cuaba.addItemProducto(cuadril, 0.2);
+		Consumible cocabot = new Consumible("Coca-Cola","coca",10.00);
+		cocabot.addItemProducto(coca, 1);
+		Consumible spritebot = new Consumible("Sprite","sprite",10.00);
+		spritebot.addItemProducto(sprite, 1);
+		
+		carta.add(lopa);
+		carta.add(loba);
+		carta.add(cuaba);
+		carta.add(cocabot);
+		carta.add(spritebot);
+		
+	}
+
+
 	private void reasignarMesas() throws ValidationException{
+
 		int i=0;
 		
 		for (Mesa mesa : mesas) {
