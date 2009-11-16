@@ -181,11 +181,12 @@ public class Restaurant {
 		Consumible unConsumible = buscarConsumible(codConsumible);
 		
 		Comanda comanda = unaMesa.getComanda();
+		
 		if(comanda != null){
 			comanda.addItem(unConsumible, cantidad);
 		}
 		else{
-			new ValidationException("La mesa no tiene asociada una comanda");
+			throw new ValidationException("La mesa no tiene asociada una comanda");
 		}
 		
 	}
