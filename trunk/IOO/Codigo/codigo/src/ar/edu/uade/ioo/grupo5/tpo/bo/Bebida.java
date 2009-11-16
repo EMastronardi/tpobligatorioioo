@@ -1,5 +1,7 @@
 package ar.edu.uade.ioo.grupo5.tpo.bo;
 
+import ar.edu.uade.ioo.grupo5.tpo.common.ValidationException;
+
 /**
  Project : TP_IPOO_1
  File Name : Bebida.java
@@ -11,7 +13,7 @@ package ar.edu.uade.ioo.grupo5.tpo.bo;
 
 public class Bebida extends Consumible {
 
-	public Bebida(String descripcion, String codigo, double precio) {
+	public Bebida(String descripcion, String codigo, double precio) throws ValidationException {
 		super(descripcion, codigo, precio);
 	}
 }

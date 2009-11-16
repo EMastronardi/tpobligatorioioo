@@ -6,7 +6,7 @@ public class LiquidacionViewData {
 	
 	
 	public LiquidacionViewData(double comision, int nroMozo) {
-
+		
 		this.comision = comision;
 		this.nroMozo = nroMozo;
 	}
