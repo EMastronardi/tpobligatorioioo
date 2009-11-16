@@ -160,6 +160,9 @@ public class Restaurant {
 		Mesa unaMesa = buscarMesa(NroMesa);
 		Comanda unaComanda = unaMesa.getComanda();
 				
+		if(unaComanda == null)
+			throw new ErrorException("La mesa no tiene asociada una comanda");
+		
 		unaMesa.setEstado(ESTADO_MESA.LIBRE);
 		
 		total = unaComanda.calcularTotal();
@@ -331,7 +334,7 @@ public class Restaurant {
 			this.comision = comision;
 		}
 		else{
-			throw new ValidationException("El porcentaje está fuera de rango (Debe ser de 0-100");
+			throw new ValidationException("El porcentaje está fuera de rango (Debe ser de 0-100)");
 		}
 		
 	}
