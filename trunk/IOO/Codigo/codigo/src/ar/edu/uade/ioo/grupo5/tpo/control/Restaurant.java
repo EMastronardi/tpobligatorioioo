@@ -223,10 +223,10 @@ public class Restaurant {
 		
 	}
 	
-	public void modificarCantidadMesas(int cantidadMesas){
+	public void modificarCantidadMesas(int cantidadMesas)throws ValidationException{
 		
 		if(mozos.size() > cantidadMesas)
-			return;
+			throw new ValidationException("La cantidad de mesas no puede ser menor a la cantidad de mozos");
 	
 		int diferenciaMesas = cantidadMesas - mesas.size();
 		
@@ -241,10 +241,10 @@ public class Restaurant {
 		
 	}
 	
-	public void modificarCantidadMozos(int cantidadMozos){
+	public void modificarCantidadMozos(int cantidadMozos)throws ValidationException{
 		
 		if(cantidadMozos > mesas.size())
-			return;
+			throw new ValidationException("La cantidad de mesas no puede ser menor a la cantidad de mozos");
 	
 		
 		int diferenciaMozos = cantidadMozos - mozos.size();
@@ -262,6 +262,18 @@ public class Restaurant {
 	}
 	
 	
+	public double getComision() {
+		return comision;
+	}
+	
+	public int getCantidadMesas(){
+		return mesas.size();
+	}
+	
+	public int getCantidadMozos(){
+		return mozos.size();
+	}
+
 	public void setComision(double comision)throws ValidationException{
 		if(comision <= 100 && comision >= 0){
 			this.comision = comision;

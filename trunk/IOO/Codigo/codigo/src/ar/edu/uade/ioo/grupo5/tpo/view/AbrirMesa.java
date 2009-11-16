@@ -21,7 +21,7 @@ public class AbrirMesa extends LayoutBase {
 	private static AbrirMesa instancia;
 	
 	public AbrirMesa(){
-		super("Abrir Mesa");
+		super("Inicilizar Comanda");
 		initGUI();
 		inicializarEventos();
 	}
@@ -51,8 +51,11 @@ public class AbrirMesa extends LayoutBase {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					hideMessage();
+					
 					int numeroMesa = Integer.parseInt(txtNumeroMesa.getText());
 					Restaurant.getInstance().nuevaComanda(numeroMesa);
+					
+					clearTextFields();
 					dispose();
 				} 
 				catch (Exception ex) {
@@ -61,6 +64,10 @@ public class AbrirMesa extends LayoutBase {
 			}
 		});
 		
+	}
+	
+	private void clearTextFields(){
+		txtNumeroMesa.setText("");
 	}
 
 

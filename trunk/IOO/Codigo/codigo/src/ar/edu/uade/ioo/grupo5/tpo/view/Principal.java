@@ -80,7 +80,18 @@ public class Principal extends LayoutBase {
 					}
 			    }
 			}
-        );	
+        );
+		menuModificarDatosSistema.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				try {
+					ModificarDatosSistema.getInstance().mostrarDatos();
+				}
+				catch (Exception ex){
+					handleException(ex);
+;				}
+		    }
+		}
+    );
 		
 		menuAgregarPedido.addActionListener(new ActionListener(){
 			@Override
