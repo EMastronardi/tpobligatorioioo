@@ -37,7 +37,7 @@ public class CerrarVenta extends LayoutBase  {
 //		txtMozo = new JTextField (4);
 		
 		
-		addField("Mesa a Cerrar", txtNroMesa);
+		addField("Nro. Mesa", txtNroMesa);
 		addButton(btnCerrar);
 		inicializarEventos();
 		

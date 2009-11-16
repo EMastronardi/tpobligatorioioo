@@ -153,18 +153,19 @@ public class Restaurant {
 		return ordenesDeCompra;
 	}
 
-	public String cerrarComanda(int NroMesa) throws ErrorException {
+	public String cerrarComanda(int NroMesa) throws ErrorException, ValidationException {
 		double total;
 		NumberFormat nm = NumberFormat.getNumberInstance();
 
 		Mesa unaMesa = buscarMesa(NroMesa);
 		Comanda unaComanda = unaMesa.getComanda();
-				
+
 		if(unaComanda == null)
-			throw new ErrorException("La mesa no tiene asociada una comanda");
+			throw new ValidationException("La mesa no tiene asociada una comanda");
+		
 		
 		unaMesa.setEstado(ESTADO_MESA.LIBRE);
-		
+		unaMesa.setComanda(null);
 		total = unaComanda.calcularTotal();
 		
 		Mozo unMozo = unaMesa.getMozo();
