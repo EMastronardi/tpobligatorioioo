@@ -83,7 +83,7 @@ public class Restaurant {
 		Consumible lopa = new Consumible("Lomo con papas","lopa",100.00);
 		lopa.addItemProducto(papa, 0.5);
 		lopa.addItemProducto(lomo, .2);
-		Consumible loba = new Consumible("Lomo con papas","lopa",100.00);
+		Consumible loba = new Consumible("Lomo con papas","loba",100.00);
 		loba.addItemProducto(batata, 0.5);
 		loba.addItemProducto(lomo, .2);
 		Consumible cuaba = new Consumible("Cuadril con batatas","cuaba",80.00);

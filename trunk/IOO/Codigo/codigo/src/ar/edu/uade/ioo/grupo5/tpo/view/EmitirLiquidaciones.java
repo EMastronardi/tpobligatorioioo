@@ -64,7 +64,7 @@ public class EmitirLiquidaciones extends LayoutBase {
 	}
 
 	public void mostar() {
-
+		hideMessage();
 		cargarDatos();
 		setVisible(true);		
 	}
