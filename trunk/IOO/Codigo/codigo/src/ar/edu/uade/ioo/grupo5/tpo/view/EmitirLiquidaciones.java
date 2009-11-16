@@ -71,17 +71,21 @@ public class EmitirLiquidaciones extends LayoutBase {
 	
 	private void cargarDatos(){
 		
-		String[] columnNames = {"Mozo",
-                "Comision",};
-		
-		Vector<LiquidacionViewData> liqs = Restaurant.getInstance().emitirLiquidaciones();
-		Object[][] data = new Object[liqs.size()][2];
-		for(int i=0;i<liqs.size();i++){
-			data[i][0] = liqs.elementAt(i).getNroMozo();
-			data[i][1] = liqs.elementAt(i).getComision();
+		try {
+			String[] columnNames = {"Mozo",
+			        "Comision",};
+			
+			Vector<LiquidacionViewData> liqs = Restaurant.getInstance().emitirLiquidaciones();
+			Object[][] data = new Object[liqs.size()][2];
+			for(int i=0;i<liqs.size();i++){
+				data[i][0] = liqs.elementAt(i).getNroMozo();
+				data[i][1] = liqs.elementAt(i).getComision();
+			}
+			tabLiquidaciones = new JTable(data, columnNames); 
+			scrollPane = new JScrollPane(tabLiquidaciones);
+			tabLiquidaciones.setFillsViewportHeight(true);
+		} catch (Exception e) {
+			handleException(e);
 		}
-		tabLiquidaciones = new JTable(data, columnNames); 
-		scrollPane = new JScrollPane(tabLiquidaciones);
-		tabLiquidaciones.setFillsViewportHeight(true);
 	}
 }
