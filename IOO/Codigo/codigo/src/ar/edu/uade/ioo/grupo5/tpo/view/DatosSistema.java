@@ -20,30 +20,17 @@ public class DatosSistema extends LayoutBase {
     
 	public DatosSistema() {
 			super("Datos del sistema");
-			initGUI();
-			inicializarEventos();
+			try {
+				initGUI();
+				inicializarEventos();
+			} catch (Exception ex) {
+				handleException(ex);
+			}
+			
 	}
 
 	private void initGUI() {
-		
-		
-//		try {
-//			
-//			int cantidadMozos = 10;
-//			int cantidadMesas = 20;
-//			double porcentajeComision = 50.0;
-//			
-//			Restaurant.getInstance().inicializar(cantidadMozos, cantidadMesas, porcentajeComision);
-//			
-//			Principal.getInstance().setVisible(true);
-//			setVisible(false);
-//			dispose();
-//			
-//		} 
-//		catch (Exception ex) {
-//			handleException(ex);
-//		}
-		
+
 		txtCantidadMesas = new JTextField(4);
 		txtCantidadMozos = new JTextField(4);
 		txtPorcentajeComision = new JTextField(4);

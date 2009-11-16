@@ -19,7 +19,7 @@ public class PopupControl extends JFrame {
 	}
 	private void inicializar() {
 		lblMessage = new JLabel();
-		lblMessage.setBounds(30,3, 200, 40);
+		
 		btnContinuar = new JButton("Continuar");
 		
 		getContentPane().setLayout(null);
@@ -30,8 +30,7 @@ public class PopupControl extends JFrame {
 				dispose();
 			}
 		});
-		
-		
+				
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.pack();
 		
@@ -39,6 +38,7 @@ public class PopupControl extends JFrame {
 		this.setVisible(true);
 		
 		setSize(400, 100);
+		lblMessage.setBounds(30,3, this.getWidth()-10, this.getHeight() - 10 );
 	
 	}
 	

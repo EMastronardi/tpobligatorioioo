@@ -1,5 +1,6 @@
 package ar.edu.uade.ioo.grupo5.tpo.view;
 
+import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -36,7 +37,7 @@ public class CerrarVenta extends LayoutBase  {
 //		txtMozo = new JTextField (4);
 		
 		
-		addField("Mesa a Cerrar: ", txtNroMesa);
+		addField("Mesa a Cerrar", txtNroMesa);
 		addButton(btnCerrar);
 		inicializarEventos();
 		
@@ -64,9 +65,10 @@ public class CerrarVenta extends LayoutBase  {
 				try {
 					hideMessage();
 					int nroMesa = Integer.parseInt(txtNroMesa.getText());
-					txtTotal.setText(Restaurant.getInstance().cerrarComanda(nroMesa));
-					txtTotal.setVisible(true);
-					dispose();
+					String resultado =  Restaurant.getInstance().cerrarComanda(nroMesa);
+									
+					PopupControl.showMessage("Cierre mesa finalizado - " + resultado);
+					
 					
 				} 
 				catch (Exception ex) {
