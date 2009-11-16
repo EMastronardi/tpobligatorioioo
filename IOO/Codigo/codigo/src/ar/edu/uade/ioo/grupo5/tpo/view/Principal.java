@@ -112,8 +112,6 @@ public class Principal extends LayoutBase {
 			try {
 				hideMessage();
 				CerrarVenta.getInstance().setVisible(true);
-				
-				
 			} catch (Exception ex) {
 				handleException(ex);
 			}

@@ -54,7 +54,7 @@ public class Restaurant {
 	}
 	
 	
-	private void reasignarMesas(){
+	private void reasignarMesas() throws ValidationException{
 		int i=0;
 		
 		for (Mesa mesa : mesas) {
@@ -87,7 +87,7 @@ public class Restaurant {
 		return liquidaciones;
 	}
 
-	public Vector<OrdenCompra> emitirOrdenesDeCompra() {
+	public Vector<OrdenCompra> emitirOrdenesDeCompra() throws ValidationException {
 		Vector<OrdenCompra> ordenesDeCompra = new Vector<OrdenCompra>();
 		
 		for (Proveedor proveedor : proveedores) {
@@ -103,7 +103,7 @@ public class Restaurant {
 		return ordenesDeCompra;
 	}
 
-	public String cerrarComanda(int NroMesa) {
+	public String cerrarComanda(int NroMesa) throws ErrorException {
 		double total;
 		NumberFormat nm = NumberFormat.getNumberInstance();
 
@@ -122,22 +122,24 @@ public class Restaurant {
 				+ unaMesa.getMozo().getNro();
 	}
 
-	public void agregarPedido(String codConsumible, int cantidad, int nroMesa) throws ErrorException{
+	public void agregarPedido(String codConsumible, int cantidad, int nroMesa) throws ErrorException,ValidationException{
 		
 		Mesa unaMesa = buscarMesa(nroMesa);
 		Consumible unConsumible = buscarConsumible(codConsumible);
 		
-		if (unConsumible != null && unaMesa != null) {
-			Comanda comanda = unaMesa.getComanda();
-			if(comanda != null){
-				comanda.addItem(unConsumible, cantidad);
-			}
+		Comanda comanda = unaMesa.getComanda();
+		if(comanda != null){
+			comanda.addItem(unConsumible, cantidad);
 		}
+		else{
+			new ValidationException("La mesa no tiene asociada una comanda");
+		}
+		
 	}
 	
 	
 
-	public void nuevaComanda(int nroMesa) throws ErrorException{
+	public void nuevaComanda(int nroMesa) throws ErrorException, ValidationException{
 		Mesa unaMesa = buscarMesa(nroMesa);
 
 		if (unaMesa != null) {
@@ -154,13 +156,13 @@ public class Restaurant {
 
 	}
 
-	private Mesa buscarMesa(int nroMesa) {
+	private Mesa buscarMesa(int nroMesa) throws ErrorException{
 		for (Mesa mesa : mesas) {
 			if (mesa.GetNro() == nroMesa)
 				return mesa;
 		}
 		
-		return null;
+		throw new ErrorException("La mesa solicitada no existe");
 	}
 
 	public Consumible buscarConsumible(String codConsumible) throws ErrorException {

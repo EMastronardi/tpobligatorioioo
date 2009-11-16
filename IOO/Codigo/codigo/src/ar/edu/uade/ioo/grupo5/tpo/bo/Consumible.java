@@ -2,6 +2,8 @@ package ar.edu.uade.ioo.grupo5.tpo.bo;
 
 import java.util.Vector;
 
+import ar.edu.uade.ioo.grupo5.tpo.common.ValidationException;
+
 /**
 Project : TP_IPOO_1
 File Name : Consumible.java
@@ -18,7 +20,11 @@ public class Consumible {
 	
 	
 	
-	public Consumible(String descripcion, String codigo, double precio) {
+	public Consumible(String descripcion, String codigo, double precio) throws ValidationException {
+		if(descripcion == null || descripcion.equals(""))
+			throw new ValidationException("La descripción ingresada del consumible es inválida");
+		if(codigo == null || codigo.equals(""))
+			throw new ValidationException("El código de consumible ingresado es inválido");
 		
 		this.descripcion = descripcion;
 		this.codigo = codigo;
@@ -26,7 +32,13 @@ public class Consumible {
 		this.itemsProducto = new Vector<ItemProducto>();
 	}
 	
-	void addItemProducto(Producto producto, double cantidad){
+	void addItemProducto(Producto producto, double cantidad) throws ValidationException{
+		if(producto == null)
+			throw new ValidationException("El producto agregado al consumible es inválido");
+		
+		if(cantidad < 0)
+			throw new ValidationException("La cantidad de productos del consumible ingresada para el item es inválida");
+		
 		itemsProducto.add(new ItemProducto(producto, cantidad));
 	}
 

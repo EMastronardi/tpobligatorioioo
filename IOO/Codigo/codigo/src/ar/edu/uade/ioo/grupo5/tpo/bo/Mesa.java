@@ -1,5 +1,7 @@
 package ar.edu.uade.ioo.grupo5.tpo.bo;
 
+import ar.edu.uade.ioo.grupo5.tpo.common.ValidationException;
+
 /**
  Project : TP_IPOO_1
  File Name : Mesa.java
@@ -36,12 +38,17 @@ public class Mesa {
 		this.estado = estado;
 	}
 	
-	public void setComanda(Comanda comanda) {
+	public void setComanda(Comanda comanda) throws ValidationException{
+		if(comanda == null)
+			throw new ValidationException("La comanda asignada a la mesa es inválida");
 		this.comanda = comanda;
 	}
 	
 	
-	public void asignarMozo(Mozo mozo) {
+	public void asignarMozo(Mozo mozo)throws ValidationException {
+		if(mozo == null)
+			throw new ValidationException("El mozo asignado a la mesa es inválido");
+		
 		this.mozo = mozo;
 	}
 	
