@@ -22,7 +22,7 @@ public class ItemProducto {
 	}
 	
 	public boolean tieneStockDisponible(int cantidad){
-		return this.producto.tieneStockDisponible(cantidad);
+		return this.producto.tieneStockDisponible(cantidad * this.cantidad);
 	}
 	
 	public Producto getProducto(){

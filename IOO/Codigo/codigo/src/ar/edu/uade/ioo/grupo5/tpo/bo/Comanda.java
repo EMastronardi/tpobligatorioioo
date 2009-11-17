@@ -3,6 +3,8 @@ package ar.edu.uade.ioo.grupo5.tpo.bo;
 
 import java.util.Vector;
 
+import ar.edu.uade.ioo.grupo5.tpo.common.ValidationException;
+
 /**
 Project : TP_IPOO_1
 File Name : Comanda.java
@@ -27,7 +29,7 @@ public class Comanda {
 		return total;
 	}
 	
-	public void addItem(Consumible consumible, int cantidad) {
+	public void addItem(Consumible consumible, int cantidad) throws ValidationException {
 		items.add(new ItemComanda(consumible, cantidad));
 	}
 	

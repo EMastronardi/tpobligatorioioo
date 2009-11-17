@@ -59,7 +59,7 @@ public class Producto {
 		return proveedor;
 	}
 
-	public boolean tieneStockDisponible(int cantidad) {
+	public boolean tieneStockDisponible(double cantidad) {
 		return (stock - cantidad) >= 0;
 
 	}
