@@ -2,6 +2,8 @@ package ar.edu.uade.ioo.grupo5.tpo.bo;
 
 import java.util.Vector;
 
+import ar.edu.uade.ioo.grupo5.tpo.common.ValidationException;
+
 
 /**
  Project : TP_IPOO_1
@@ -18,7 +20,10 @@ public class Proveedor {
 	private Vector<Producto> productosAReponer;
 	private String nombre;
 	
-	public Proveedor() {
+	public Proveedor(String nombre) throws ValidationException {
+		if(nombre == null || nombre.equals(""))
+			throw new ValidationException("El nombre del proveedor es inválido");
+		this.nombre = nombre;
 		productosAReponer = new Vector<Producto>();
 	}
 			

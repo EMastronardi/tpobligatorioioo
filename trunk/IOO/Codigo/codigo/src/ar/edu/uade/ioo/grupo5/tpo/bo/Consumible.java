@@ -2,6 +2,8 @@ package ar.edu.uade.ioo.grupo5.tpo.bo;
 
 import java.util.Vector;
 
+import ar.edu.uade.ioo.grupo5.tpo.common.ValidationException;
+
 /**
 Project : TP_IPOO_1
 File Name : Consumible.java
