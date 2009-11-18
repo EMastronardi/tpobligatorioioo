@@ -38,7 +38,6 @@ public class ModificarDatosSistema extends LayoutBase {
 	
 	
 	public void mostrarDatos(){
-		clearTextFields();
 		txtCantidadMesas.setText(String.valueOf(Restaurant.getInstance().getCantidadMesas()));
 		txtCantidadMozos.setText(String.valueOf(Restaurant.getInstance().getCantidadMozos()));
 		txtPorcentajeComision.setText(String.valueOf(Restaurant.getInstance().getComision()));
@@ -74,12 +73,14 @@ public class ModificarDatosSistema extends LayoutBase {
 		btnModificarDatos.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				hideMessage();
+				
 				if (!esValidoModificarDatos()){
 					showMessage("Debe ingresar un numero de mesa");
 					return;
 				}
 				try {
-					hideMessage();
+					
 					int cantidadMozos = Integer.parseInt(txtCantidadMozos.getText());
 					int cantidadMesas = Integer.parseInt(txtCantidadMesas.getText());
 					double porcentajeComision = Double.parseDouble(txtPorcentajeComision.getText());			
@@ -88,6 +89,7 @@ public class ModificarDatosSistema extends LayoutBase {
 					Restaurant.getInstance().modificarCantidadMozos(cantidadMozos);
 					Restaurant.getInstance().setComision(porcentajeComision);
 					
+					dispose();
 				} 
 				catch (Exception ex) {
 					handleException(ex);

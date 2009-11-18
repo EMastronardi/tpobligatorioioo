@@ -41,9 +41,9 @@ public class Restaurant {
 		
 		setComision(porcentajeComision);
 		
-		if(cantidadMesas < cantidadMozos){
+		if(cantidadMesas < cantidadMozos)
 			throw new ValidationException("La cantidad de mesas no puede ser menor a la cantidad de mozos");
-		}
+		
 			
 		agregarMozos(cantidadMozos);
 
@@ -268,7 +268,7 @@ public class Restaurant {
 	public void modificarCantidadMesas(int cantidadMesas) throws ValidationException{
 		
 		if(mozos.size() > cantidadMesas)
-			return;
+			throw new ValidationException("La cantidad de mesas no puede ser menor a la cantidad de mozos");
 	
 		int diferenciaMesas = cantidadMesas - mesas.size();
 		
@@ -285,8 +285,8 @@ public class Restaurant {
 	
 	public void modificarCantidadMozos(int cantidadMozos) throws ValidationException{
 		
-		if(cantidadMozos > mesas.size())
-			return;
+		if(cantidadMozos > this.mesas.size())
+			throw new ValidationException("La cantidad de mesas no puede ser menor a la cantidad de mozos");
 	
 		int diferenciaMozos = cantidadMozos - mozos.size();
 		
