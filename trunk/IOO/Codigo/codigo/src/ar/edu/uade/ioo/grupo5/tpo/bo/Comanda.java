@@ -17,6 +17,7 @@ public class Comanda {
 
 	public Comanda() {
 		items = new Vector<ItemComanda>();
+	
 	}
 	
 
@@ -32,6 +33,8 @@ public class Comanda {
 	public void addItem(Consumible consumible, int cantidad) throws ValidationException {
 		items.add(new ItemComanda(consumible, cantidad));
 	}
+	
+	
 	
 	
 }

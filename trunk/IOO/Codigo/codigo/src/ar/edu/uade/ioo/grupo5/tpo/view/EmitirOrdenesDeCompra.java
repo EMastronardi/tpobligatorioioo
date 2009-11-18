@@ -49,7 +49,7 @@ public class EmitirOrdenesDeCompra extends LayoutBase {
 				
 		btnAceptar = new JButton("Aceptar");
 		
-		addField("", scrollPane);
+		
 		
 		addButton(btnAceptar);
 		
@@ -82,19 +82,24 @@ public class EmitirOrdenesDeCompra extends LayoutBase {
 	                "Producto","Cantidad",};
 			
 			Vector<OrdenCompra> OCs = Restaurant.getInstance().emitirOrdenesDeCompra();
+			
 			Object[][] data = new Object[OCs.size()][3];
 			for(int i=0;i<OCs.size();i++){
 				
-				for(int j=0;i<OCs.elementAt(i).getItemsCompra().size();i++){
+				for(int j=0;j<OCs.elementAt(i).getItemsCompra().size();j++){
 					data[i][0] = OCs.elementAt(i).getProveedor();
 					data[i][1] = OCs.elementAt(i).getItemsCompra().elementAt(j).getProducto();
 					data[i][2] = OCs.elementAt(i).getItemsCompra().elementAt(j).getCantidad();
 				}
 				
 			}
+			
 			tabOrdenesCompra = new JTable(data, columnNames); 
 			scrollPane = new JScrollPane(tabOrdenesCompra);
 			tabOrdenesCompra.setFillsViewportHeight(true);
+			
+			reset();
+			addField("", scrollPane);
 		} catch (Exception ex) {
 			handleException(ex);
 		}

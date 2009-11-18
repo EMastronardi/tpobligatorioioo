@@ -17,7 +17,11 @@ public class Formulario {
 	    private Container container;
 	    private JLabel lblMessage;
 	    public Formulario(Container container) {
-	    	lblMessage = new JLabel();
+	    	initGUI(container);
+	       
+	    }
+		private void initGUI(Container container) {
+			lblMessage = new JLabel();
 	    	lblMessage.setSize(500, 50);
 	    	lblMessage.setForeground(new Color(203,12,12));
 	    	
@@ -30,8 +34,7 @@ public class Formulario {
 	        constraints.anchor = GridBagConstraints.LINE_START;
 	        this.container.add(lblMessage, constraints);
 	        constraints.gridy++;
-	       
-	    }
+		}
 	    public void showMessage(String message){
 	    	lblMessage.setText(message);
 		}
@@ -82,5 +85,9 @@ public class Formulario {
 
 	        constraints.gridy++;
 	    }
+		public void reset() {
+			container.removeAll();
+			initGUI(container);
+		}
 
 }

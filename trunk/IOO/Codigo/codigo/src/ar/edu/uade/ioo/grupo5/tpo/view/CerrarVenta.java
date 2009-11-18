@@ -14,9 +14,8 @@ import ar.edu.uade.ioo.grupo5.tpo.control.Restaurant;
 public class CerrarVenta extends LayoutBase  {
 	private JTextField txtNroMesa;
 	private JButton btnCerrar;
-    private JTextField txtTotal;
-    private JTextField txtMesa;
-    private JTextField txtMozo;
+
+  
     private static CerrarVenta instancia = null;
 	private  CerrarVenta() {
 			super("Cerrar Comanda");
@@ -33,22 +32,17 @@ public class CerrarVenta extends LayoutBase  {
 	private void initGUI() {
 		txtNroMesa = new JTextField(4);
 		btnCerrar = new JButton ("Cerrar Mesa");
-		txtTotal = new JTextField(4);
-//		txtMesa = new JTextField (4);
-//		txtMozo = new JTextField (4);
-		
-		
+	
 		addField("Mesa a Cerrar", txtNroMesa);
 		addButton(btnCerrar);
 		inicializarEventos();
 		
 		inicializar();
 		setSize(400, this.getHeight() +10);
-		
-		
 	}
 
 	private void inicializarEventos() {
+		
 		btnCerrar.addActionListener(new ActionListener(){
 			
 			public void actionPerformed(ActionEvent e) {
@@ -58,7 +52,7 @@ public class CerrarVenta extends LayoutBase  {
 					ComandaCerradaViewData resultado =  Restaurant.getInstance().cerrarComanda(nroMesa);
 									
 					PopupControl.showMessage(String.format("Cierre mesa Nro. %d para el mozo Nro. %d por $%f", resultado.getNroMesa(), resultado.getNroMozo(), resultado.getTotal()) );
-					
+					setDefault();
 					dispose();
 				} 
 				catch (Exception ex) {
@@ -66,6 +60,11 @@ public class CerrarVenta extends LayoutBase  {
 				}
 			}
 		});
+	}
+	
+	private void setDefault() {
+		txtNroMesa.setText("");
+		
 	}
 }
 

@@ -14,6 +14,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -74,6 +75,10 @@ public class LayoutBase extends JFrame {
       
 	}
 	
+	protected void reset()
+	{
+		form.reset();
+	}
 	protected void showMessage(String message){
 		form.showMessage(message);
 	}
@@ -83,13 +88,13 @@ public class LayoutBase extends JFrame {
 	}
 	protected void inicializar(){
 		 
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
         this.setMinimumSize(this.getPreferredSize());
         this.setMaximumSize(this.getPreferredSize());
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-       
+         
 	}
 	
 	protected void addField(String titulo, JComponent component){

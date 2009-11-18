@@ -138,7 +138,8 @@ public class Restaurant {
 				orden.addItem(producto.getNombre(), producto.getPuntoReabastecimiento());
 			}
 			
-			ordenesDeCompra.add(orden);
+			if(orden.getItemsCompra().size() > 0)
+				ordenesDeCompra.add(orden);
 		}
 
 		return ordenesDeCompra;
