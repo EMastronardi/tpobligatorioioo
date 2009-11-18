@@ -14,9 +14,10 @@ public class AgregarProductosAConsumibles extends LayoutBase {
 	private static AgregarProductosAConsumibles ventana;
 	private JTextField txtConsumible; //TODO este habria que cambiarlo por un combo de consumibles
 	private JTextField txtCantidad; //TODO este habria que cambiarlo por un combo de productos
-	private JTextField txtPrecio;
+	private JTextField txtProducto;
 	private JButton btnAgregar;
 	private JButton btnCancelar;
+	
 	
 		
 	public AgregarProductosAConsumibles(String titulo) {
@@ -25,18 +26,20 @@ public class AgregarProductosAConsumibles extends LayoutBase {
 	}
 
 	void initGUI(){
-		btnAgregar = new JButton();
-		btnCancelar = new JButton();
+		btnAgregar = new JButton("Agregar");
+		btnCancelar = new JButton("Cancelar");
 				
 		txtConsumible = new JTextField(4);
+		txtProducto = new JTextField(4);
 		txtCantidad = new JTextField(4);
-		txtPrecio = new JTextField(4);
 		
 		addField("Consumible",txtConsumible);
+		addField("Producto",txtProducto);
 		addField("Cantidad", txtCantidad);
 		
 		addButton(btnAgregar);
 		addButton(btnCancelar);
+		
 		inicializarEventos();
 		
 		inicializar();
@@ -49,11 +52,21 @@ public class AgregarProductosAConsumibles extends LayoutBase {
 	
 			public void actionPerformed(ActionEvent e) {
 				Restaurant.getInstance().agregarProductoAConsumible(txtConsumible.getText(),
-						txtCantidad.getText(),
-						Double.parseDouble(txtPrecio.getText()));
-				
+						txtProducto.getText(),
+						Double.parseDouble(txtCantidad.getText())
+						);
+				borrar();
+				dispose();
 			}
 		});
+		
+		btnCancelar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				borrar();
+				dispose();
+			}
+		});
+
 	}
 
 	public static AgregarProductosAConsumibles getInstance() {
@@ -61,6 +74,12 @@ public class AgregarProductosAConsumibles extends LayoutBase {
 			ventana = new AgregarProductosAConsumibles("Alta Consumibles");
 		}
 		return ventana;
+	}
+	
+	private void borrar(){
+		txtCantidad.setText("");
+		txtConsumible.setText("");
+		txtProducto.setText("");
 	}
 	
 }
