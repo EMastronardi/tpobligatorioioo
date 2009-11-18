@@ -30,21 +30,10 @@ public class AltaProductos extends LayoutBase {
 
 	void initGUI(){
 		
-		txtDescripcion = new JTextField(10);
-		txtStock = new JTextField(4);
-		txtPtoPedido = new JTextField(4);
-		txtPtoReabastecimiento = new JTextField(4);
-		String[] proveedores = Restaurant.getInstance().getProveedores();
-		cbxProveedores = new JComboBox(proveedores);
-		
 		btnAgregar = new JButton("Agregar");
 		btnCancelar = new JButton("Cancelar");
-				
-		addField("Nombre",txtDescripcion);
-		addField("Stock Inicial", txtStock);
-		addField("Punto de pedido", txtPtoPedido);
-		addField("Punto de Reabastecimiento", txtPtoReabastecimiento);
-		addField("Proveedor",cbxProveedores);
+		
+		cargarControles();
 		
 		addButton(btnAgregar);
 		addButton(btnCancelar);
@@ -95,5 +84,31 @@ public class AltaProductos extends LayoutBase {
 		txtPtoPedido.setText("");
 		txtPtoReabastecimiento.setText("");
 		txtStock.setText("");
+	}
+	public void mostrar() {
+		hideMessage();
+		cargarControles();
+		setVisible(true);		
+	}
+
+	private void cargarControles() {
+		reset();
+		txtDescripcion = new JTextField(10);
+		txtStock = new JTextField(4);
+		txtPtoPedido = new JTextField(4);
+		txtPtoReabastecimiento = new JTextField(4);
+		String[] proveedores = Restaurant.getInstance().getProveedores();
+		cbxProveedores = new JComboBox(proveedores);
+		
+		
+				
+		addField("Nombre",txtDescripcion);
+		addField("Stock Inicial", txtStock);
+		addField("Punto de pedido", txtPtoPedido);
+		addField("Punto de Reabastecimiento", txtPtoReabastecimiento);
+		addField("Proveedor",cbxProveedores);
+		
+		
+		
 	}
 }

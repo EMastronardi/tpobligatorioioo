@@ -70,7 +70,7 @@ public class EmitirOrdenesDeCompra extends LayoutBase {
 		});
 	}
 
-	public void mostar() {
+	public void mostrar() {
 
 		cargarDatos();
 		setVisible(true);		
