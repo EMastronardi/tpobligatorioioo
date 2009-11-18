@@ -13,12 +13,8 @@ import ar.edu.uade.ioo.grupo5.tpo.common.ValidationException;
  **/
 
 public class Restaurant {
-	public static Restaurant getInstance(){
-		if(instancia == null){
-			instancia= new Restaurant();
-		}
-		return instancia;
-	}
+	
+	
 	private double comision;
 	private Vector<Consumible> carta;
 	private Vector<Producto> productos;
@@ -28,6 +24,13 @@ public class Restaurant {
 	
 	private static Restaurant instancia = null;
 	
+	
+	public static Restaurant getInstance(){
+		if(instancia == null){
+			instancia= new Restaurant();
+		}
+		return instancia;
+	}
 	private Restaurant() {
 		carta = new Vector<Consumible>();
 		productos = new Vector<Producto>();
@@ -36,7 +39,8 @@ public class Restaurant {
 		proveedores = new Vector<Proveedor>();
 	}
 	
-	public void agregarConsumible(String descripcion, String codigo, double precio) throws ValidationException{
+	public void agregarConsumible(String descripcion, String codigo,
+			double precio) throws ValidationException{
 		Consumible cons = new Consumible(descripcion, codigo, precio);
 		carta.add(cons);
 	}
@@ -69,8 +73,7 @@ public class Restaurant {
 		}
 	}
 
-	public void agregarProducto(String nombre, double stock, double puntoPedido,
-			double puntoReabastecimiento, String proveedor) throws ErrorException, ValidationException {
+	public void agregarProducto(String nombre, double stock, double puntoPedido,double puntoReabastecimiento, String proveedor) throws ErrorException, ValidationException {
 		Proveedor prov = buscarProveedor(proveedor);
 		Producto prod = new Producto(nombre, stock, puntoPedido, puntoReabastecimiento, prov);
 		productos.add(prod);
@@ -146,7 +149,7 @@ public class Restaurant {
 		Consumible lopa = new Consumible("Lomo con papas","lopa",100.00);
 		lopa.addItemProducto(papa, 0.5);
 		lopa.addItemProducto(lomo, .2);
-		Consumible loba = new Consumible("Lomo con papas","loba",100.00);
+		Consumible loba = new Consumible("Lomo con batatas","loba",100.00);
 		loba.addItemProducto(batata, 0.5);
 		loba.addItemProducto(lomo, .2);
 		Consumible cuaba = new Consumible("Cuadril con batatas","cuaba",80.00);
@@ -378,7 +381,6 @@ public class Restaurant {
 		Producto prod = buscarProducto(producto);
 
 		cons.addItemProducto(prod, cantidad);
-		
 	}
 	
 	private Producto buscarProducto(String prod) throws ErrorException {
@@ -413,6 +415,9 @@ public class Restaurant {
 		return lista;
 	}
 	
+	public double getConsumiblePrecio(String codConsumible) throws ErrorException{
+		return buscarConsumible(codConsumible).getPrecio();
+	}
 	public String[] getCodigoConsumibles() {
 		String lista[] = new String[this.carta.size()];
 		
