@@ -20,7 +20,6 @@ public class AltaProductos extends LayoutBase {
 	private JTextField txtStock;
 	private JTextField txtPtoPedido;
 	private JTextField txtPtoReabastecimiento;
-	//private JTextField txtProveedor; //TODO este habria que cambiarlo por un combo de proveedores
 	private JComboBox cbxProveedores ;
 	
 	public AltaProductos(String titulo) {
@@ -41,26 +40,27 @@ public class AltaProductos extends LayoutBase {
 		inicializarEventos();
 		
 		inicializar();
-		setSize(400, this.getHeight() +10);
+		setSize(500, this.getHeight() +10);
 	}
 	
 	void inicializarEventos(){
 		btnAgregar.addActionListener(new ActionListener(){
 		
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
+		public void actionPerformed(ActionEvent e) {
+			if(!validarDatos())
+				return;
+			try {
 					Restaurant.getInstance().agregarProducto(txtDescripcion.getText(),
-							Double.parseDouble(txtStock.getText()),
-							Double.parseDouble(txtPtoPedido.getText()),
-							Double.parseDouble(txtPtoReabastecimiento.getText()),
-							String.valueOf(cbxProveedores.getSelectedItem()));
-							borrar();
-							dispose();
-				} catch (Exception e1) {
-					handleException(e1);
-				}
+					Double.parseDouble(txtStock.getText()),
+					Double.parseDouble(txtPtoPedido.getText()),
+					Double.parseDouble(txtPtoReabastecimiento.getText()),
+					String.valueOf(cbxProveedores.getSelectedItem()));
+					borrar();
+					dispose();
+			} catch (Exception ex) {
+				handleException(ex);
 			}
+		}
 		});
 		
 		btnCancelar.addActionListener(new ActionListener(){
@@ -90,7 +90,17 @@ public class AltaProductos extends LayoutBase {
 		cargarControles();
 		setVisible(true);		
 	}
-
+	private boolean validarDatos(){
+		String message = "";
+		
+		if(txtPtoReabastecimiento.getText().equals("")) message = "El punto de reabastecimiento es un campo obligatorio";
+		if(txtPtoPedido.getText().equals("")) message = "El punto de pedido es un campo obligatorio";
+		if(txtStock.getText().equals("")) message = "El stock es un campo obligatorio";
+		if(txtDescripcion.getText().equals("")) message = "El nombre de producto es un campo obligatorio";
+		
+		showMessage(message);
+		return message.equals("");
+	}
 	private void cargarControles() {
 		reset();
 		txtDescripcion = new JTextField(10);

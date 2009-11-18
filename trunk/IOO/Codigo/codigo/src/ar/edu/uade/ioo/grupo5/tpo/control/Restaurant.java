@@ -36,7 +36,7 @@ public class Restaurant {
 		proveedores = new Vector<Proveedor>();
 	}
 	
-	public void agregarConsumible(String descripcion, String codigo, double precio){
+	public void agregarConsumible(String descripcion, String codigo, double precio) throws ValidationException{
 		Consumible cons = new Consumible(descripcion, codigo, precio);
 		carta.add(cons);
 	}
@@ -70,15 +70,27 @@ public class Restaurant {
 	}
 
 	public void agregarProducto(String nombre, double stock, double puntoPedido,
-			double puntoReabastecimiento, String proveedor) throws ErrorException {
+			double puntoReabastecimiento, String proveedor) throws ErrorException, ValidationException {
 		Proveedor prov = buscarProveedor(proveedor);
 		Producto prod = new Producto(nombre, stock, puntoPedido, puntoReabastecimiento, prov);
 		productos.add(prod);
 	}
 
 	public void agregarProveedor(String nombre) throws ValidationException{
+		if(existeProveedor(nombre))
+			throw new ValidationException("El nombre de proveedor ingresado ya existe");
+		
 		Proveedor prov = new Proveedor(nombre);
 		proveedores.add(prov);
+	}
+	
+	private boolean existeProveedor(String nombre){
+		try {
+			buscarProveedor(nombre);
+			return true;
+		} catch (ErrorException e) {
+			return false;
+		}
 	}
 
 	public Consumible buscarConsumible(String codConsumible) throws ErrorException {
