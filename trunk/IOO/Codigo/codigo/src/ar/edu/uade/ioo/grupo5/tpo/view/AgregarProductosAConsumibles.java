@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
+import ar.edu.uade.ioo.grupo5.tpo.common.ErrorException;
+import ar.edu.uade.ioo.grupo5.tpo.common.ValidationException;
 import ar.edu.uade.ioo.grupo5.tpo.control.Restaurant;
 
 public class AgregarProductosAConsumibles extends LayoutBase {
@@ -51,10 +53,16 @@ public class AgregarProductosAConsumibles extends LayoutBase {
 			
 	
 			public void actionPerformed(ActionEvent e) {
-				Restaurant.getInstance().agregarProductoAConsumible(txtConsumible.getText(),
-						txtProducto.getText(),
-						Double.parseDouble(txtCantidad.getText())
-						);
+				try {
+					Restaurant.getInstance().agregarProductoAConsumible(txtConsumible.getText(),
+							txtProducto.getText(),
+							Double.parseDouble(txtCantidad.getText())
+							);
+				
+				} catch (Exception e1) {
+					
+					handleException(e1);
+				}
 				borrar();
 				dispose();
 			}
