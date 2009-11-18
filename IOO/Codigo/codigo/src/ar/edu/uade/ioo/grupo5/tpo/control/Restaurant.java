@@ -237,6 +237,14 @@ public class Restaurant {
 		
 		setComision(porcentajeComision);
 		
+		if(cantidadMesas <= 0)
+			throw new ValidationException("La cantidad de mesas debe ser mayor a cero");
+		
+		if(cantidadMozos <= 0)
+			throw new ValidationException("La cantidad de mozos debe ser mayor a cero");
+		
+		setComision(porcentajeComision);
+		
 		if(cantidadMesas < cantidadMozos)
 			throw new ValidationException("La cantidad de mesas no puede ser menor a la cantidad de mozos");
 		
@@ -351,5 +359,16 @@ public class Restaurant {
 			double parseDouble) {
 		// TODO TODAVIA NO HACE NADA
 		
+	}
+	
+	public String[] getProveedores(){
+		String[] lista = new String[this.proveedores.size()];
+		
+		for (int i = 0; i < this.proveedores.size(); i++) {
+			String string = this.proveedores.elementAt(i).getNombre();
+			lista[i] = string;
+		}
+		
+		return lista;
 	}
 }

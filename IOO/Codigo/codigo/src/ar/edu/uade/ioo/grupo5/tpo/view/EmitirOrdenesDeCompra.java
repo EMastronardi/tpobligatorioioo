@@ -94,7 +94,11 @@ public class EmitirOrdenesDeCompra extends LayoutBase {
 				
 			}
 			
-			tabOrdenesCompra = new JTable(data, columnNames); 
+			tabOrdenesCompra = new JTable(data, columnNames){
+				public boolean isCellEditable(int row, int column)
+				{
+					return false;
+				}}; 
 			scrollPane = new JScrollPane(tabOrdenesCompra);
 			tabOrdenesCompra.setFillsViewportHeight(true);
 			

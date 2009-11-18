@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -30,26 +31,36 @@ public class LayoutBase extends JFrame {
     private JPanel panel;
     private Formulario form; // Formulario donde vamos a ubicar los pares de label con un campo
     private String titulo;
-    private JLabel message;
+    private JLabel lblMessage;
+    private JPanel pnlMessage;
+    private JPanel container;
     
 	public LayoutBase(String titulo) {
 		this.titulo = titulo;
 		setTitle(titulo);
+		lblMessage = new JLabel();
 		content = new JPanel();
         footer = new JPanel();
         header = new JPanel();
         panel = new JPanel();
-        
+        pnlMessage = new JPanel();
+        lblMessage.setForeground(new Color(203,12,12));
+        container = new JPanel();
      // el formulario usa GridBagLayout
         form = new Formulario(content);
         
         footer.setLayout(new BoxLayout(footer, BoxLayout.LINE_AXIS));
+        pnlMessage.setLayout(new BoxLayout(pnlMessage, BoxLayout.LINE_AXIS));
         
         footer.add(Box.createHorizontalGlue()); // botones alineados a la derecha
         footer.add(Box.createRigidArea(new Dimension(5, 0))); // separación entre botones
         
+        pnlMessage.add(Box.createHorizontalGlue()); // botones alineados a la derecha
+        pnlMessage.add(Box.createRigidArea(new Dimension(5, 0))); // separación entre botones
+        
         
         footer.setBorder(BorderFactory.createEmptyBorder(50, 5, 5, 5));
+        
 
         // un JPanel por defecto tiene un FlowLayout
         // así que la etiqueta estará centrada
@@ -63,7 +74,11 @@ public class LayoutBase extends JFrame {
 
         // el "contentPane" tiene BorderLayout por defecto
         this.getContentPane().add(panel);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        pnlMessage.add(lblMessage);
+        panel.add(lblMessage);
         panel.add(content);
+        
         
         //this.getContentPane().add(content, BorderLayout.WEST);
         
@@ -71,8 +86,6 @@ public class LayoutBase extends JFrame {
         
         this.getContentPane().add(header, BorderLayout.NORTH);
         
-
-      
 	}
 	
 	protected void reset()
@@ -80,11 +93,12 @@ public class LayoutBase extends JFrame {
 		form.reset();
 	}
 	protected void showMessage(String message){
-		form.showMessage(message);
+		this.lblMessage.setVisible(true);
+		this.lblMessage.setText(message);
 	}
 	
 	protected void hideMessage(){
-		form.hideMessage();
+		this.lblMessage.setVisible(false);
 	}
 	protected void inicializar(){
 		 
