@@ -13,12 +13,19 @@ import ar.edu.uade.ioo.grupo5.tpo.common.ValidationException;
  **/
 
 public class Restaurant {
+	public static Restaurant getInstance(){
+		if(instancia == null){
+			instancia= new Restaurant();
+		}
+		return instancia;
+	}
 	private double comision;
 	private Vector<Consumible> carta;
 	private Vector<Producto> productos;
 	private Vector<Mozo> mozos;
 	private Vector<Mesa> mesas;
 	private Vector<Proveedor> proveedores;
+	
 	private static Restaurant instancia = null;
 	
 	private Restaurant() {
@@ -29,29 +36,76 @@ public class Restaurant {
 		proveedores = new Vector<Proveedor>();
 	}
 	
-	public static Restaurant getInstance(){
-		if(instancia == null){
-			instancia= new Restaurant();
+	public void agregarConsumible(String descripcion, String codigo, double precio){
+		Consumible cons = new Consumible(descripcion, codigo, precio);
+		carta.add(cons);
+	}
+
+	private void agregarMesas(int cantidad) {
+		for (int i = 0; i < cantidad; i++) {
+			mesas.add(new Mesa());
 		}
-		return instancia;
+	}
+
+	private void agregarMozos(int cantidad) {
+		for (int i = 0; i < cantidad; i++) {
+			mozos.add(new Mozo());
+		}
+		
 	}
 	
-	public void inicializar(int cantidadMozos, int cantidadMesas,
-			double porcentajeComision) throws ValidationException {
+	public void agregarPedido(String codConsumible, int cantidad, int nroMesa) throws ErrorException, ValidationException{
 		
-		setComision(porcentajeComision);
+		Mesa unaMesa = buscarMesa(nroMesa);
+		Consumible unConsumible = buscarConsumible(codConsumible);
 		
-		if(cantidadMesas < cantidadMozos)
-			throw new ValidationException("La cantidad de mesas no puede ser menor a la cantidad de mozos");
+		Comanda comanda = unaMesa.getComanda();
 		
-			
-		agregarMozos(cantidadMozos);
+		if(comanda != null){
+			comanda.addItem(unConsumible, cantidad);
+		}
+		else{
+			throw new ValidationException("La mesa no tiene asociada una comanda");
+		}
+	}
 
-		agregarMesas(cantidadMesas);	
+	public void agregarProducto(String nombre, double stock, double puntoPedido,
+			double puntoReabastecimiento, String proveedor) throws ErrorException {
+		Proveedor prov = buscarProveedor(proveedor);
+		Producto prod = new Producto(nombre, stock, puntoPedido, puntoReabastecimiento, prov);
+		productos.add(prod);
+	}
+
+	public void agregarProveedor(String nombre) throws ValidationException{
+		Proveedor prov = new Proveedor(nombre);
+		proveedores.add(prov);
+	}
+
+	public Consumible buscarConsumible(String codConsumible) throws ErrorException {
+		for (Consumible consumible : carta) {
+			if (consumible.getCodigo().equalsIgnoreCase(codConsumible))
+				return consumible;
+		}
 		
-		reasignarMesas();
+		throw new ErrorException("El consumible solicitado no existe");
+	}
+	
+	private Mesa buscarMesa(int nroMesa) {
+		for (Mesa mesa : mesas) {
+			if (mesa.GetNro() == nroMesa)
+				return mesa;
+		}
 		
-		cargarDatosPrueba();
+		return null;
+	}
+
+	private Proveedor buscarProveedor(String nombre) throws ErrorException {
+		for (Proveedor proveedor : proveedores) {
+			if (proveedor.getNombre().equalsIgnoreCase(nombre))
+				return proveedor;
+		}
+		
+		throw new ErrorException("El proveedor solicitado no existe");
 	}
 
 	private void cargarDatosPrueba() throws ValidationException {
@@ -97,54 +151,7 @@ public class Restaurant {
 		carta.add(cocabot);
 		carta.add(spritebot);
 	}
-
-	private void reasignarMesas() throws ValidationException{
-		int i=0;
-		
-		for (Mesa mesa : mesas) {
-			
-			if(i >= mozos.size()){
-				i = 0;
-			}
-			
-			mesa.asignarMozo(mozos.elementAt(i));
-			i++;
-		}
-	}
 	
-	public Vector<LiquidacionViewData> emitirLiquidaciones() {
-		double total;
-		Vector<LiquidacionViewData> liquidaciones = new Vector<LiquidacionViewData>();
-		
-		for (Mozo mozo : mozos) {
-			total = 0;
-			for (Comanda comanda : mozo.getComandasCerradas()) {
-				total +=comanda.calcularTotal();
-			}
-			
-			liquidaciones.add(new LiquidacionViewData(total * this.comision / 100, mozo.getNro()));
-		}
-
-		return liquidaciones;
-	}
-
-	public Vector<OrdenCompra> emitirOrdenesDeCompra() {
-		Vector<OrdenCompra> ordenesDeCompra = new Vector<OrdenCompra>();
-		
-		for (Proveedor proveedor : proveedores) {
-			OrdenCompra orden = new OrdenCompra(proveedor.getNombre());
-			
-			for (Producto producto : proveedor.getProductos()) {
-				orden.addItem(producto.getNombre(), producto.getPuntoReabastecimiento());
-			}
-			
-			if(orden.getItemsCompra().size() > 0)
-				ordenesDeCompra.add(orden);
-		}
-
-		return ordenesDeCompra;
-	}
-
 	public ComandaCerradaViewData cerrarComanda(int NroMesa) throws ErrorException, ValidationException {
 		double total;
 		NumberFormat nm = NumberFormat.getNumberInstance();
@@ -166,53 +173,51 @@ public class Restaurant {
 	
 		return new ComandaCerradaViewData(total, unaMesa.GetNro(), unaMesa.getMozo().getNro());
 	}
+	
+	
+	public Vector<LiquidacionViewData> emitirLiquidaciones() {
+		double total;
+		Vector<LiquidacionViewData> liquidaciones = new Vector<LiquidacionViewData>();
+		
+		for (Mozo mozo : mozos) {
+			total = 0;
+			for (Comanda comanda : mozo.getComandasCerradas()) {
+				total +=comanda.calcularTotal();
+			}
+			
+			liquidaciones.add(new LiquidacionViewData(total * this.comision / 100, mozo.getNro()));
+		}
 
-	public void agregarPedido(String codConsumible, int cantidad, int nroMesa) throws ErrorException, ValidationException{
-		
-		Mesa unaMesa = buscarMesa(nroMesa);
-		Consumible unConsumible = buscarConsumible(codConsumible);
-		
-		Comanda comanda = unaMesa.getComanda();
-		
-		if(comanda != null){
-			comanda.addItem(unConsumible, cantidad);
-		}
-		else{
-			throw new ValidationException("La mesa no tiene asociada una comanda");
-		}
+		return liquidaciones;
 	}
 	
-	public void nuevaComanda(int nroMesa) throws ErrorException{
-		Mesa unaMesa = buscarMesa(nroMesa);
-
-		if (unaMesa != null) {
-			unaMesa.setEstado(ESTADO_MESA.OCUPADA);
-
-			Comanda unaComanda = new Comanda();
-			unaMesa.setComanda(unaComanda);
-
-		}
-		else {
-			throw new ErrorException("La mesa ingresada no existe");
-		}
-	}
-
-	private Mesa buscarMesa(int nroMesa) {
-		for (Mesa mesa : mesas) {
-			if (mesa.GetNro() == nroMesa)
-				return mesa;
-		}
+	public Vector<OrdenCompra> emitirOrdenesDeCompra() {
+		Vector<OrdenCompra> ordenesDeCompra = new Vector<OrdenCompra>();
 		
-		return null;
-	}
-
-	public Consumible buscarConsumible(String codConsumible) throws ErrorException {
-		for (Consumible consumible : carta) {
-			if (consumible.getCodigo().equalsIgnoreCase(codConsumible))
-				return consumible;
+		for (Proveedor proveedor : proveedores) {
+			OrdenCompra orden = new OrdenCompra(proveedor.getNombre());
+			
+			for (Producto producto : proveedor.getProductos()) {
+				orden.addItem(producto.getNombre(), producto.getPuntoReabastecimiento());
+			}
+			
+			if(orden.getItemsCompra().size() > 0)
+				ordenesDeCompra.add(orden);
 		}
-		
-		throw new ErrorException("El consumible solicitado no existe");
+
+		return ordenesDeCompra;
+	}
+	
+	public int getCantidadMesas() {
+		return mesas.size();
+	}
+	
+	public int getCantidadMozos() {
+		return mozos.size();
+	}
+	
+	public double getComision() {
+		return comision;
 	}
 	
 	private Vector<Mesa> getMesasLibres(){
@@ -227,44 +232,24 @@ public class Restaurant {
 		return mesasLibres;
 	}
 	
-	
-	private void agregarMesas(int cantidad) {
-		for (int i = 0; i < cantidad; i++) {
-			mesas.add(new Mesa());
-		}
-	}
-	
-	private void quitarMesas(int cantidad) {
-		Vector<Mesa> mesasLibres = getMesasLibres();
+	public void inicializar(int cantidadMozos, int cantidadMesas,
+			double porcentajeComision) throws ValidationException {
 		
-		for (Mesa mesaLibre : mesasLibres) {
-			if(cantidad == 0)
-				break;
+		setComision(porcentajeComision);
+		
+		if(cantidadMesas < cantidadMozos)
+			throw new ValidationException("La cantidad de mesas no puede ser menor a la cantidad de mozos");
+		
 			
-			mesas.remove(mesaLibre);
-			cantidad--;
-		}
+		agregarMozos(cantidadMozos);
+
+		agregarMesas(cantidadMesas);	
 		
+		reasignarMesas();
+		
+		cargarDatosPrueba();
 	}
-	
-	private void quitarMozos(int cantidad) {
-		
-		if(cantidad < mozos.size())
-			return;
-		
-		for (int i = 0; i < cantidad; i++) {
-			mozos.remove(mozos.elementAt(i));
-		}
-		
-	}
-	
-	private void agregarMozos(int cantidad) {
-		for (int i = 0; i < cantidad; i++) {
-			mozos.add(new Mozo());
-		}
-		
-	}
-	
+
 	public void modificarCantidadMesas(int cantidadMesas) throws ValidationException{
 		
 		if(mozos.size() > cantidadMesas)
@@ -282,7 +267,7 @@ public class Restaurant {
 		reasignarMesas();
 		
 	}
-	
+
 	public void modificarCantidadMozos(int cantidadMozos) throws ValidationException{
 		
 		if(cantidadMozos > this.mesas.size())
@@ -299,7 +284,60 @@ public class Restaurant {
 		
 		reasignarMesas();
 	}
-	
+
+	public void nuevaComanda(int nroMesa) throws ErrorException{
+		Mesa unaMesa = buscarMesa(nroMesa);
+
+		if (unaMesa != null) {
+			unaMesa.setEstado(ESTADO_MESA.OCUPADA);
+
+			Comanda unaComanda = new Comanda();
+			unaMesa.setComanda(unaComanda);
+
+		}
+		else {
+			throw new ErrorException("La mesa ingresada no existe");
+		}
+	}
+
+	private void quitarMesas(int cantidad) {
+		Vector<Mesa> mesasLibres = getMesasLibres();
+		
+		for (Mesa mesaLibre : mesasLibres) {
+			if(cantidad == 0)
+				break;
+			
+			mesas.remove(mesaLibre);
+			cantidad--;
+		}
+		
+	}
+
+	private void quitarMozos(int cantidad) {
+		
+		if(cantidad < mozos.size())
+			return;
+		
+		for (int i = 0; i < cantidad; i++) {
+			mozos.remove(mozos.elementAt(i));
+		}
+		
+	}
+
+	private void reasignarMesas() throws ValidationException{
+		int i=0;
+		
+		for (Mesa mesa : mesas) {
+			
+			if(i >= mozos.size()){
+				i = 0;
+			}
+			
+			mesa.asignarMozo(mozos.elementAt(i));
+			i++;
+		}
+	}
+
 	public void setComision(double comision)throws ValidationException{
 		if(comision <= 100 && comision >= 0){
 			this.comision = comision;
@@ -309,15 +347,9 @@ public class Restaurant {
 		}
 	}
 
-	public int getCantidadMesas() {
-		return mesas.size();
-	}
-
-	public int getCantidadMozos() {
-		return mozos.size();
-	}
-
-	public double getComision() {
-		return comision;
+	public void agregarProductoAConsumible(String text, String text2,
+			double parseDouble) {
+		// TODO TODAVIA NO HACE NADA
+		
 	}
 }
