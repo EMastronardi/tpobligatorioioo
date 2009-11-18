@@ -20,7 +20,15 @@ public class Consumible {
 	
 	
 	
-	public Consumible(String descripcion, String codigo, double precio) {
+	public Consumible(String descripcion, String codigo, double precio) throws ValidationException {
+		if(descripcion.equals("") || descripcion == null)
+			throw new ValidationException("La descripción ingresada del consumible es inválida");
+		
+		if(codigo.equals("") || codigo == null)
+			throw new ValidationException("El código ingresado del consumible es inválido");
+		
+		if(precio < 0)
+			throw new ValidationException("El precio ingresado del consumible es inválido");
 		
 		this.descripcion = descripcion;
 		this.codigo = codigo;

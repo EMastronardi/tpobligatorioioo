@@ -15,11 +15,11 @@ import ar.edu.uade.ioo.grupo5.tpo.control.Restaurant;
 public class AgregarProductosAConsumibles extends LayoutBase {
 
 	private static AgregarProductosAConsumibles ventana;
-//	private JTextField txtConsumible; //TODO este habria que cambiarlo por un combo de consumibles
+
 	private JTextField txtCantidad; 
 	private JComboBox cbxConsumible; 
 	private JComboBox cbxProducto;
-//	private JTextField txtProducto; //TODO este habria que cambiarlo por un combo de productos
+
 	private JButton btnAgregar;
 	private JButton btnCancelar;
 	private String[] codigosConsumibles;
@@ -49,8 +49,7 @@ public class AgregarProductosAConsumibles extends LayoutBase {
 	private void cargarControles() {
 		
 		reset();
-//		txtConsumible = new JTextField(4);
-//		txtProducto = new JTextField(4);
+
 		String consumibles[] = Restaurant.getInstance().getConsumibles();
 		codigosConsumibles = Restaurant.getInstance().getCodigoConsumibles();
 		cbxConsumible = new JComboBox(consumibles);
@@ -58,9 +57,7 @@ public class AgregarProductosAConsumibles extends LayoutBase {
 		cbxProducto = new JComboBox(productos);
 		
 		txtCantidad = new JTextField(4);
-		
-//		addField("Consumible",txtConsumible);
-//		addField("Producto",txtProducto);
+
 		addField("Consumible",cbxConsumible);
 		addField("Producto",cbxProducto);
 		addField("Cantidad", txtCantidad);
@@ -78,6 +75,7 @@ public class AgregarProductosAConsumibles extends LayoutBase {
 			
 	
 			public void actionPerformed(ActionEvent e) {
+				if (!validarDatos()) return;
 				try {
 					Restaurant.getInstance().agregarProductoAConsumible(codigosConsumibles[cbxConsumible.getSelectedIndex()],
 							String.valueOf(cbxProducto.getSelectedItem()),
@@ -101,6 +99,15 @@ public class AgregarProductosAConsumibles extends LayoutBase {
 			}
 		});
 
+	}
+	
+	private boolean validarDatos(){
+		String message = "";
+		if(txtCantidad.getText().equals("")) message = "La cantidad es un campo obligatorio";
+		
+		showMessage(message);
+		return message.equals("");
+			
 	}
 
 	public static AgregarProductosAConsumibles getInstance() {

@@ -32,7 +32,7 @@ public class AltaConsumibles extends LayoutBase {
 		txtPrecio = new JTextField(4);
 		
 		addField("Nombre",txtDescripcion);
-		addField("Codigo", txtCodigo);
+		addField("Código", txtCodigo);
 		addField("Precio", txtPrecio);
 		addButton(btnAgregar);
 		addButton(btnCancelar);
@@ -45,11 +45,18 @@ public class AltaConsumibles extends LayoutBase {
 	void inicializarEventos(){
 		btnAgregar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				Restaurant.getInstance().agregarConsumible(txtDescripcion.getText(),
-						txtCodigo.getText(),
-						Double.parseDouble(txtPrecio.getText()));
-				borrar();
-				dispose();
+				if(!validarDatos())
+					return;
+				try {
+					Restaurant.getInstance().agregarConsumible(txtDescripcion.getText(),
+							txtCodigo.getText(),
+							Double.parseDouble(txtPrecio.getText()));
+					borrar();
+					dispose();
+				} catch (Exception ex) {
+					handleException(ex);
+				}
+				
 			}
 		});
 		
@@ -60,6 +67,17 @@ public class AltaConsumibles extends LayoutBase {
 			}
 		});
 
+	}
+	
+	private boolean validarDatos(){
+		String message = "";
+		
+		if(txtPrecio.getText().equals("")) message = "El precio del consumible es un campo obligatorio";
+		if(txtCodigo.getText().equals("")) message = "El código del consumible es un campo obligatorio";
+		if(txtDescripcion.getText().equals("")) message = "El nombre del consumible es un campo obligatorio";
+		
+		showMessage(message);
+		return message.equals("");
 	}
 
 	public static AltaConsumibles getInstance() {
