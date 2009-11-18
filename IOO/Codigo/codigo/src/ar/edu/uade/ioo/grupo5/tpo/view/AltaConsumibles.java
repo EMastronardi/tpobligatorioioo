@@ -32,7 +32,8 @@ public class AltaConsumibles extends LayoutBase {
 		txtPrecio = new JTextField(4);
 		
 		addField("Nombre",txtDescripcion);
-		addField("Stock Inicial", txtCodigo);
+		addField("Codigo", txtCodigo);
+		addField("Precio", txtPrecio);
 		addButton(btnAgregar);
 		addButton(btnCancelar);
 		inicializarEventos();

@@ -67,7 +67,7 @@ public class Principal extends LayoutBase {
 		menuAltaConsumibles = new JMenuItem("Alta Consumibles");
 		menuAltaProductos = new JMenuItem("Alta Productos");
 		menuAltaProveedores = new JMenuItem("Alta Proveedores");
-		menuAltaProductosAConsumibles = new JMenuItem("Agregar Productos a un Consumible");
+		menuAltaProductosAConsumibles = new JMenuItem("Alta Productos a un Consumible");
 
 		menuAltas.add(menuAltaConsumibles);
 		menuAltas.add(menuAltaProductos);
