@@ -76,6 +76,9 @@ public class LayoutBase extends JFrame {
         this.getContentPane().add(panel);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         pnlMessage.add(lblMessage);
+        lblMessage.setAlignmentY(TOP_ALIGNMENT);
+        pnlMessage.setAlignmentY(TOP_ALIGNMENT);
+        content.setAlignmentY(TOP_ALIGNMENT);
         panel.add(lblMessage);
         panel.add(content);
         
