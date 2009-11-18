@@ -272,6 +272,9 @@ public class Restaurant {
 
 	public void modificarCantidadMesas(int cantidadMesas) throws ValidationException{
 		
+		if(cantidadMesas <= 0)
+			throw new ValidationException("La cantidad de mesas debe ser mayor a cero");
+		
 		if(mozos.size() > cantidadMesas)
 			throw new ValidationException("La cantidad de mesas no puede ser menor a la cantidad de mozos");
 	
@@ -289,6 +292,8 @@ public class Restaurant {
 	}
 
 	public void modificarCantidadMozos(int cantidadMozos) throws ValidationException{
+		if(cantidadMozos <= 0)
+			throw new ValidationException("La cantidad de mozos debe ser mayor a cero");
 		
 		if(cantidadMozos > this.mesas.size())
 			throw new ValidationException("La cantidad de mesas no puede ser menor a la cantidad de mozos");
@@ -335,7 +340,7 @@ public class Restaurant {
 
 	private void quitarMozos(int cantidad) {
 		
-		if(cantidad < mozos.size())
+		if(cantidad >= mozos.size())
 			return;
 		
 		for (int i = 0; i < cantidad; i++) {
