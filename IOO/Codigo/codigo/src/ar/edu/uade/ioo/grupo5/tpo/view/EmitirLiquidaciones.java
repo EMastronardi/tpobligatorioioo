@@ -42,7 +42,6 @@ public class EmitirLiquidaciones extends LayoutBase {
 				
 		btnAceptar = new JButton("Aceptar");
 		
-		addField("", scrollPane);
 		
 		addButton(btnAceptar);
 		
@@ -84,6 +83,9 @@ public class EmitirLiquidaciones extends LayoutBase {
 			tabLiquidaciones = new JTable(data, columnNames); 
 			scrollPane = new JScrollPane(tabLiquidaciones);
 			tabLiquidaciones.setFillsViewportHeight(true);
+			
+			reset();
+			addField("", scrollPane);
 		} catch (Exception e) {
 			handleException(e);
 		}
