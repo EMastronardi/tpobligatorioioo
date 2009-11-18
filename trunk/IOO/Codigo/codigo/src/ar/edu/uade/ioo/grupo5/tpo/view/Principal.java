@@ -132,7 +132,7 @@ public class Principal extends LayoutBase {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					hideMessage();
-					EmitirLiquidaciones.getInstance().mostar();
+					EmitirLiquidaciones.getInstance().mostrar();
 					
 					
 				} catch (Exception ex) {
@@ -146,7 +146,7 @@ public class Principal extends LayoutBase {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					hideMessage();
-					EmitirOrdenesDeCompra.getInstance().mostar();
+					EmitirOrdenesDeCompra.getInstance().mostrar();
 
 				} catch (Exception ex) {
 					handleException(ex);
@@ -189,7 +189,7 @@ public class Principal extends LayoutBase {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					hideMessage();
-					AltaProductos.getInstance().setVisible(true);
+					AltaProductos.getInstance().mostrar();
 
 				} catch (Exception ex) {
 					handleException(ex);
