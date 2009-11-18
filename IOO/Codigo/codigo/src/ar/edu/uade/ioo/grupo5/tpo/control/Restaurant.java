@@ -385,4 +385,34 @@ public class Restaurant {
 		
 		return lista;
 	}
+
+	public String[] getConsumibles() {
+		String lista[] = new String[this.carta.size()];
+		
+		for (int i=0; i<this.carta.size();i++){
+			String consu = this.carta.elementAt(i).getDescripcion();
+			lista[i] = consu;
+		}
+		return lista;
+	}
+	
+	public String[] getCodigoConsumibles() {
+		String lista[] = new String[this.carta.size()];
+		
+		for (int i=0; i<this.carta.size();i++){
+			String codigo = this.carta.elementAt(i).getCodigo();
+			lista[i] = codigo;
+		}
+		return lista;
+	}
+	
+	public String[] getProductos() {
+		String lista[] = new String[this.productos.size()];
+		
+		for (int i=0; i<this.productos.size();i++){
+			String prod = this.productos.elementAt(i).getNombre();
+			lista[i] = prod;
+		}
+		return lista;
+	}
 }

@@ -203,7 +203,7 @@ public class Principal extends LayoutBase {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					hideMessage();
-					AgregarProductosAConsumibles.getInstance().setVisible(true);
+					AgregarProductosAConsumibles.getInstance().mostrar();
 
 				} catch (Exception ex) {
 					handleException(ex);
