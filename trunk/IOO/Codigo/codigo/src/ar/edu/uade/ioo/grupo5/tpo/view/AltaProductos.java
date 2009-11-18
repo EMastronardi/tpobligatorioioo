@@ -91,7 +91,7 @@ public class AltaProductos extends LayoutBase {
 	}
 	private void borrar(){
 		txtDescripcion.setText("");
-		txtProveedor.setText("");
+		cbxProveedores.setSelectedIndex(0);
 		txtPtoPedido.setText("");
 		txtPtoReabastecimiento.setText("");
 		txtStock.setText("");
