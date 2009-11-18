@@ -2,6 +2,7 @@ package ar.edu.uade.ioo.grupo5.tpo.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.DefaultListModel;
@@ -83,15 +84,21 @@ public class EmitirOrdenesDeCompra extends LayoutBase {
 			
 			Vector<OrdenCompra> OCs = Restaurant.getInstance().emitirOrdenesDeCompra();
 			
-			Object[][] data = new Object[OCs.size()][3];
+			int totalItems = 0;
+			for (OrdenCompra ordenCompra : OCs) {
+				totalItems += ordenCompra.getItemsCompra().size();
+			}
+			
+			Object[][] data = new Object[totalItems][3];
+			
+			int indexItem = 0;
 			for(int i=0;i<OCs.size();i++){
-				
 				for(int j=0;j<OCs.elementAt(i).getItemsCompra().size();j++){
-					data[i][0] = OCs.elementAt(i).getProveedor();
-					data[i][1] = OCs.elementAt(i).getItemsCompra().elementAt(j).getProducto();
-					data[i][2] = OCs.elementAt(i).getItemsCompra().elementAt(j).getCantidad();
+					data[indexItem][0] = OCs.elementAt(i).getProveedor();
+					data[indexItem][1] = OCs.elementAt(i).getItemsCompra().elementAt(j).getProducto();
+					data[indexItem][2] = OCs.elementAt(i).getItemsCompra().elementAt(j).getCantidad();
+					indexItem++;
 				}
-				
 			}
 			
 			tabOrdenesCompra = new JTable(data, columnNames){

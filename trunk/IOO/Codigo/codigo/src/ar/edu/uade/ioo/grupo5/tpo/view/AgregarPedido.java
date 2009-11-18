@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -19,18 +20,16 @@ import ar.edu.uade.ioo.grupo5.tpo.control.Restaurant;
  */
 public class AgregarPedido extends LayoutBase {
 	private static AgregarPedido instancia;
-	private JTextField txtCodigoConsumible; 
-	private JButton btnBuscarConsumible;
-	
-	private JLabel lblConsumible;
-	private JLabel lblConsumibleDescripcion;
+	private JLabel lblPrecio;
+	private JLabel lblPrecioConsumible;
 	private JLabel lblCantidadDescripcion;
 	private JTextField txtCantidad;
 	private JTextField txtNroMesa;
 	private JLabel lblNroMesaDescripcion;
 	private JButton btnAgregarPedido;
 	private JButton btnSalir;
-	
+	private JComboBox cbxCarta;
+	private String[] codigosConsumibles;
     private AgregarPedido() {
     	super("Agregar pedido a la comanda");
     	try {
@@ -43,81 +42,66 @@ public class AgregarPedido extends LayoutBase {
     }
     
     private void initGUI() {
-    	// Buscador de consumible
-		txtCodigoConsumible = new JTextField(10);
-		btnBuscarConsumible = new JButton("Buscar consumible");
-		lblConsumible = new JLabel();
+    	
+    	String[] carta = Restaurant.getInstance().getConsumibles();
+    	codigosConsumibles = Restaurant.getInstance().getCodigoConsumibles();
+    	
+    	
+    	cbxCarta = new JComboBox(carta);
+    	
+    	
+		lblPrecio = new JLabel();
 		txtNroMesa = new JTextField(4);
 		btnAgregarPedido = new JButton("Agregar pedido");
 		lblNroMesaDescripcion = new JLabel("Nro. Mesa");
-		lblConsumibleDescripcion = new JLabel("Descripción");
+		lblPrecioConsumible = new JLabel("Precio");
 		txtCantidad = new JTextField(4);
 		lblCantidadDescripcion = new JLabel("Cantidad");
 		btnSalir = new JButton("Salir");
 		
+		addField("Carta", cbxCarta);
 		
-		addField("Cod. consumible", txtCodigoConsumible);
-		addButton(btnBuscarConsumible);
-		addField(lblConsumibleDescripcion, lblConsumible);
+		addField(lblPrecioConsumible, lblPrecio);
 		addField(lblNroMesaDescripcion, txtNroMesa);
 		addField(lblCantidadDescripcion, txtCantidad);
 		addButton(btnAgregarPedido);
 		addButton(btnSalir);
-		mostrarResultado(false);
+		
 		
 		setSize(400, 300);
+		cargarPrecioConsumible();
 	}
     
     private void setDefault(){
-    	txtCodigoConsumible.setText("");
+    	
     	txtNroMesa.setText("");
-    	lblConsumible.setText("");
-    	mostrarResultado(false);
+    	lblPrecio.setText("");
+    	cbxCarta.setSelectedIndex(0);
+    	cargarPrecioConsumible();
     	hideMessage();
     	
     }
     
-    private boolean esValidoBuscarConsumible(){
-    	
-		if (txtCodigoConsumible.getText().equals(""))return false;
-		
-		return true ;
-	}
+    
     
     private boolean esValidoAgregarPedido(){
-    	
+		String message= "";
 		
-		if (txtCantidad.getText().equals("")) return false;
-		if (txtNroMesa.getText().equals("")) return false;
-		
-		return true ;
+		if (txtCantidad.getText().equals("")) message = "La cantidad es un campo obligatorio";
+		if (txtNroMesa.getText().equals("")) message = "El Nro. de mesa es un campo obligatorio";
+				
+		showMessage(message);
+		return message.equals("") ;
 	}
     
     private void clearTextFields(){
     	txtCantidad.setText("");
-    	txtCodigoConsumible.setText("");
+    	
     	txtNroMesa.setText("");
     }
     
     private void inicializarEventos() {
 	
-		btnBuscarConsumible.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					String codigo = txtCodigoConsumible.getText().trim();
-					
-					Consumible consumible =  Restaurant.getInstance().buscarConsumible(codigo);
-				
-					lblConsumible.setText(String.format("%s (%s) | Precio:%f", consumible.getDescripcion(), consumible.getCodigo(), consumible.getPrecio()));
-					mostrarResultado(true);
-				} catch (Exception ex) {
-					handleException(ex);
-				}
-				
-			}
-		});
-		
 		btnSalir.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -127,14 +111,26 @@ public class AgregarPedido extends LayoutBase {
 			}
 		});
 		
+		cbxCarta.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				cargarPrecioConsumible();
+			}
+
+			
+		});
 		btnAgregarPedido.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				if(!esValidoAgregarPedido())
+					return;
 				try {
 					
 					int nroMesa = Integer.parseInt(txtNroMesa.getText());
 					int cantidad = Integer.parseInt(txtCantidad.getText());
-					String codConsumible = txtCodigoConsumible.getText().trim();
+					int indexConsumible = cbxCarta.getSelectedIndex();
+					String codConsumible = codigosConsumibles[indexConsumible];
 					
 					Restaurant.getInstance().agregarPedido(codConsumible, cantidad, nroMesa);
 					
@@ -149,15 +145,16 @@ public class AgregarPedido extends LayoutBase {
 		
 	}
     
-    private void mostrarResultado(boolean mostrar){
-    	btnAgregarPedido.setVisible(mostrar);
-    	txtNroMesa.setVisible(mostrar);
-    	lblConsumible.setVisible(mostrar);
-    	lblCantidadDescripcion.setVisible(mostrar);
-    	txtCantidad.setVisible(mostrar);
-    	lblConsumibleDescripcion.setVisible(mostrar);
-    	lblNroMesaDescripcion.setVisible(mostrar);
-    }
+    private void cargarPrecioConsumible() {
+		try {
+			int indexConsumible = cbxCarta.getSelectedIndex();
+			String codConsumible = codigosConsumibles[indexConsumible];
+			double precio = Restaurant.getInstance().getConsumiblePrecio(codConsumible);
+			lblPrecio.setText("$ " + precio);
+		} catch (Exception ex) {
+			handleException(ex);
+		}
+	}
     
 	public static AgregarPedido getInstance(){
     	if(instancia == null){
