@@ -22,7 +22,13 @@ public class Principal extends LayoutBase {
 	private JMenuItem menuEmitirLiquidaciones;
 	private JMenuItem menuEmitirOrdenesCompra;
 	private JMenuItem menuModificarDatosSistema;
-	
+
+	private JMenu menuAltas;
+	private JMenuItem menuAltaProductos;
+	private JMenuItem menuAltaProveedores;
+	private JMenuItem menuAltaConsumibles;
+	private JMenuItem menuAltaProductosAConsumibles;
+
 	private Principal() {
 		super("Sistema RESTAURANT");
 		initGUI();
@@ -56,10 +62,22 @@ public class Principal extends LayoutBase {
 		menuSistema.add(menuEmitirLiquidaciones);
 		menuSistema.add(menuModificarDatosSistema);
 		menuSistema.add(menuEmitirOrdenesCompra);
-		
+
+		menuAltas = new JMenu("Altas");
+		menuAltaConsumibles = new JMenuItem("Alta Consumibles");
+		menuAltaProductos = new JMenuItem("Alta Productos");
+		menuAltaProveedores = new JMenuItem("Alta Proveedores");
+		menuAltaProductosAConsumibles = new JMenuItem("Agregar Productos a un Consumible");
+
+		menuAltas.add(menuAltaConsumibles);
+		menuAltas.add(menuAltaProductos);
+		menuAltas.add(menuAltaProveedores);
+		menuAltas.add(menuAltaProductosAConsumibles);
+
 		barraMenu.add(menuMesas);
 		barraMenu.add(menuSistema);
-		
+		barraMenu.add(menuAltas);
+
 		setJMenuBar(barraMenu);
 		inicializar();
 		
@@ -129,8 +147,64 @@ public class Principal extends LayoutBase {
 				try {
 					hideMessage();
 					EmitirOrdenesDeCompra.getInstance().mostar();
-					
-					
+
+				} catch (Exception ex) {
+					handleException(ex);
+				}
+
+			}
+		});
+
+
+		menuAltaConsumibles.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				try {
+					hideMessage();
+					AltaConsumibles.getInstance().setVisible(true);
+
+				} catch (Exception ex) {
+					handleException(ex);
+				}
+
+			}
+		});
+
+		menuAltaProveedores.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				try {
+					hideMessage();
+					AltaProveedores.getInstance().setVisible(true);
+
+				} catch (Exception ex) {
+					handleException(ex);
+				}
+
+			}
+		});
+
+		menuAltaProductos.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				try {
+					hideMessage();
+					AltaProductos.getInstance().setVisible(true);
+
+				} catch (Exception ex) {
+					handleException(ex);
+				}
+
+			}
+		});
+		
+		menuAltaProductosAConsumibles.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				try {
+					hideMessage();
+					AgregarProductosAConsumibles.getInstance().setVisible(true);
+
 				} catch (Exception ex) {
 					handleException(ex);
 				}
