@@ -77,10 +77,17 @@ public class EmitirLiquidaciones extends LayoutBase {
 			Vector<LiquidacionViewData> liqs = Restaurant.getInstance().emitirLiquidaciones();
 			Object[][] data = new Object[liqs.size()][2];
 			for(int i=0;i<liqs.size();i++){
-				data[i][0] = liqs.elementAt(i).getNroMozo();
-				data[i][1] = liqs.elementAt(i).getComision();
+				data[i][0] = "   Mozo "+ liqs.elementAt(i).getNroMozo();
+				data[i][1] = "$" + liqs.elementAt(i).getComision();
+				
 			}
-			tabLiquidaciones = new JTable(data, columnNames); 
+			tabLiquidaciones = new JTable(data, columnNames)
+			{
+				public boolean isCellEditable(int row, int column)
+			{
+				return false;
+			}};
+			
 			scrollPane = new JScrollPane(tabLiquidaciones);
 			tabLiquidaciones.setFillsViewportHeight(true);
 			

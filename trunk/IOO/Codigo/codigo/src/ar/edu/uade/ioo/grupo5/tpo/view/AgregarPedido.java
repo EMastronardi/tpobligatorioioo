@@ -47,11 +47,11 @@ public class AgregarPedido extends LayoutBase {
 		txtCodigoConsumible = new JTextField(10);
 		btnBuscarConsumible = new JButton("Buscar consumible");
 		lblConsumible = new JLabel();
-		txtNroMesa = new JTextField(3);
+		txtNroMesa = new JTextField(4);
 		btnAgregarPedido = new JButton("Agregar pedido");
 		lblNroMesaDescripcion = new JLabel("Nro. Mesa");
 		lblConsumibleDescripcion = new JLabel("Descripción");
-		txtCantidad = new JTextField();
+		txtCantidad = new JTextField(4);
 		lblCantidadDescripcion = new JLabel("Cantidad");
 		btnSalir = new JButton("Salir");
 		

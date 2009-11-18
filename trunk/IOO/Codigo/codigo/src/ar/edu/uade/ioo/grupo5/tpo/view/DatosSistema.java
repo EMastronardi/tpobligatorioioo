@@ -29,6 +29,20 @@ public class DatosSistema extends LayoutBase {
 			
 	}
 
+	private boolean esValidoModificarDatos(){
+		String message = "";
+		
+		if (txtCantidadMesas.getText().equals("")) message = "La cantidad de mesas es un campo obligatorio";
+		if (txtPorcentajeComision.getText().equals("")) message = "La comisión es un campo obligatorio";
+		if (txtCantidadMozos.getText().equals("")) message = "La cantidad de mozos es un campo obligatorio";
+		
+		
+		
+		showMessage(message);
+		
+		return message.equals("");
+	}
+
 	private void initGUI() {
 
 		txtCantidadMesas = new JTextField(4);
@@ -49,8 +63,13 @@ public class DatosSistema extends LayoutBase {
 		btnCargarDatos.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				hideMessage();
+				
+				if (!esValidoModificarDatos())
+					return;
+				
 				try {
-					hideMessage();
+					
 					int cantidadMozos = Integer.parseInt(txtCantidadMozos.getText());
 					int cantidadMesas = Integer.parseInt(txtCantidadMesas.getText());
 					double porcentajeComision = Double.parseDouble(txtPorcentajeComision.getText());

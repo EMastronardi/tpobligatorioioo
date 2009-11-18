@@ -15,15 +15,14 @@ import javax.swing.JTextField;
 public class Formulario {
 	 private GridBagConstraints constraints;
 	    private Container container;
+	   
 	    private JLabel lblMessage;
 	    public Formulario(Container container) {
 	    	initGUI(container);
 	       
 	    }
 		private void initGUI(Container container) {
-			lblMessage = new JLabel();
-	    	lblMessage.setSize(500, 50);
-	    	lblMessage.setForeground(new Color(203,12,12));
+			
 	    	
 	        this.container = container;
 	        container.setLayout(new GridBagLayout());
@@ -32,8 +31,7 @@ public class Formulario {
 	        constraints.gridx = 0;
 	        constraints.gridy = 0;
 	        constraints.anchor = GridBagConstraints.LINE_START;
-	        this.container.add(lblMessage, constraints);
-	        constraints.gridy++;
+	    
 		}
 	    public void showMessage(String message){
 	    	lblMessage.setText(message);

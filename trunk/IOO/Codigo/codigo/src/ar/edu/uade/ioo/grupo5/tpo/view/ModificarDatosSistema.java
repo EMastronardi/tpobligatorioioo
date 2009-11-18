@@ -61,12 +61,15 @@ public class ModificarDatosSistema extends LayoutBase {
 	}
 	
 	private boolean esValidoModificarDatos(){
+		String message = "";
 		
-		if (txtCantidadMesas.getText().equals("")) return false;
-		if (txtCantidadMozos.getText().equals("")) return false;
-		if (txtPorcentajeComision.getText().equals("")) return false;
+		if (txtCantidadMesas.getText().equals("")) message = "La cantidad de mesas es un campo obligatorio";
+		if (txtPorcentajeComision.getText().equals("")) message = "La comisión es un campo obligatorio";
+		if (txtCantidadMozos.getText().equals("")) message = "La cantidad de mozos es un campo obligatorio";
 		
-		return true;
+		showMessage(message);
+		
+		return message.equals("");
 	}
 
 	private void inicializarEventos(){
@@ -75,10 +78,9 @@ public class ModificarDatosSistema extends LayoutBase {
 			public void actionPerformed(ActionEvent e) {
 				hideMessage();
 				
-				if (!esValidoModificarDatos()){
-					showMessage("Debe ingresar un numero de mesa");
+				if (!esValidoModificarDatos())
 					return;
-				}
+
 				try {
 					
 					int cantidadMozos = Integer.parseInt(txtCantidadMozos.getText());
