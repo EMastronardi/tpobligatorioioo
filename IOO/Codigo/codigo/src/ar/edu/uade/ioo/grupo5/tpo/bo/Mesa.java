@@ -51,5 +51,6 @@ public class Mesa {
 	
 	public Mesa() {
 		this.nro = getNewId();
+		this.estado = estado.LIBRE;
 	}
 }
