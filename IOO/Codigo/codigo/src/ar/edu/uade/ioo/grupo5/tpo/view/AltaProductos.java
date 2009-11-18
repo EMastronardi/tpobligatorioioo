@@ -64,11 +64,21 @@ public class AltaProductos extends LayoutBase {
 							Double.parseDouble(txtPtoPedido.getText()),
 							Double.parseDouble(txtPtoReabastecimiento.getText()),
 							txtProveedor.getText());
+							borrar();
+							dispose();
 				} catch (Exception e1) {
 					handleException(e1);
 				}
 			}
 		});
+		
+		btnCancelar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				borrar();
+				dispose();
+			}
+		});
+
 	}
 
 	public static AltaProductos getInstance() {
@@ -77,5 +87,11 @@ public class AltaProductos extends LayoutBase {
 		}
 		return ventana;
 	}
-	
+	private void borrar(){
+		txtDescripcion.setText("");
+		txtProveedor.setText("");
+		txtPtoPedido.setText("");
+		txtPtoReabastecimiento.setText("");
+		txtStock.setText("");
+	}
 }

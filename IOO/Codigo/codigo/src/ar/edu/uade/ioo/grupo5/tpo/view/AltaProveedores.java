@@ -25,7 +25,7 @@ public class AltaProveedores extends LayoutBase {
 		btnAgregar = new JButton("Agregar");
 		btnCancelar = new JButton("Cancelar");
 		
-		JTextField txtNombre = new JTextField(10);
+		txtNombre = new JTextField(10);
 		
 		addField("Nombre",txtNombre);
 		
@@ -43,12 +43,22 @@ public class AltaProveedores extends LayoutBase {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					Restaurant.getInstance().agregarProveedor(txtNombre.getText());
+					borrar();
+					dispose();
 				}
 				catch (Exception ex){
 					handleException(ex);
 				}
 			}
 		});
+		
+		btnCancelar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				borrar();
+				dispose();
+			}
+		});
+
 	}
 
 	public static AltaProveedores getInstance() {
@@ -58,4 +68,7 @@ public class AltaProveedores extends LayoutBase {
 		return ventana;
 	}
 	
+	private void borrar(){
+		txtNombre.setText("");
+	}
 }

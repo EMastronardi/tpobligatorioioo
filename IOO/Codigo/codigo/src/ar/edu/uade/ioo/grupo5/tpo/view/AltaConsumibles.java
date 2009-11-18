@@ -24,8 +24,8 @@ public class AltaConsumibles extends LayoutBase {
 	}
 
 	void initGUI(){
-		btnAgregar = new JButton();
-		btnCancelar = new JButton();
+		btnAgregar = new JButton("Agregar");
+		btnCancelar = new JButton("Cancelar");
 				
 		txtDescripcion = new JTextField(10);
 		txtCodigo = new JTextField(4);
@@ -34,6 +34,7 @@ public class AltaConsumibles extends LayoutBase {
 		addField("Nombre",txtDescripcion);
 		addField("Stock Inicial", txtCodigo);
 		addButton(btnAgregar);
+		addButton(btnCancelar);
 		inicializarEventos();
 		
 		inicializar();
@@ -42,16 +43,22 @@ public class AltaConsumibles extends LayoutBase {
 	
 	void inicializarEventos(){
 		btnAgregar.addActionListener(new ActionListener(){
-			
-
-			
 			public void actionPerformed(ActionEvent e) {
 				Restaurant.getInstance().agregarConsumible(txtDescripcion.getText(),
 						txtCodigo.getText(),
 						Double.parseDouble(txtPrecio.getText()));
-				
+				borrar();
+				dispose();
 			}
 		});
+		
+		btnCancelar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				borrar();
+				dispose();
+			}
+		});
+
 	}
 
 	public static AltaConsumibles getInstance() {
@@ -61,4 +68,10 @@ public class AltaConsumibles extends LayoutBase {
 		return ventana;
 	}
 	
+	
+	private void borrar(){
+		txtCodigo.setText("");
+		txtDescripcion.setText("");
+		txtPrecio.setText("");
+	}
 }
