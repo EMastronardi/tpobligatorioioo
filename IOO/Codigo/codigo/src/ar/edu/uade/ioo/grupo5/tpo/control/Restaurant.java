@@ -355,12 +355,26 @@ public class Restaurant {
 		}
 	}
 
-	public void agregarProductoAConsumible(String text, String text2,
-			double parseDouble) {
-		// TODO TODAVIA NO HACE NADA
+	public void agregarProductoAConsumible(String codigoConsumible, String producto,
+			double cantidad) throws ValidationException, ErrorException {
+		Consumible cons = buscarConsumible(codigoConsumible);
+		Producto prod = buscarProducto(producto);
+
+		cons.addItemProducto(prod, cantidad);
 		
 	}
 	
+	private Producto buscarProducto(String prod) throws ErrorException {
+		
+		for (Producto producto : productos) {
+			if (producto.getNombre().equalsIgnoreCase(prod))
+				return producto;
+		}
+		
+		throw new ErrorException("El consumible solicitado no existe");
+		
+	}
+
 	public String[] getProveedores(){
 		String[] lista = new String[this.proveedores.size()];
 		
