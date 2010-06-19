@@ -16,7 +16,6 @@ public class Camino implements CaminoTDA{
 	
 	public Camino(MapaTDA mapa){
 		this.mapa = mapa;
-		
 	}
 	
 	@Override
@@ -27,7 +26,7 @@ public class Camino implements CaminoTDA{
 		cmc.add(origen.getUbicacion());
 		cmc.add(destino.getUbicacion());
 		
-		Ventana.camino = new Camino(mapa);
+		//Ventana.camino = new Camino(mapa);
 	
 		
 		
@@ -46,7 +45,7 @@ public class Camino implements CaminoTDA{
 
 	@Override
 	public void setDestino(NodoTDA destino) {
-		// TODO Auto-generated method stub
+		this.destino = destino;
 		
 	}
 
@@ -57,7 +56,7 @@ public class Camino implements CaminoTDA{
 
 	@Override
 	public void setOrigen(NodoTDA origen) {
-		// TODO Auto-generated method stub
+		this.origen = origen;
 		
 	}
 
