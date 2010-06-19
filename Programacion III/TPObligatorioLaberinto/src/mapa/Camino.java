@@ -6,6 +6,8 @@ import grafico.PuntoTDA;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import vista.Ventana;
 
@@ -23,16 +25,31 @@ public class Camino implements CaminoTDA{
 		// TODO Auto-generated method stub
 		
 		List<PuntoTDA> cmc = new ArrayList<PuntoTDA>();
+		Set listaAbierta = new TreeSet<NodoTDA>();
+		Set listaCerrada = new TreeSet<NodoTDA>();
+		
+		
+		
 		cmc.add(origen.getUbicacion());
 		cmc.add(destino.getUbicacion());
 		
 		//Ventana.camino = new Camino(mapa);
 	
+		List<PuntoTDA> lista =  mapa.getAdyacentes(new Punto(5,5));
+	
+		
+		cmc.addAll(lista);
 		
 		
 		return cmc;
 	}
 
+	
+	
+	
+	
+	
+	
 	@Override
 	public NodoTDA getDestino() {
 		return destino;

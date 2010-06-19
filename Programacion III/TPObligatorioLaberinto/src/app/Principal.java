@@ -1,8 +1,10 @@
 package app;
 
 import grafico.Punto;
+import grafico.PuntoTDA;
 
 import java.io.Console;
+import java.util.List;
 
 import mapa.Camino;
 import mapa.Mapa;
@@ -21,7 +23,7 @@ public class Principal {
 				{1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,5,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1},
@@ -31,11 +33,32 @@ public class Principal {
 		
 		Mapa mapa = new Mapa(matriz);
 		
-		
-		
 		Camino camino = new Camino(mapa);
-		System.out.println("sdsd");
-
+		
+		camino.setOrigen(new Punto(0,0));
+		camino.setDestino(new Punto(9,9));
+		
+		List<PuntoTDA> resultado = camino.buscarCamino();
+		
+		for (PuntoTDA puntoTDA : resultado) {
+			matriz[puntoTDA.getX()][puntoTDA.getY()] = 1000;
+		}
+		
+		
+		
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz.length; j++) {
+				if(matriz[i][j] == 1000){
+					System.out.print(" * ");
+				}
+				else{
+					System.out.print(" " + matriz[i][j] +  " ");
+				}
+				
+			}
+			
+			System.out.println("");
+		}
 	}
 
 }
