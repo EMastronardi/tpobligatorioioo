@@ -4,45 +4,48 @@ import grafico.PuntoTDA;
 
 public class Nodo implements NodoTDA{
 	private PuntoTDA ubicacion;
-	
+	private PuntoTDA destino;
+	private NodoTDA padre;
+	private int g = 0;
 	public Nodo(PuntoTDA ubicacion){
 		this.ubicacion = ubicacion;
 	}
 	
 	@Override
 	public String codigo() {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("{%d - %d}", ubicacion.getX(), ubicacion.getY());
 	}
 
 	@Override
 	public boolean esIgual(NodoTDA n) {
-		// TODO Auto-generated method stub
-		return false;
+		return hashCode() == n.hashCode();
 	}
 
+	
+	@Override
+	public int hashCode() {
+		return codigo().hashCode();
+	}
+	
 	@Override
 	public int f() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.padre.getG() + this.g;
 	}
 
 	@Override
 	public int getG() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.g;
 	}
 
+	private int h; 
 	@Override
 	public int getH() {
-		// TODO Auto-generated method stub
-		return 0;
+		return h;
 	}
 
 	@Override
 	public NodoTDA getPadre() {
-		// TODO Auto-generated method stub
-		return null;
+		return padre;
 	}
 
 	@Override
@@ -52,26 +55,35 @@ public class Nodo implements NodoTDA{
 
 	@Override
 	public void setG(int g) {
-		// TODO Auto-generated method stub
+		this.g = g;
 		
 	}
 
 	@Override
 	public void setH(PuntoTDA p) {
-		// TODO Auto-generated method stub
+		this.destino = p;
+		
+		int dX = Math.abs(ubicacion.getX() - destino.getX());
+		int dY = Math.abs(ubicacion.getY() - destino.getY());
+		
+		this.h =  dX + dY;
 		
 	}
 
 	@Override
 	public void setPadre(NodoTDA padre) {
-		// TODO Auto-generated method stub
+		this.padre = padre;
 		
 	}
 
 	@Override
 	public int compareTo(NodoTDA arg0) {
-		// TODO Auto-generated method stub
-		return 0;
+		if(this.g < arg0.getG()){
+			return -1;
+		}
+		else{
+			return 1;
+		}
 	}
 
 }
