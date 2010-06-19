@@ -22,6 +22,26 @@ public class Inicio {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	
+            	int[][] matriz = {
+        				{1,1,1,1,1,1,1,1,1,1},
+        				{1,1,1,1,1,1,1,1,1,1},
+        				{1,1,1,1,1,1,1,1,1,1},
+        				{1,1,1,1,1,1,1,1,1,1},
+        				{1,1,1,1,1,1,1,1,1,1},
+        				{1,1,1,1,1,1,1,1,1,1},
+        				{1,1,1,1,1,1,1,1,1,1},
+        				{1,1,1,1,1,1,1,1,1,1},
+        				{1,1,1,1,1,1,1,1,1,1},
+        				{1,1,1,1,1,1,1,1,1,1}
+        				};
+        		
+        		Mapa mapa = new Mapa(matriz);
+        		
+        		
+        		
+        		CaminoTDA camino = new Camino(mapa);
+
+        		Ventana.camino = camino;
             	Ventana.mostrar("1");
 
             	
