@@ -6,7 +6,7 @@ public class Nodo implements NodoTDA{
 	private PuntoTDA ubicacion;
 	private PuntoTDA destino;
 	private NodoTDA padre;
-	private int g = 0;
+	private int g = 0; 
 	public Nodo(PuntoTDA ubicacion){
 		this.ubicacion = ubicacion;
 	}
