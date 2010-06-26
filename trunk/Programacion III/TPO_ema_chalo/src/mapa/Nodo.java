@@ -4,6 +4,9 @@ import grafico.PuntoTDA;
 
 public class Nodo implements NodoTDA{
 	private PuntoTDA ubicacion;
+	private NodoTDA padre;
+	private float g;
+	
 	
 	public Nodo(PuntoTDA ubicacion){
 		this.ubicacion = ubicacion;
@@ -41,8 +44,8 @@ public class Nodo implements NodoTDA{
 
 	@Override
 	public NodoTDA getPadre() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.padre;
 	}
 
 	@Override
@@ -64,9 +67,10 @@ public class Nodo implements NodoTDA{
 
 	@Override
 	public void setPadre(NodoTDA padre) {
-		// TODO Auto-generated method stub
+		this.padre = padre;
 		
 	}
+	
 
 	@Override
 	public int compareTo(NodoTDA arg0) {
