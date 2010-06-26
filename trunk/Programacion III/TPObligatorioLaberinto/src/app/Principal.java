@@ -18,7 +18,7 @@ public class Principal {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		int[][] matriz = {
+		/*int[][] matriz = {
 				{1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1},
@@ -29,14 +29,33 @@ public class Principal {
 				{1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1}
+				};*/
+		
+		int[][] matriz = {
+				{1,1,1,1},
+				{1,1,1,1},
+				{1,1,1,1},
+				{1,1,1,1}
 				};
 		
 		Mapa mapa = new Mapa(matriz);
 		
 		Camino camino = new Camino(mapa);
 		
+		
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz.length; j++) {
+			
+				System.out.print(" " + matriz[i][j] +  " ");
+				
+			}
+			
+			System.out.println("");
+		}
+		
+		System.out.println("");
 		camino.setOrigen(new Punto(0,0));
-		camino.setDestino(new Punto(9,9));
+		camino.setDestino(new Punto(3,3));
 		
 		List<PuntoTDA> resultado = camino.buscarCamino();
 		
@@ -45,6 +64,7 @@ public class Principal {
 		}
 		
 		
+
 		
 		for (int i = 0; i < matriz.length; i++) {
 			for (int j = 0; j < matriz.length; j++) {
