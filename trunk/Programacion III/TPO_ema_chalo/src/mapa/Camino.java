@@ -41,22 +41,23 @@ public class Camino implements CaminoTDA{
 	@Override
 	public void setDestino(NodoTDA destino) {
 		// TODO Auto-generated method stub
-		
+		this.destino = destino;
 	}
 
 	@Override
 	public void setDestino(PuntoTDA punto) {
-		this.destino = new Nodo(punto);
+		this.destino = new Nodo(punto,this);
 	}
 
 	@Override
 	public void setOrigen(NodoTDA origen) {
 		// TODO Auto-generated method stub
+		this.origen = origen;
 	}
 
 	@Override
 	public void setOrigen(PuntoTDA punto) {
-		this.origen = new Nodo(punto);
+		this.origen = new Nodo(punto,this);
 		// por las dudas...
 		this.origen.setPadre(null);
 	}
@@ -174,7 +175,7 @@ public class Camino implements CaminoTDA{
 		List<NodoTDA> listaNodos = new ArrayList<NodoTDA>();
 		
 		for (PuntoTDA p: lista){
-				NodoTDA nodo = new Nodo(p);
+				NodoTDA nodo = new Nodo(p,this);
 				listaNodos.add(nodo);
 		}
 		
@@ -198,7 +199,7 @@ public class Camino implements CaminoTDA{
 		float fMinima = Float.MAX_VALUE;
 		int tamanioLista = listaNodos.size();
 		NodoTDA nodo;
-		NodoTDA nodoMinimo = new Nodo(null);
+		NodoTDA nodoMinimo = new Nodo(null,this);
 		
 		for ( int i = 0; i < tamanioLista; i++){
 			nodo = listaNodos.get(i);
