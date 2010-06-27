@@ -24,4 +24,6 @@ public interface MapaTDA {
 	 * Método no implementado
 	 */
 	public List<PuntoTDA> getAdyacentes(PuntoTDA ubicacion);
+	
+	
 }

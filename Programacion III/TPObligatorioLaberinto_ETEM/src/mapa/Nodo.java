@@ -1,5 +1,12 @@
 package mapa;
 
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.Vector;
+
+import com.sun.corba.se.spi.oa.OADefault;
+
 import grafico.PuntoTDA;
 
 public class Nodo implements NodoTDA{
@@ -21,7 +28,17 @@ public class Nodo implements NodoTDA{
 		return hashCode() == n.hashCode();
 	}
 
+	@Override
+	public boolean equals(Object arg0) {
+		
+		return hashCode() == arg0.hashCode();
+	}
 	
+	@Override
+	public String toString() {
+		
+		return ubicacion.toString();
+	}
 	@Override
 	public int hashCode() {
 		return codigo().hashCode();
@@ -29,7 +46,7 @@ public class Nodo implements NodoTDA{
 	
 	@Override
 	public int f() {
-		return this.padre.getG() + this.g;
+		return this.g + this.h;
 	}
 
 	@Override
@@ -45,7 +62,20 @@ public class Nodo implements NodoTDA{
 
 	@Override
 	public NodoTDA getPadre() {
-		return padre;
+		if(padres.size() == 0)
+			return null;
+		NodoTDA mejor = padres.get(0);
+		double total = mejor.calcularDistancia(this.ubicacion);
+		
+		for (NodoTDA nodo : padres) {
+			if(nodo.calcularDistancia(this.ubicacion) < total){
+				mejor = nodo;
+				total = nodo.calcularDistancia(this.ubicacion);
+			}
+		}
+		
+		return mejor;
+		
 	}
 
 	@Override
@@ -73,17 +103,37 @@ public class Nodo implements NodoTDA{
 	@Override
 	public void setPadre(NodoTDA padre) {
 		this.padre = padre;
-		
+		this.padres.add(padre);
 	}
 
 	@Override
 	public int compareTo(NodoTDA arg0) {
-		if(this.g < arg0.getG()){
+		if(equals(arg0))
+			return 0;
+		else if(this.f() < arg0.f()){
 			return -1;
 		}
 		else{
 			return 1;
 		}
 	}
+	
+	@Override
+	public double calcularDistancia(PuntoTDA punto) {
+		int x, y;
+		
+		
+		x = Math.abs(this.getUbicacion().getX() -punto.getX());
+		y = Math.abs(this.getUbicacion().getY() -punto.getY());
+		
+		double resultado = Math.sqrt((x * x) + (y *y));
+		
+		return resultado;
+		
+	}
+
+	private List<NodoTDA> padres =  new Vector<NodoTDA>();
+	
+	
 
 }

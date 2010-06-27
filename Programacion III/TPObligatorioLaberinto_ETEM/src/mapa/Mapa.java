@@ -21,6 +21,9 @@ public class Mapa implements MapaTDA{
 		
 		for (int i = ubicacion.getX()-1; i <= ubicacion.getX()+1; i++) {
 			for (int j =  ubicacion.getY()-1; j <= ubicacion.getY()+1; j++) {
+				if(i< 0 || j < 0)
+					continue;
+				
 				Punto punto = new Punto(i,j);
 				
 				if(!punto.esIgual(ubicacion) && transitable(punto)){
@@ -74,6 +77,8 @@ public class Mapa implements MapaTDA{
 	public void setArea(Area area) {
 		// No nos importa uachin pelado boton
 	}
+
+	
 
 	
 

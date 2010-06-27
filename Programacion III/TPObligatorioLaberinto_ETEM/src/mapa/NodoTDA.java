@@ -1,5 +1,7 @@
 package mapa;
 
+import java.util.Set;
+
 import grafico.PuntoTDA;
 
 public interface NodoTDA extends Comparable<NodoTDA>{
@@ -14,6 +16,8 @@ public interface NodoTDA extends Comparable<NodoTDA>{
 	 */
 	public NodoTDA getPadre();
 	public void setPadre(NodoTDA padre);
+	
+	
 	
 	/*
 	 * representa la distancia heurística al punto destino
@@ -41,4 +45,10 @@ public interface NodoTDA extends Comparable<NodoTDA>{
 	 * Retornar el método toString() del PuntoTDA (la ubicacion)
 	 */
 	public String codigo();
+
+	public double calcularDistancia(PuntoTDA punto);
+	
+	
+	
+	
 }
