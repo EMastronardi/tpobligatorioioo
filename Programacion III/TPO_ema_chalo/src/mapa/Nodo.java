@@ -5,10 +5,12 @@ import grafico.PuntoTDA;
 public class Nodo implements NodoTDA{
 	private PuntoTDA ubicacion;
 	private NodoTDA padre;
+	private CaminoTDA camino;
 	//private float g;
 	
-	public Nodo(PuntoTDA ubicacion){
+	public Nodo(PuntoTDA ubicacion, CaminoTDA camino){
 		this.ubicacion = ubicacion;
+		this.camino = camino;
 	}
 	
 	@Override
@@ -20,7 +22,20 @@ public class Nodo implements NodoTDA{
 	@Override
 	public boolean esIgual(NodoTDA n) {
 		// TODO Auto-generated method stub
-		return false;
+		boolean valorRetorno;
+		
+		if (this.ubicacion.getX() == n.getUbicacion().getX()){
+			if (this.ubicacion.getY() == n.getUbicacion().getY()){
+				valorRetorno = true;
+			}
+			else {
+				valorRetorno = false;
+			}
+		}
+		else {
+			valorRetorno = false;
+		}
+		return valorRetorno;
 	}
 
 	@Override
@@ -32,13 +47,18 @@ public class Nodo implements NodoTDA{
 	@Override
 	public int getG() {
 		// TODO Auto-generated method stub
-		return 0;
+		int valorRetorno = this.camino.getDensidadNodo(this);
+		
+		if (this.padre != null){
+			valorRetorno = valorRetorno + this.padre.getG();
+		}
+		return valorRetorno;
 	}
 
 	@Override
 	public float getH() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.camino.getHeuristicaNodo(this);
 	}
 
 	@Override
@@ -55,19 +75,16 @@ public class Nodo implements NodoTDA{
 	@Override
 	public void setG(int g) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void setH(PuntoTDA p) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void setPadre(NodoTDA padre) {
 		this.padre = padre;
-		
 	}
 	
 
