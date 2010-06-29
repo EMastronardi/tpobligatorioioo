@@ -87,7 +87,7 @@ public class Camino implements CaminoTDA{
 				nodo.setH(destino.getUbicacion());
 				
 				int densidad = mapa.getDensidad(punto);
-				int distancia = nodoActual.calcularDistancia(punto) * densidad;
+				int distancia = nodoActual.calcularDistancia(punto) * (densidad +1);
 				
 				nodo.setG(nodoActual.getG() + distancia);
 				
