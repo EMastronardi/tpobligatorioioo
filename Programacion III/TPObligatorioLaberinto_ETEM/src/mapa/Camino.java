@@ -6,6 +6,7 @@ import grafico.PuntoTDA;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
@@ -24,136 +25,76 @@ public class Camino implements CaminoTDA{
 	}
 	
 	@Override
-	public List<PuntoTDA> buscarCamino() throws Exception {
+	public List<PuntoTDA> buscarCamino() {
 		
-		List<PuntoTDA> resultado = new Vector<PuntoTDA>();
-		List<NodoTDA> lista =  buscarSolucion();
+		List<PuntoTDA> resultado = buscarSolucion();
 
 		if(destino.getPadre() == null){
-			throw new Exception("No existe un camino solución para el laberinto especificado");
+			//throw new Exception("No existe un camino solución para el laberinto especificado");
+			System.err.println("No existe un camino solución para el laberinto especificado");
 		}
-		resultado.add(origen.getUbicacion());
-		for (NodoTDA nodo : lista) {
-			resultado.add(nodo.getUbicacion());
-		}
-		
-		
+
 		return resultado;
 	}
 
-	
-	
-	private List<NodoTDA> buscarSolucion() {
-		Set<NodoTDA> listaAbierta = new TreeSet<NodoTDA>();
-		List<NodoTDA> listaCerrada = new Vector<NodoTDA>();
-		
-		
-		List<NodoTDA> solucion = new Vector<NodoTDA>();
-		
-	
+	private List<PuntoTDA> buscarSolucion() {
+		PriorityQueue<NodoTDA> listaAbierta = new PriorityQueue<NodoTDA>();
+		int[][] nodosEstados = new int[mapa.getGrilla().length][mapa.getGrilla().length];
+		List<PuntoTDA> solucion = new Vector<PuntoTDA>();
+			
 		NodoTDA nodoActual = origen;
 		nodoActual.setG(0);
 		nodoActual.setH(destino.getUbicacion());
 		listaAbierta.add(nodoActual);
 	
-		
+		nodosEstados[nodoActual.getUbicacion().getX()][nodoActual.getUbicacion().getY()] = 1;
 		do  {
-			List<NodoTDA> adyacentes  = getNodosValidos(mapa.getAdyacentes(nodoActual.getUbicacion()),nodoActual, listaCerrada, listaAbierta);
+			getNodosValidos(mapa.getAdyacentes(nodoActual.getUbicacion()),nodoActual, nodosEstados, listaAbierta);
 			
-			listaAbierta.addAll(adyacentes);
+			listaAbierta.remove(nodoActual);
 			
-			Vector<NodoTDA> abierta = new Vector<NodoTDA>(listaAbierta);
-			abierta.remove(nodoActual);
-			listaAbierta.clear();
-			listaAbierta.addAll(abierta);
-			listaCerrada.add(nodoActual);
-		
-					
-			if(listaAbierta.size() > 0){
-				//nodoActual = listaAbierta.iterator().next();
-				Iterator<NodoTDA> it = listaAbierta.iterator();
-				NodoTDA siguiente =it.next();
+			nodosEstados[nodoActual.getUbicacion().getX()][nodoActual.getUbicacion().getY()] = 2;
+			
+			if(!listaAbierta.isEmpty()){
+				NodoTDA siguiente =listaAbierta.peek();
 				
 				if(nodoActual.equals(destino)){
 					destino.setPadre(nodoActual);
-					break;
 				}
-					nodoActual = siguiente;
-					
-					
-				
+				nodoActual = siguiente;
 			}
 			
-			
-			
-			
-			
 		}
-		while(listaAbierta.size() > 0 );
+		while(listaAbierta.size() > 0 && destino.getPadre() == null );
 		
 		nodoActual = destino;
 		
-		
 		while (nodoActual.getPadre() != null) {
-			
-			solucion.add(nodoActual);
+			solucion.add(nodoActual.getUbicacion());
 			nodoActual = nodoActual.getPadre();
-		
 		}
-		
 		
 		return solucion;
 	}
 
-	private List<NodoTDA> getNodosValidos(List<PuntoTDA> adyacentes, NodoTDA nodoActual, List<NodoTDA> listaCerrada, Set<NodoTDA> listaAbierta) {
-		List<NodoTDA> nodos = new Vector<NodoTDA>();
-		
-		List<NodoTDA> abiertaLista = new Vector<NodoTDA>(listaAbierta);
-		boolean parar = false;
-		if(nodoActual.getUbicacion().getX() == 2 && nodoActual.getUbicacion().getY() == 1){
-			
-			parar = true;
-		}
+	private void getNodosValidos(List<PuntoTDA> adyacentes, NodoTDA nodoActual, int[][] nodosEstados, PriorityQueue<NodoTDA> listaAbierta) {
 		for (PuntoTDA punto : adyacentes) {
-			NodoTDA nodo = new Nodo(punto);
 			
-			
-			
-			if(!listaCerrada.contains(nodo) && !abiertaLista.contains(nodo)){
-				nodos.add(nodo);
+			if(nodosEstados[punto.getX()][punto.getY()] == 0){
+				NodoTDA nodo = new Nodo(punto);
+				
 				nodo.setPadre(nodoActual);
 				nodo.setH(destino.getUbicacion());
 				
 				int densidad = mapa.getDensidad(punto);
-				int distancia = (int) (Math.round(nodoActual.calcularDistancia(punto)) * densidad);
+				int distancia = nodoActual.calcularDistancia(punto) * densidad;
 				
+				nodo.setG(nodoActual.getG() + distancia);
 				
-				nodo.setG(nodoActual.f() + distancia);
-				
+				listaAbierta.add(nodo);
+				nodosEstados[nodo.getUbicacion().getX()][nodo.getUbicacion().getY()] = 1;
 			}
-			else{
-				if(nodo.equals(origen))
-					continue;
-				
-				int index = listaCerrada.indexOf(nodo);
-				
-				if(index < 0){
-					index = abiertaLista.indexOf(nodo);
-					nodo = abiertaLista.get(index);
-				}else{
-					nodo = listaCerrada.get(index);
-				}
-				
-				//nodo.setPadre(nodoActual);
-			}
-			
 		}
-		
-		
-		
-		
-		return nodos;
-
 	}
 
 	@Override

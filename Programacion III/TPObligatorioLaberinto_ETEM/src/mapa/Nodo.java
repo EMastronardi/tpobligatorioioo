@@ -62,20 +62,7 @@ public class Nodo implements NodoTDA{
 
 	@Override
 	public NodoTDA getPadre() {
-		if(padres.size() == 0)
-			return null;
-		NodoTDA mejor = padres.get(0);
-		double total = mejor.calcularDistancia(this.ubicacion);
-		
-		for (NodoTDA nodo : padres) {
-			if(nodo.calcularDistancia(this.ubicacion) < total){
-				mejor = nodo;
-				total = nodo.calcularDistancia(this.ubicacion);
-			}
-		}
-		
-		return mejor;
-		
+		return padre;
 	}
 
 	@Override
@@ -103,7 +90,7 @@ public class Nodo implements NodoTDA{
 	@Override
 	public void setPadre(NodoTDA padre) {
 		this.padre = padre;
-		this.padres.add(padre);
+		
 	}
 
 	@Override
@@ -119,21 +106,17 @@ public class Nodo implements NodoTDA{
 	}
 	
 	@Override
-	public double calcularDistancia(PuntoTDA punto) {
+	public int calcularDistancia(PuntoTDA punto) {
 		int x, y;
 		
+		x = this.getUbicacion().getX() -punto.getX();
+		y = this.getUbicacion().getY() -punto.getY();
 		
-		x = Math.abs(this.getUbicacion().getX() -punto.getX());
-		y = Math.abs(this.getUbicacion().getY() -punto.getY());
-		
-		double resultado = Math.sqrt((x * x) + (y *y));
+		int resultado = (int)Math.sqrt((x * x) + (y *y));
 		
 		return resultado;
 		
 	}
 
-	private List<NodoTDA> padres =  new Vector<NodoTDA>();
-	
-	
 
 }

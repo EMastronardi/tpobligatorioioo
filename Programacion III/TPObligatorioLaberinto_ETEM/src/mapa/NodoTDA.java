@@ -46,7 +46,7 @@ public interface NodoTDA extends Comparable<NodoTDA>{
 	 */
 	public String codigo();
 
-	public double calcularDistancia(PuntoTDA punto);
+	public int calcularDistancia(PuntoTDA punto);
 	
 	
 	
