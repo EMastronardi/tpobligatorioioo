@@ -7,7 +7,7 @@ public interface CaminoTDA {
 	/*
 	 * Retorna las celdas seleccionadas entre el origen y el destino
 	 */
-	public List<PuntoTDA> buscarCamino() throws Exception ;
+	public List<PuntoTDA> buscarCamino()  ;
 	
 	/*
 	 * represeta al nodo origen

@@ -7,15 +7,15 @@ import grafico.PuntoTDA;
 import java.util.List;
 import java.util.Vector;
 
-public class Mapa implements MapaTDA{
-
-	private int[][] grilla;
+public class Mapa extends MapaBase{
+//
+//	private int[][] grilla;
+//	
+//	public Mapa(int[][] grilla) {
+//		this.grilla = grilla;
+//	}
+//	
 	
-	public Mapa(int[][] grilla) {
-		this.grilla = grilla;
-	}
-	
-	@Override
 	public List<PuntoTDA> getAdyacentes(PuntoTDA ubicacion) {
 		List<PuntoTDA> adyacentes = new Vector<PuntoTDA>();
 		
@@ -73,13 +73,5 @@ public class Mapa implements MapaTDA{
 					(p.getY() >= 0 && p.getY() < this.grilla[0].length));
 	}
 
-	@Override
-	public void setArea(Area area) {
-		// No nos importa uachin pelado boton
-	}
-
-	
-
-	
 
 }
