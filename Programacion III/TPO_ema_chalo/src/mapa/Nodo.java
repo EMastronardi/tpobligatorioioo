@@ -105,10 +105,23 @@ public class Nodo implements NodoTDA{
 	}
 	
 
-	@Override
-	public int compareTo(NodoTDA arg0) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	public int compareTo(NodoTDA nodo) {
+		int valorRetorno = -1;
+		if (this.f() < nodo.f()) {
+			valorRetorno = -1;
+		} 
+		
+		else if (nodo.f() == this.f()) {
 
+			if ( this.getH()< nodo.getH()) {
+			
+				valorRetorno = -1;
+			}else{
+				
+			}
+		}else{
+			valorRetorno = 1;
+		}
+	return valorRetorno;
+	}
 }
