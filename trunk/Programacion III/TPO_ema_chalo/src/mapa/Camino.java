@@ -22,39 +22,11 @@ public class Camino implements CaminoTDA {
 		List<NodoTDA> listaAbierta = new ArrayList<NodoTDA>();
 		List<NodoTDA> listaCerrada = new ArrayList<NodoTDA>();
 
-		System.out.println("Voy a buscar el camino mas corto");
 		listaCerrada.add(this.origen);
-		cmc = buscarCaminoIterativo(listaAbierta, listaCerrada, this.origen);
-		// implementacion recursiva
-		// fin de la implementacion recusrsiva
+		cmc = buscarCaminoRecursivo(listaAbierta, listaCerrada, this.origen);
 		Ventana.camino = new Camino(mapa);
-		System.out.println("Encontré el camino mas corto");
+
 		return cmc;
-	}
-	
-	public List<PuntoTDA> buscarCaminoIterativo(List<NodoTDA> listaAbierta,
-		List<NodoTDA> listaCerrada, NodoTDA nodoActual) {
-		List<NodoTDA> adyacentes;
-		NodoTDA nodoSiguiente;
-		int indiceNodoSiguiente;
-		boolean OK = true;
-		
-		while (OK) {
-			if (nodoActual.esIgual(this.destino)) {
-				OK = false;
-			}
-			// agregar adyacentes a lista abierta
-			adyacentes = convertirAListaDeNodos(this.mapa.getAdyacentes(nodoActual.getUbicacion()));
-			asiganarPadreANodos(adyacentes, nodoActual);
-			concatenarListasNodos(listaAbierta, listaCerrada, adyacentes);
-			// evaluo cual nodo es el siguiente en el camino
-			indiceNodoSiguiente = obtenerMininoListaNodos(listaAbierta, nodoActual);
-			nodoSiguiente = listaAbierta.get(indiceNodoSiguiente);
-			listaCerrada.add(nodoSiguiente);
-			nodoActual = nodoSiguiente;
-			listaAbierta.remove(indiceNodoSiguiente);
-		}
-		return generarCaminoConListaDePuntos(listaCerrada);
 	}
 
 	public NodoTDA getDestino() {
@@ -69,51 +41,35 @@ public class Camino implements CaminoTDA {
 	@Override
 	public void setDestino(NodoTDA destino) {
 		// TODO Auto-generated method stub
-		//System.out.println("Creo destino con un nodo");
 		this.destino = destino;
-		PuntoTDA punto = this.destino.getUbicacion();
-		this.destino.setDensidad(getDensidadPunto(punto));
-		this.destino.setHeuristica(getHeuristicaPunto(punto));
 	}
 
 	@Override
 	public void setDestino(PuntoTDA punto) {
-		//System.out.println("Creo destino con un punto");
-		//this.destino = new Nodo(punto, this.getHeuristicaPunto(punto), this.getDensidadPunto(punto));
-		this.destino = new Nodo(punto);
-		this.destino.setDensidad(getDensidadPunto(punto));
-		this.destino.setHeuristica(getHeuristicaPunto(punto));
+		this.destino = new Nodo(punto, this);
 	}
 
 	@Override
 	public void setOrigen(NodoTDA origen) {
 		// TODO Auto-generated method stub
-		//System.out.println("Creo origen con un nodo");
 		this.origen = origen;
-		PuntoTDA punto = this.origen.getUbicacion();
-		this.origen.setDensidad(getDensidadPunto(punto));
-		this.origen.setHeuristica(getHeuristicaPunto(punto));
-		this.origen.setG(getDensidadPunto(punto));
 	}
 
-	
+	@Override
 	public void setOrigen(PuntoTDA punto) {
-		//System.out.println("Creo origen con un punto");
-		//this.origen = new Nodo(punto, this.getHeuristicaPunto(punto),this.getDensidadPunto(punto));
-		this.origen = new Nodo(punto);
-		this.origen.setDensidad(getDensidadPunto(punto));
-		this.origen.setHeuristica(getHeuristicaPunto(punto));
-		this.origen.setG(getDensidadPunto(punto));
+		this.origen = new Nodo(punto, this);
+		// por las dudas...
+		this.origen.setPadre(null);
 	}
 
-	public int getDensidadPunto(PuntoTDA p) {
-		return mapa.getDensidad(p);
+	public int getDensidadNodo(NodoTDA n) {
+		return mapa.getDensidad(n.getUbicacion());
 	}
 
-	public float getHeuristicaPunto(PuntoTDA p) {
+	public float getHeuristicaNodo(NodoTDA n) {
 		float heuristica = 0;
-		int cordX = p.getX();
-		int cordY = p.getY();
+		int cordX = n.getUbicacion().getX();
+		int cordY = n.getUbicacion().getY();
 		int destX = destino.getUbicacion().getX();
 		int destY = destino.getUbicacion().getY();
 		while (!(cordX == destX && cordY == destY)) {
@@ -160,6 +116,31 @@ public class Camino implements CaminoTDA {
 
 	}
 
+	public List<PuntoTDA> buscarCaminoRecursivo(List<NodoTDA> listaAbierta,
+			List<NodoTDA> listaCerrada, NodoTDA nodoActual) {
+		List<NodoTDA> adyacentes;
+		NodoTDA nodoSiguiente;
+		int indiceNodoSiguiente;
+		// caso base
+		if (nodoActual.esIgual(this.destino)) {
+			return generarCaminoConListaDePuntos(listaCerrada);
+		}
+		// proceso principal
+		// agregar adyacentes a lista abierta
+		adyacentes = convertirAListaDeNodos(this.mapa.getAdyacentes(nodoActual
+				.getUbicacion()));
+		asiganarPadreANodos(adyacentes, nodoActual);
+		concatenarListasNodos(listaAbierta,listaCerrada, adyacentes);
+		// evaluo cual nodo es el siguiente en el camino
+		indiceNodoSiguiente = obtenerMininoListaNodos(listaAbierta, nodoActual);
+		nodoSiguiente = listaAbierta.get(indiceNodoSiguiente);
+		listaCerrada.add(nodoSiguiente);
+		nodoActual = nodoSiguiente;
+		listaAbierta.remove(indiceNodoSiguiente);
+		// sigo con la recursion
+		return buscarCaminoRecursivo(listaAbierta, listaCerrada, nodoActual);
+	}
+
 	private List<PuntoTDA> generarCaminoConListaDePuntos(
 			List<NodoTDA> listaCerrada) {
 		List<PuntoTDA> aux = new ArrayList<PuntoTDA>();
@@ -197,33 +178,33 @@ public class Camino implements CaminoTDA {
 		List<NodoTDA> listaNodos = new ArrayList<NodoTDA>();
 
 		for (PuntoTDA p : lista) {
-			NodoTDA nodo = new Nodo(p,this.getHeuristicaPunto(p),getDensidadPunto(p));
+			NodoTDA nodo = new Nodo(p, this);
 			listaNodos.add(nodo);
 		}
 
 		return listaNodos;
 	}
 
-	private void concatenarListasNodos(List<NodoTDA> listaDestino,
-			List<NodoTDA> listaVisitados, List<NodoTDA> listaFuente) {
+	private void concatenarListasNodos(List<NodoTDA> listaDestino,List<NodoTDA> listaVisitados,
+			List<NodoTDA> listaFuente) {
 		for (NodoTDA nodo : listaFuente) {
-			if (!estaEnLista(listaDestino, nodo)
-					&& (!estaEnLista(listaVisitados, nodo))) {
+			if(estaEnLista(listaDestino,nodo) && (estaEnLista(listaVisitados, nodo))){
 				listaDestino.add(nodo);
-				//System.out.println("Agrego uno!");
+			//	System.out.print(nodo.getUbicacion().getX());
+				//System.out.println(nodo.getUbicacion().getX());
 			}
 		}
 	}
-
-	private boolean estaEnLista(List<NodoTDA> lista, NodoTDA nodoActual) {
-		for (NodoTDA nodo : lista) {
-			if (nodo.esIgual(nodoActual)) {
-				//if (nodo.getPadre() == nodoActual.getPadre()) {
-					return true;
-				//}
+	
+	private boolean estaEnLista(List<NodoTDA> lista,NodoTDA nodoActual){
+		for (NodoTDA nodo: lista){
+			if(nodo.esIgual(nodoActual)){
+				if(nodo.getPadre() == nodoActual.getPadre()){
+					return false;
+				}
 			}
 		}
-		return false;
+		return true;
 	}
 
 	private void asiganarPadreANodos(List<NodoTDA> listaNodos, NodoTDA padre) {
@@ -238,7 +219,7 @@ public class Camino implements CaminoTDA {
 		float fMinima = Float.MAX_VALUE;
 		int tamanioLista = listaNodos.size();
 		NodoTDA nodo;
-		NodoTDA nodoMinimo = null;
+		NodoTDA nodoMinimo = new Nodo(null, this);
 
 		for (int i = 0; i < tamanioLista; i++) {
 			nodo = listaNodos.get(i);
@@ -246,54 +227,36 @@ public class Camino implements CaminoTDA {
 				fMinima = nodo.f();
 				nodoMinimo = nodo;
 				valorRetorno = i;
-			//	System.out.println("F es menor");
-			} 
-			
-			else if (nodo.f() == fMinima) {
-//				System.out.println("la f es igual");
-//				System.out.print("Densidad nodo :"+nodo.getDensidad());
-//				System.out.print(" Heurisitca nodo :"+nodo.getH());
-//				System.out.println(" G nodo :"+nodo.getG());
-//				System.out.print("Densidad nodo minimo:"+nodoMinimo.getDensidad());
-//				System.out.print(" Heuristica nodo minomo:"+nodoMinimo.getH());
-//				System.out.println(" G nodo minimo :"+nodoMinimo.getG());
-				if (nodo.getH() < nodoMinimo.getH()) {
-					fMinima = nodo.f();
-					nodoMinimo = nodo;
-					//System.out.println("me movi por densidad");
-					valorRetorno = i;
+			} else if (nodo.f() == fMinima) {
+				// o G y H de cada nodo son iguales
+				if (nodo.getH() == nodoMinimo.getH()) {
+					// seguro las G son iguales
+					if (this.getDensidadNodo(nodo) < this
+							.getDensidadNodo(nodoMinimo)) {
+						fMinima = nodo.f();
+						nodoMinimo = nodo;
+						valorRetorno = i;
+					} else if (this.getDensidadNodo(nodo) == this
+							.getDensidadNodo(nodoMinimo)) {
+						if (nodo.getPadre() == nodoActual) {
+							fMinima = nodo.f();
+							nodoMinimo = nodo;
+							valorRetorno = i;
+						}
+					}
 				}
-			}	
-//					// seguro las G son iguales
-//					if (this.getDensidadNodo(nodo) < this
-//							.getDensidadNodo(nodoMinimo)) {
-//						fMinima = nodo.f();
-//						nodoMinimo = nodo;
-//						valorRetorno = i;
-//					} 
-//					else if (this.getDensidadNodo(nodo) == this
-//							.getDensidadNodo(nodoMinimo)) {
-//						if (nodo.getPadre() == nodoActual) {
-//							fMinima = nodo.f();
-//							nodoMinimo = nodo;
-//							valorRetorno = i;
-//						}
-//					}
-//				}
-//				// entonces eligo el de menor densidad
-//				else {
-//					if (this.getDensidadNodo(nodo) < this
-//							.getDensidadNodo(nodoMinimo)) {
-//						fMinima = nodo.f();
-//						valorRetorno = i;
-//						nodoMinimo = nodo;
-//					}
-//				}
-//			}
+				// entonces eligo el de menor densidad acumulada
+				else {
+					if (this.getDensidadNodo(nodo) < this
+							.getDensidadNodo(nodoMinimo)) {
+						fMinima = nodo.f();
+						valorRetorno = i;
+						nodoMinimo = nodo;
+					}
+				}
+			}
 		}
-		if( valorRetorno == -1 ){
-			System.out.println("algo paso");
-		}
+
 		return valorRetorno;
 	}
 
