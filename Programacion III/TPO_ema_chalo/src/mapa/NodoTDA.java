@@ -19,7 +19,7 @@ public interface NodoTDA extends Comparable<NodoTDA>{
 	 * representa la distancia heurística al punto destino
 	 */
 	public float getH();
-	public void setH(PuntoTDA p);
+	public void setH(float h);
 	
 	/*
 	 * representa el peso acumulado (el heredado del padre más el propio)
@@ -41,4 +41,8 @@ public interface NodoTDA extends Comparable<NodoTDA>{
 	 * Retornar el método toString() del PuntoTDA (la ubicacion)
 	 */
 	public String codigo();
+	public void setDensidad(int d);
+	public int getDensidad();
+	
+	public void setHeuristica(float h);
 }

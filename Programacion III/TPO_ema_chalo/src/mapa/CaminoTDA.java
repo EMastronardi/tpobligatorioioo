@@ -23,6 +23,6 @@ public interface CaminoTDA {
 	public void setDestino(NodoTDA destino);
 	public void setDestino(PuntoTDA punto);
 	// agregado para implementar funciones de NodoTDA
-	public int getDensidadNodo (NodoTDA n);
-	public float getHeuristicaNodo (NodoTDA n);
+	public int getDensidadPunto (PuntoTDA p);
+	public float getHeuristicaPunto (PuntoTDA p);
 }
