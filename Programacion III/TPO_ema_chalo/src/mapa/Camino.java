@@ -3,6 +3,7 @@ package mapa;
 import grafico.PuntoTDA;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import vista.Ventana;
@@ -21,19 +22,36 @@ public class Camino implements CaminoTDA {
 		List<PuntoTDA> cmc;
 		List<NodoTDA> listaAbierta = new ArrayList<NodoTDA>();
 		List<NodoTDA> listaCerrada = new ArrayList<NodoTDA>();
-
+		// 0 : nodo no visitado
+		// 1 : nodo visitado
+		int tamanioMatriz = 400;
+		boolean [][]visitadosListaAbierta = new boolean[tamanioMatriz][tamanioMatriz];;
+		boolean [][]visitadosListaCerrada = new boolean[tamanioMatriz][tamanioMatriz];;
+		
+		// resetear la matriz con cada camino
+		for(int i = 0; i < 400; i++){
+			for(int j = 0; j < 400; j++){
+				visitadosListaAbierta[i][j] = false;
+				visitadosListaCerrada[i][j] = false;
+			}
+		}
+		// proceso principal
 		System.out.println("Voy a buscar el camino mas corto");
 		listaCerrada.add(this.origen);
-		cmc = buscarCaminoIterativo(listaAbierta, listaCerrada, this.origen);
+		visitadosListaCerrada[this.origen.getUbicacion().getX()][this.origen.getUbicacion().getY()] = true;
+		long startTime = Calendar.getInstance().getTimeInMillis();
 		// implementacion recursiva
-		// fin de la implementacion recusrsiva
+		cmc = buscarCaminoIterativo(listaAbierta, listaCerrada, visitadosListaAbierta, visitadosListaCerrada, this.origen);
+		long endTime = Calendar.getInstance().getTimeInMillis();
+		System.out.println("Encontré el camino mas corto en "+Long.toString((endTime - startTime)/1000)+" segundos.");
+		System.out.println("Cant. de segundos transcurridos: "+Long.toString((endTime - startTime)/1000));
+		System.out.println("---------------------------------------------------------");
 		Ventana.camino = new Camino(mapa);
-		System.out.println("Encontré el camino mas corto");
 		return cmc;
 	}
 	
 	public List<PuntoTDA> buscarCaminoIterativo(List<NodoTDA> listaAbierta,
-		List<NodoTDA> listaCerrada, NodoTDA nodoActual) {
+		List<NodoTDA> listaCerrada, boolean [][]visitadosAbierta, boolean [][]visitadosCerrada, NodoTDA nodoActual) {
 		List<NodoTDA> adyacentes;
 		NodoTDA nodoSiguiente;
 		int indiceNodoSiguiente;
@@ -43,13 +61,15 @@ public class Camino implements CaminoTDA {
 			// agregar adyacentes a lista abierta
 			adyacentes = convertirAListaDeNodos(this.mapa.getAdyacentes(nodoActual.getUbicacion()));
 			asiganarPadreANodos(adyacentes, nodoActual);
-			concatenarListasNodos(listaAbierta, listaCerrada, adyacentes);
+			agregarAdyacentesAListaAbierta(listaAbierta, adyacentes, visitadosAbierta, visitadosCerrada);
 			// evaluo cual nodo es el siguiente en el camino
 			indiceNodoSiguiente = obtenerMininoListaNodos(listaAbierta, nodoActual);
 			nodoSiguiente = listaAbierta.get(indiceNodoSiguiente);
 			listaCerrada.add(nodoSiguiente);
+			visitadosCerrada[nodoSiguiente.getUbicacion().getX()][nodoSiguiente.getUbicacion().getY()] = true;
 			nodoActual = nodoSiguiente;
 			listaAbierta.remove(indiceNodoSiguiente);
+			visitadosAbierta[nodoSiguiente.getUbicacion().getX()][nodoSiguiente.getUbicacion().getY()] = false;
 			if (nodoActual.esIgual(this.destino)) {
 				OK = false;
 			}
@@ -61,14 +81,11 @@ public class Camino implements CaminoTDA {
 		return destino;
 	}
 
-	@Override
 	public NodoTDA getOrigen() {
 		return origen;
 	}
 
-	@Override
 	public void setDestino(NodoTDA destino) {
-		// TODO Auto-generated method stub
 		//System.out.println("Creo destino con un nodo");
 		this.destino = destino;
 		PuntoTDA punto = this.destino.getUbicacion();
@@ -76,7 +93,6 @@ public class Camino implements CaminoTDA {
 		this.destino.setHeuristica(getHeuristicaPunto(punto));
 	}
 
-	@Override
 	public void setDestino(PuntoTDA punto) {
 		//System.out.println("Creo destino con un punto");
 		//this.destino = new Nodo(punto, this.getHeuristicaPunto(punto), this.getDensidadPunto(punto));
@@ -85,9 +101,7 @@ public class Camino implements CaminoTDA {
 		this.destino.setHeuristica(getHeuristicaPunto(punto));
 	}
 
-	@Override
 	public void setOrigen(NodoTDA origen) {
-		// TODO Auto-generated method stub
 		//System.out.println("Creo origen con un nodo");
 		this.origen = origen;
 		PuntoTDA punto = this.origen.getUbicacion();
@@ -160,12 +174,12 @@ public class Camino implements CaminoTDA {
 
 	}
 
-	private List<PuntoTDA> generarCaminoConListaDePuntos(
-			List<NodoTDA> listaCerrada) {
+	private List<PuntoTDA> generarCaminoConListaDePuntos(List<NodoTDA> listaCerrada) {
 		List<PuntoTDA> aux = new ArrayList<PuntoTDA>();
 		List<PuntoTDA> valorRetorno = new ArrayList<PuntoTDA>();
 		NodoTDA nodoActual;
 
+		System.out.println(" DEBUG: voy a generar el camino con la lista cerrada");
 		// agrego a la lista el punto destino
 		nodoActual = listaCerrada.get(listaCerrada.size() - 1);
 		aux.add(nodoActual.getUbicacion());
@@ -178,20 +192,9 @@ public class Camino implements CaminoTDA {
 		for (int i = aux.size() - 1; i >= 0; i--) {
 			valorRetorno.add(aux.get(i));
 		}
-
+		System.out.println(" DEBUG: fin del armado de la lista");
 		return valorRetorno;
 	}
-
-	/*
-	 * private List<PuntoTDA> convertirAListaDePuntos(List<NodoTDA> lista){
-	 * List<PuntoTDA> listaPuntos = new ArrayList<PuntoTDA>();
-	 * 
-	 * for (NodoTDA n: lista){ PuntoTDA punto = new
-	 * Punto(n.getUbicacion().getX(),n.getUbicacion().getY());
-	 * listaPuntos.add(punto); }
-	 * 
-	 * return listaPuntos; }
-	 */
 
 	private List<NodoTDA> convertirAListaDeNodos(List<PuntoTDA> lista) {
 		List<NodoTDA> listaNodos = new ArrayList<NodoTDA>();
@@ -204,26 +207,22 @@ public class Camino implements CaminoTDA {
 		return listaNodos;
 	}
 
-	private void concatenarListasNodos(List<NodoTDA> listaDestino,
-			List<NodoTDA> listaVisitados, List<NodoTDA> listaFuente) {
-		for (NodoTDA nodo : listaFuente) {
-			if (!estaEnLista(listaDestino, nodo)
-					&& (!estaEnLista(listaVisitados, nodo))) {
-				listaDestino.add(nodo);
+	private void agregarAdyacentesAListaAbierta(List<NodoTDA> listaAbierta, 
+										List<NodoTDA> listaAdyacentes, 
+										boolean [][]visiAbierta,
+										boolean [][]visiCerrada) {
+		// lista destino es la lista abierta
+		for (NodoTDA nodo : listaAdyacentes) {
+			if (!estaEnLista(visiAbierta, nodo) && (!estaEnLista(visiCerrada, nodo))) {
+				listaAbierta.add(nodo);
+				visiAbierta[nodo.getUbicacion().getX()][nodo.getUbicacion().getY()] = true;
 				//System.out.println("Agrego uno!");
 			}
 		}
 	}
 
-	private boolean estaEnLista(List<NodoTDA> lista, NodoTDA nodoActual) {
-		for (NodoTDA nodo : lista) {
-			if (nodo.esIgual(nodoActual)) {
-				//if (nodo.getPadre() == nodoActual.getPadre()) {
-					return true;
-				//}
-			}
-		}
-		return false;
+	private boolean estaEnLista(boolean [][]m,NodoTDA nodo) {
+		return (m[nodo.getUbicacion().getX()][nodo.getUbicacion().getY()]);
 	}
 
 	private void asiganarPadreANodos(List<NodoTDA> listaNodos, NodoTDA padre) {
@@ -232,8 +231,7 @@ public class Camino implements CaminoTDA {
 		}
 	}
 
-	private int obtenerMininoListaNodos(List<NodoTDA> listaNodos,
-			NodoTDA nodoActual) {
+	private int obtenerMininoListaNodos(List<NodoTDA> listaNodos, NodoTDA nodoActual) {
 		int valorRetorno = -1;
 		float fMinima = Float.MAX_VALUE;
 		int tamanioLista = listaNodos.size();
@@ -294,6 +292,7 @@ public class Camino implements CaminoTDA {
 		if( valorRetorno == -1 ){
 			System.out.println("algo paso");
 		}
+		
 		return valorRetorno;
 	}
 
