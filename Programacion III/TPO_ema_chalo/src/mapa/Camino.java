@@ -29,8 +29,8 @@ public class Camino implements CaminoTDA {
 		boolean [][]visitadosListaCerrada = new boolean[tamanioMatriz][tamanioMatriz];;
 		
 		// resetear la matriz con cada camino
-		for(int i = 0; i < tamanioMatriz; i++){
-			for(int j = 0; j < tamanioMatriz; j++){
+		for(int i = 0; i < 400; i++){
+			for(int j = 0; j < 400; j++){
 				visitadosListaAbierta[i][j] = false;
 				visitadosListaCerrada[i][j] = false;
 			}
@@ -51,17 +51,18 @@ public class Camino implements CaminoTDA {
 	}
 	
 	public List<PuntoTDA> buscarCaminoIterativo(List<NodoTDA> listaAbierta,
-		List<NodoTDA> listaCerrada, boolean [][]visitadosAbierta, boolean [][]visitadosCerrada, NodoTDA nodoActual) {
+												List<NodoTDA> listaCerrada, 
+												boolean [][]visitadosAbierta, 
+												boolean [][]visitadosCerrada, 
+												NodoTDA nodoActual) {
 		List<NodoTDA> adyacentes;
 		NodoTDA nodoSiguiente;
 		int indiceNodoSiguiente;
 		boolean OK = true;
-		int contador = 0;
+		
 		while (OK) {
-			System.out.println("contador: "+ contador);
-			contador++;
 			// agregar adyacentes a lista abierta
-			adyacentes = convertirAListaDeNodos(this.mapa.getAdyacentes(nodoActual.getUbicacion()));
+			adyacentes = convertirAListaDeNodos(this.mapa.getAdyacentes(nodoActual.getUbicacion()),nodoActual);
 			asiganarPadreANodos(adyacentes, nodoActual);
 			agregarAdyacentesAListaAbierta(listaAbierta, adyacentes, visitadosAbierta, visitadosCerrada);
 			// evaluo cual nodo es el siguiente en el camino
@@ -71,13 +72,11 @@ public class Camino implements CaminoTDA {
 			visitadosCerrada[nodoSiguiente.getUbicacion().getX()][nodoSiguiente.getUbicacion().getY()] = true;
 			nodoActual = nodoSiguiente;
 			listaAbierta.remove(indiceNodoSiguiente);
-			System.out.println("tamaño lista abierta"+listaAbierta.size());
 			visitadosAbierta[nodoSiguiente.getUbicacion().getX()][nodoSiguiente.getUbicacion().getY()] = false;
 			if (nodoActual.esIgual(this.destino)) {
 				OK = false;
 			}
 		}
-		System.out.println("contador final!: "+ contador);
 		return generarCaminoConListaDePuntos(listaCerrada);
 	}
 
@@ -183,7 +182,7 @@ public class Camino implements CaminoTDA {
 		List<PuntoTDA> valorRetorno = new ArrayList<PuntoTDA>();
 		NodoTDA nodoActual;
 
-		//System.out.println(" DEBUG: voy a generar el camino con la lista cerrada");
+		System.out.println(" DEBUG: voy a generar el camino con la lista cerrada");
 		// agrego a la lista el punto destino
 		nodoActual = listaCerrada.get(listaCerrada.size() - 1);
 		aux.add(nodoActual.getUbicacion());
@@ -196,15 +195,19 @@ public class Camino implements CaminoTDA {
 		for (int i = aux.size() - 1; i >= 0; i--) {
 			valorRetorno.add(aux.get(i));
 		}
-		//System.out.println(" DEBUG: fin del armado de la lista");
+		System.out.println(" DEBUG: fin del armado de la lista");
 		return valorRetorno;
 	}
 
-	private List<NodoTDA> convertirAListaDeNodos(List<PuntoTDA> lista) {
+	private List<NodoTDA> convertirAListaDeNodos(List<PuntoTDA> lista, NodoTDA padre) {
 		List<NodoTDA> listaNodos = new ArrayList<NodoTDA>();
 
 		for (PuntoTDA p : lista) {
+			
 			NodoTDA nodo = new Nodo(p,this.getHeuristicaPunto(p),getDensidadPunto(p));
+			nodo.setDensidad(getDensidadPunto(nodo.getUbicacion()));
+			nodo.setHeuristica(getHeuristicaPunto(nodo.getUbicacion()));
+			nodo.setPadre(padre);
 			listaNodos.add(nodo);
 		}
 
