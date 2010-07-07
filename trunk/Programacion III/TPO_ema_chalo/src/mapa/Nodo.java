@@ -6,7 +6,7 @@ public class Nodo implements NodoTDA{
 	private PuntoTDA ubicacion;
 	private NodoTDA padre;
 	private int densidad;
-	private int g;
+	private int g = 0;
 	private float heuristica;
 	//private float g;
 	
@@ -18,6 +18,8 @@ public class Nodo implements NodoTDA{
 	
 	public Nodo(PuntoTDA ubicacion){
 		this.ubicacion = ubicacion;
+		this.densidad = Integer.MAX_VALUE;
+		this.heuristica = Integer.MAX_VALUE;
 	}
 	
 	@Override
@@ -46,25 +48,26 @@ public class Nodo implements NodoTDA{
 	}
 
 	@Override
-	public float f() {
-		
+	public float f() {	
 		return this.getG() + this.getH();
 	}
 
 	@Override
 	public int getG() {
-		return g;
+		if (this.densidad == Integer.MAX_VALUE){
+			return Integer.MAX_VALUE;
+		}
+		// caso esperado
+		return g + 1;
 	}
 
 	@Override
 	public float getH() {
-		
 		return this.heuristica;
 	}
 
 	@Override
 	public NodoTDA getPadre() {
-		
 		return this.padre;
 	}
 
@@ -88,8 +91,11 @@ public class Nodo implements NodoTDA{
 	@Override
 	public void setPadre(NodoTDA padre) {
 		this.padre = padre;
-		//this.g = this.densidad + 1 + this.padre.getG();
-		this.g = this.densidad + this.padre.getG();
+		if (this.padre != null){
+			if (this.densidad != Integer.MAX_VALUE){
+				this.g = this.densidad + this.padre.getG();
+			}	
+		}
 	}
 	
 	public void setDensidad(int d){
